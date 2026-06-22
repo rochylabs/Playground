@@ -147,7 +147,7 @@ export default function HomePage() {
         <div>
           <p className="text-base font-bold text-gray-800">Hallo! Ich bin Twixie, dein Lernbegleiter!</p>
           <p className="text-sm text-gray-500 mt-1">
-            I&apos;m Twixie the dog — I&apos;ll guide you through every exercise. After each answer I&apos;ll explain
+            I&apos;m Twixie — I&apos;ll guide you through every exercise. After each answer I&apos;ll explain
             what&apos;s right, what&apos;s wrong, and why. Choose a section above to get started!
           </p>
           <p className="text-xs text-gray-400 mt-2">

@@ -13,7 +13,7 @@ export default function MaxBubble({ correct, message, className = "" }: Props) {
           : "bg-orange-50 border border-orange-200 text-orange-800"
       } ${className}`}
     >
-      <span className="text-base flex-shrink-0" role="img" aria-label="Twixie the dog">
+      <span className="text-base flex-shrink-0" role="img" aria-label="Twixie">
         🐶
       </span>
       <div>
