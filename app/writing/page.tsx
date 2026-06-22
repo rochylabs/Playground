@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { writingExamSets } from "@/data/writing";
+import { useRandomIndex } from "@/hooks/useRandomIndex";
 import WritingPart1 from "@/components/WritingPart1";
 import WritingPart2 from "@/components/WritingPart2";
 import PatternTips, { type PatternGroup } from "@/components/PatternTips";
@@ -55,10 +55,7 @@ const TIPS: PatternGroup[] = [
 ];
 
 export default function WritingPage() {
-  const [setIdx, setSetIdx] = useState(0);
-  useEffect(() => {
-    setSetIdx(Math.floor(Math.random() * writingExamSets.length));
-  }, []);
+  const [setIdx, setSetIdx] = useRandomIndex(writingExamSets.length);
   const { part1, part2 } = writingExamSets[setIdx];
 
   const nextSet = () => setSetIdx((i) => (i + 1) % writingExamSets.length);

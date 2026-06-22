@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { readingExamSets } from "@/data/reading";
+import { useRandomIndex } from "@/hooks/useRandomIndex";
 import ReadingExercise from "@/components/ReadingExercise";
 import PatternTips, { type PatternGroup } from "@/components/PatternTips";
 
@@ -59,10 +59,7 @@ const TIPS: PatternGroup[] = [
 ];
 
 export default function ReadingPage() {
-  const [setIdx, setSetIdx] = useState(0);
-  useEffect(() => {
-    setSetIdx(Math.floor(Math.random() * readingExamSets.length));
-  }, []);
+  const [setIdx, setSetIdx] = useRandomIndex(readingExamSets.length);
   const parts = readingExamSets[setIdx].parts;
 
   const nextSet = () => setSetIdx((i) => (i + 1) % readingExamSets.length);

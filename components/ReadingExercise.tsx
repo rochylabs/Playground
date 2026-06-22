@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import type { ReadingPart } from "@/data/reading";
-import ReactMarkdown from "react-markdown";
 import MaxBubble from "@/components/MaxBubble";
 
 const MATCH_OPTIONS = ["a", "b", "c", "d", "e", "f", "X"];

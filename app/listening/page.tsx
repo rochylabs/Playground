@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { listeningExamSets } from "@/data/listening";
+import { useRandomIndex } from "@/hooks/useRandomIndex";
 import ListeningExercise from "@/components/ListeningExercise";
 import PatternTips, { type PatternGroup } from "@/components/PatternTips";
 
@@ -59,10 +59,7 @@ const TIPS: PatternGroup[] = [
 ];
 
 export default function ListeningPage() {
-  const [setIdx, setSetIdx] = useState(0);
-  useEffect(() => {
-    setSetIdx(Math.floor(Math.random() * listeningExamSets.length));
-  }, []);
+  const [setIdx, setSetIdx] = useRandomIndex(listeningExamSets.length);
   const parts = listeningExamSets[setIdx];
 
   const nextSet = () => setSetIdx((i) => (i + 1) % listeningExamSets.length);

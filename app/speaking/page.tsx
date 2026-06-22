@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { speakingExamSets } from "@/data/speaking";
+import { useRandomIndex } from "@/hooks/useRandomIndex";
 import { SpeakingPart1, SpeakingPart2, SpeakingPart3 } from "@/components/SpeakingCard";
 import PatternTips, { type PatternGroup } from "@/components/PatternTips";
 
@@ -83,10 +83,7 @@ const TIPS: PatternGroup[] = [
 ];
 
 export default function SpeakingPage() {
-  const [setIdx, setSetIdx] = useState(0);
-  useEffect(() => {
-    setSetIdx(Math.floor(Math.random() * speakingExamSets.length));
-  }, []);
+  const [setIdx, setSetIdx] = useRandomIndex(speakingExamSets.length);
   const { part1, part2, part3 } = speakingExamSets[setIdx];
 
   const nextSet = () => setSetIdx((i) => (i + 1) % speakingExamSets.length);
