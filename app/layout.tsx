@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import PostHogProvider from "@/components/PostHogProvider";
+import FeedbackButton from "@/components/FeedbackButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,6 +26,7 @@ export default function RootLayout({
         <PostHogProvider>
           <Navbar />
           <main className="flex-1">{children}</main>
+          <FeedbackButton />
           <footer className="text-center text-xs text-gray-400 py-4">
             Deutsch A1 Prep · Viel Erfolg! 🇩🇪
           </footer>
