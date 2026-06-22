@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import PostHogProvider from "@/components/PostHogProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,11 +22,13 @@ export default function RootLayout({
   return (
     <html lang="de" className={`${geistSans.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-gray-50 text-gray-900 antialiased">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <footer className="text-center text-xs text-gray-400 py-4">
-          Deutsch A1 Prep · Viel Erfolg! 🇩🇪
-        </footer>
+        <PostHogProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <footer className="text-center text-xs text-gray-400 py-4">
+            Deutsch A1 Prep · Viel Erfolg! 🇩🇪
+          </footer>
+        </PostHogProvider>
       </body>
     </html>
   );
