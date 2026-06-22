@@ -91,9 +91,9 @@ export default function HomePage() {
       <div className="mt-8 rounded-xl bg-white border border-gray-200 p-5 flex gap-4 items-start">
         <div className="text-5xl flex-shrink-0">🐶</div>
         <div>
-          <p className="text-base font-bold text-gray-800">Hallo! Ich bin Max, dein Lernbegleiter!</p>
+          <p className="text-base font-bold text-gray-800">Hallo! Ich bin Twixie, dein Lernbegleiter!</p>
           <p className="text-sm text-gray-500 mt-1">
-            I&apos;m Max the dog — I&apos;ll guide you through every exercise. After each answer I&apos;ll explain
+            I&apos;m Twixie the dog — I&apos;ll guide you through every exercise. After each answer I&apos;ll explain
             what&apos;s right, what&apos;s wrong, and why. Choose a section above to get started!
           </p>
           <p className="text-xs text-gray-400 mt-2">
