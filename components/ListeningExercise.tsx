@@ -4,10 +4,11 @@ import { useState } from "react";
 import type { ListeningPart } from "@/data/listening";
 import MaxBubble from "@/components/MaxBubble";
 import GermanAudio from "@/components/GermanAudio";
+import type { QuestionResult } from "@/components/WeakSpots";
 
 const qOffsets = [0, 6, 10];
 
-export default function ListeningExercise({ part, onSubmit }: { part: ListeningPart; onSubmit?: (earned: number, total: number) => void }) {
+export default function ListeningExercise({ part, onSubmit }: { part: ListeningPart; onSubmit?: (earned: number, total: number, results: QuestionResult[]) => void }) {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [showTranscript, setShowTranscript] = useState<Record<number, boolean>>({});
@@ -175,7 +176,14 @@ export default function ListeningExercise({ part, onSubmit }: { part: ListeningP
           </>
         ) : (
           <button
-            onClick={() => { setSubmitted(true); onSubmit?.(score, part.questions.length); }}
+            onClick={() => {
+              setSubmitted(true);
+              const results: QuestionResult[] = part.questions.map((q) => ({
+                questionType: part.type === "richtig-falsch" ? "richtig-falsch" : "multiple-choice",
+                correct: answers[q.id]?.toLowerCase() === q.answer.toLowerCase(),
+              }));
+              onSubmit?.(score, part.questions.length, results);
+            }}
             disabled={!allAnswered}
             className="ml-auto px-5 py-2 rounded-lg bg-green-700 hover:bg-green-800 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold transition-colors"
           >

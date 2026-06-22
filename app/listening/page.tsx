@@ -4,8 +4,11 @@ import { useState } from "react";
 import { listeningExamSets } from "@/data/listening";
 import { useRandomIndex } from "@/hooks/useRandomIndex";
 import { useExamScore } from "@/hooks/useExamScore";
+import { useExamTimer } from "@/hooks/useExamTimer";
 import ExamSummary from "@/components/ExamSummary";
+import ExamTimer from "@/components/ExamTimer";
 import ListeningExercise from "@/components/ListeningExercise";
+import WeakSpots, { type QuestionResult } from "@/components/WeakSpots";
 import PatternTips, { type PatternGroup } from "@/components/PatternTips";
 
 const TIPS: PatternGroup[] = [
@@ -66,12 +69,20 @@ export default function ListeningPage() {
   const parts = listeningExamSets[setIdx];
   const { scores, save, reset, allDone } = useExamScore();
   const [partScores, setPartScores] = useState<(number | null)[]>([null, null, null]);
+  const [allResults, setAllResults] = useState<QuestionResult[]>([]);
   const [showSummary, setShowSummary] = useState(false);
+  const timer = useExamTimer(20);
 
-  const nextSet = () => { setSetIdx((i) => (i + 1) % listeningExamSets.length); setPartScores([null, null, null]); };
+  const nextSet = () => {
+    setSetIdx((i) => (i + 1) % listeningExamSets.length);
+    setPartScores([null, null, null]);
+    setAllResults([]);
+    timer.reset();
+  };
 
-  const handlePartScore = (idx: number, earned: number) => {
+  const handlePartScore = (idx: number, earned: number, results: QuestionResult[]) => {
     setPartScores((prev) => { const next = [...prev]; next[idx] = earned; return next; });
+    setAllResults((prev) => [...prev, ...results]);
   };
 
   const sectionTotal = parts.reduce((a, p) => a + p.questions.length, 0);
@@ -86,6 +97,7 @@ export default function ListeningPage() {
           <span className="text-2xl">🎧</span>
           <h1 className="text-2xl font-bold text-gray-900">Hören</h1>
           <span className="text-xs font-semibold bg-green-100 text-green-700 rounded-full px-3 py-1">15 Punkte · 20 Minuten</span>
+          <ExamTimer {...timer} onStart={timer.start} onPause={timer.pause} onReset={timer.reset} />
           <button
             onClick={nextSet}
             className="ml-auto flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-green-400 text-green-700 text-xs font-semibold hover:bg-green-50 transition-colors"
@@ -113,10 +125,12 @@ export default function ListeningPage() {
       <div className="space-y-10">
         {parts.map((p, idx) => (
           <div key={`${setIdx}-${p.part}`} id={`hoeren-teil-${p.part}`}>
-            <ListeningExercise part={p} onSubmit={(earned) => handlePartScore(idx, earned)} />
+            <ListeningExercise part={p} onSubmit={(earned, total, results) => handlePartScore(idx, earned, results)} />
           </div>
         ))}
       </div>
+
+      {allResults.length > 0 && <WeakSpots results={allResults} />}
 
       {/* Section completion */}
       {allPartsScored && !sectionSaved && (

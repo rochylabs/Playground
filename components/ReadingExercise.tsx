@@ -3,10 +3,11 @@
 import { useState } from "react";
 import type { ReadingPart } from "@/data/reading";
 import MaxBubble from "@/components/MaxBubble";
+import type { QuestionResult } from "@/components/WeakSpots";
 
 const MATCH_OPTIONS = ["a", "b", "c", "d", "e", "f", "X"];
 
-export default function ReadingExercise({ part, onSubmit }: { part: ReadingPart; onSubmit?: (earned: number, total: number) => void }) {
+export default function ReadingExercise({ part, onSubmit }: { part: ReadingPart; onSubmit?: (earned: number, total: number, results: QuestionResult[]) => void }) {
   const [answers, setAnswers] = useState<Record<string, string | boolean>>({});
   const [submitted, setSubmitted] = useState(false);
 
@@ -193,7 +194,16 @@ export default function ReadingExercise({ part, onSubmit }: { part: ReadingPart;
           </>
         ) : (
           <button
-            onClick={() => { setSubmitted(true); onSubmit?.(score, part.questions.length); }}
+            onClick={() => {
+              setSubmitted(true);
+              const qType: QuestionResult["questionType"] =
+                part.type === "matching" ? "matching" : "richtig-falsch";
+              const results: QuestionResult[] = part.questions.map((q) => ({
+                questionType: qType,
+                correct: String(answers[q.id]).toLowerCase() === String(q.answer).toLowerCase(),
+              }));
+              onSubmit?.(score, part.questions.length, results);
+            }}
             disabled={!allAnswered}
             className="ml-auto px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold transition-colors"
           >

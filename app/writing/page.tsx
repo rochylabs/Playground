@@ -4,7 +4,9 @@ import { useState } from "react";
 import { writingExamSets } from "@/data/writing";
 import { useRandomIndex } from "@/hooks/useRandomIndex";
 import { useExamScore } from "@/hooks/useExamScore";
+import { useExamTimer } from "@/hooks/useExamTimer";
 import ExamSummary from "@/components/ExamSummary";
+import ExamTimer from "@/components/ExamTimer";
 import WritingPart1 from "@/components/WritingPart1";
 import WritingPart2 from "@/components/WritingPart2";
 import PatternTips, { type PatternGroup } from "@/components/PatternTips";
@@ -64,7 +66,8 @@ export default function WritingPage() {
   const [partScores, setPartScores] = useState<(number | null)[]>([null, null]);
   const [showSummary, setShowSummary] = useState(false);
 
-  const nextSet = () => { setSetIdx((i) => (i + 1) % writingExamSets.length); setPartScores([null, null]); };
+  const timer = useExamTimer(20);
+  const nextSet = () => { setSetIdx((i) => (i + 1) % writingExamSets.length); setPartScores([null, null]); timer.reset(); };
 
   const handlePartScore = (idx: number, earned: number, outOf: number) => {
     // scale to section total (part1: 5pts, part2: 10pts = 15 total)
@@ -85,7 +88,8 @@ export default function WritingPage() {
         <div className="flex items-center gap-3 mb-1 flex-wrap">
           <span className="text-2xl">✏️</span>
           <h1 className="text-2xl font-bold text-gray-900">Schreiben</h1>
-          <span className="text-xs font-semibold bg-yellow-100 text-yellow-700 rounded-full px-3 py-1">25 Punkte · 20 Minuten</span>
+          <span className="text-xs font-semibold bg-yellow-100 text-yellow-700 rounded-full px-3 py-1">15 Punkte · 20 Minuten</span>
+          <ExamTimer {...timer} onStart={timer.start} onPause={timer.pause} onReset={timer.reset} />
           <button
             onClick={nextSet}
             className="ml-auto flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-yellow-400 text-yellow-700 text-xs font-semibold hover:bg-yellow-50 transition-colors"

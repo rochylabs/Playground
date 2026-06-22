@@ -4,7 +4,9 @@ import { useState } from "react";
 import { speakingExamSets } from "@/data/speaking";
 import { useRandomIndex } from "@/hooks/useRandomIndex";
 import { useExamScore } from "@/hooks/useExamScore";
+import { useExamTimer } from "@/hooks/useExamTimer";
 import ExamSummary from "@/components/ExamSummary";
+import ExamTimer from "@/components/ExamTimer";
 import { SpeakingPart1, SpeakingPart2, SpeakingPart3 } from "@/components/SpeakingCard";
 import PatternTips, { type PatternGroup } from "@/components/PatternTips";
 
@@ -104,7 +106,8 @@ export default function SpeakingPage() {
   const [partRatings, setPartRatings] = useState<(number | null)[]>([null, null, null]);
   const [showSummary, setShowSummary] = useState(false);
 
-  const nextSet = () => { setSetIdx((i) => (i + 1) % speakingExamSets.length); setPartRatings([null, null, null]); };
+  const timer = useExamTimer(15);
+  const nextSet = () => { setSetIdx((i) => (i + 1) % speakingExamSets.length); setPartRatings([null, null, null]); timer.reset(); };
 
   const sectionEarned = partRatings.reduce<number>((a, r, i) => a + (r !== null ? Math.round(SPEAKING_PARTS[i].max * r) : 0), 0);
   const sectionTotal = SPEAKING_PARTS.reduce((a, p) => a + p.max, 0);
@@ -118,6 +121,7 @@ export default function SpeakingPage() {
           <span className="text-2xl">🎤</span>
           <h1 className="text-2xl font-bold text-gray-900">Sprechen</h1>
           <span className="text-xs font-semibold bg-red-100 text-red-700 rounded-full px-3 py-1">25 Punkte · 15 Minuten</span>
+          <ExamTimer {...timer} onStart={timer.start} onPause={timer.pause} onReset={timer.reset} />
           <button
             onClick={nextSet}
             className="ml-auto flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-red-400 text-red-700 text-xs font-semibold hover:bg-red-50 transition-colors"
