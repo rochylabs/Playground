@@ -1,7 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { listeningExamSets } from "@/data/listening";
 import { useRandomIndex } from "@/hooks/useRandomIndex";
+import { useExamScore } from "@/hooks/useExamScore";
+import ExamSummary from "@/components/ExamSummary";
 import ListeningExercise from "@/components/ListeningExercise";
 import PatternTips, { type PatternGroup } from "@/components/PatternTips";
 
@@ -61,8 +64,20 @@ const TIPS: PatternGroup[] = [
 export default function ListeningPage() {
   const [setIdx, setSetIdx] = useRandomIndex(listeningExamSets.length);
   const parts = listeningExamSets[setIdx];
+  const { scores, save, reset, allDone } = useExamScore();
+  const [partScores, setPartScores] = useState<(number | null)[]>([null, null, null]);
+  const [showSummary, setShowSummary] = useState(false);
 
-  const nextSet = () => setSetIdx((i) => (i + 1) % listeningExamSets.length);
+  const nextSet = () => { setSetIdx((i) => (i + 1) % listeningExamSets.length); setPartScores([null, null, null]); };
+
+  const handlePartScore = (idx: number, earned: number) => {
+    setPartScores((prev) => { const next = [...prev]; next[idx] = earned; return next; });
+  };
+
+  const sectionTotal = parts.reduce((a, p) => a + p.questions.length, 0);
+  const sectionEarned = partScores.reduce<number>((a, s) => a + (s ?? 0), 0);
+  const allPartsScored = partScores.every((s) => s !== null);
+  const sectionSaved = scores.hoeren.completed;
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -96,12 +111,41 @@ export default function ListeningPage() {
       </div>
 
       <div className="space-y-10">
-        {parts.map((p) => (
+        {parts.map((p, idx) => (
           <div key={`${setIdx}-${p.part}`} id={`hoeren-teil-${p.part}`}>
-            <ListeningExercise part={p} />
+            <ListeningExercise part={p} onSubmit={(earned) => handlePartScore(idx, earned)} />
           </div>
         ))}
       </div>
+
+      {/* Section completion */}
+      {allPartsScored && !sectionSaved && (
+        <div className="mt-8 rounded-xl border border-green-300 bg-green-50 p-5 flex items-center justify-between gap-4">
+          <div>
+            <p className="font-bold text-green-800">Hören abgeschlossen — {sectionEarned} / {sectionTotal} Punkte</p>
+            <p className="text-sm text-green-700 mt-0.5">Speichere dein Ergebnis, um es in der Gesamtauswertung zu sehen.</p>
+          </div>
+          <button
+            onClick={() => { save("hoeren", sectionEarned, sectionTotal); if (allDone) setShowSummary(true); }}
+            className="flex-shrink-0 px-5 py-2 rounded-lg bg-green-700 hover:bg-green-800 text-white text-sm font-semibold transition-colors"
+          >
+            Ergebnis speichern ✓
+          </button>
+        </div>
+      )}
+      {sectionSaved && (
+        <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-4 flex items-center justify-between gap-4">
+          <p className="text-sm font-semibold text-gray-600">✓ Hören gespeichert: {scores.hoeren.earned} / {scores.hoeren.total} Punkte</p>
+          <button onClick={() => setShowSummary(true)} className="text-xs text-blue-600 hover:underline font-semibold">
+            {allDone ? "📊 Gesamtergebnis anzeigen" : "Weiter zum nächsten Abschnitt →"}
+          </button>
+        </div>
+      )}
+
+      {showSummary && (
+        <ExamSummary scores={scores}
+          onReset={() => { reset(); setShowSummary(false); setPartScores([null, null, null]); }} />
+      )}
     </div>
   );
 }

@@ -1,7 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { speakingExamSets } from "@/data/speaking";
 import { useRandomIndex } from "@/hooks/useRandomIndex";
+import { useExamScore } from "@/hooks/useExamScore";
+import ExamSummary from "@/components/ExamSummary";
 import { SpeakingPart1, SpeakingPart2, SpeakingPart3 } from "@/components/SpeakingCard";
 import PatternTips, { type PatternGroup } from "@/components/PatternTips";
 
@@ -82,11 +85,31 @@ const TIPS: PatternGroup[] = [
   },
 ];
 
+const SPEAKING_PARTS = [
+  { label: "Teil 1 – Sich vorstellen", max: 8 },
+  { label: "Teil 2 – Thema & Fragen",  max: 8 },
+  { label: "Teil 3 – Bitten & Reagieren", max: 9 },
+];
+const SELF_RATINGS = [
+  { label: "Sehr gut", pct: 1.0,  emoji: "🌟" },
+  { label: "Gut",      pct: 0.75, emoji: "😊" },
+  { label: "OK",       pct: 0.55, emoji: "😐" },
+  { label: "Schwach",  pct: 0.35, emoji: "😓" },
+];
+
 export default function SpeakingPage() {
   const [setIdx, setSetIdx] = useRandomIndex(speakingExamSets.length);
   const { part1, part2, part3 } = speakingExamSets[setIdx];
+  const { scores, save, reset, allDone } = useExamScore();
+  const [partRatings, setPartRatings] = useState<(number | null)[]>([null, null, null]);
+  const [showSummary, setShowSummary] = useState(false);
 
-  const nextSet = () => setSetIdx((i) => (i + 1) % speakingExamSets.length);
+  const nextSet = () => { setSetIdx((i) => (i + 1) % speakingExamSets.length); setPartRatings([null, null, null]); };
+
+  const sectionEarned = partRatings.reduce<number>((a, r, i) => a + (r !== null ? Math.round(SPEAKING_PARTS[i].max * r) : 0), 0);
+  const sectionTotal = SPEAKING_PARTS.reduce((a, p) => a + p.max, 0);
+  const allRated = partRatings.every((r) => r !== null);
+  const sectionSaved = scores.sprechen.completed;
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -121,6 +144,59 @@ export default function SpeakingPage() {
         <div id="sprechen-teil-2" key={`${setIdx}-2`}><SpeakingPart2 data={part2} /></div>
         <div id="sprechen-teil-3" key={`${setIdx}-3`}><SpeakingPart3 data={part3} /></div>
       </div>
+
+      {/* Self-assessment */}
+      {!sectionSaved && (
+        <div className="mt-8 rounded-xl border border-red-200 bg-red-50 p-5 space-y-4">
+          <p className="font-bold text-red-800">Selbstbewertung — Wie gut hast du gesprochen?</p>
+          <p className="text-sm text-red-700">Vergleiche deine Antworten mit den Musterlösungen und bewerte dich ehrlich.</p>
+          {SPEAKING_PARTS.map((sp, idx) => (
+            <div key={idx}>
+              <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5">{sp.label} (max. {sp.max} Pkt.)</p>
+              <div className="flex flex-wrap gap-2">
+                {SELF_RATINGS.map((r) => {
+                  const pts = Math.round(sp.max * r.pct);
+                  const selected = partRatings[idx] === r.pct;
+                  return (
+                    <button key={r.label}
+                      onClick={() => setPartRatings((prev) => { const next = [...prev]; next[idx] = r.pct; return next; })}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors ${
+                        selected ? "bg-red-100 border-red-500 text-red-800" : "border-gray-300 text-gray-600 hover:border-red-400 hover:bg-red-50"
+                      }`}
+                    >
+                      {r.emoji} {r.label} ({pts} Pkt.)
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+          {allRated && (
+            <div className="flex items-center justify-between pt-2 border-t border-red-200">
+              <p className="font-bold text-red-800">Gesamt: {sectionEarned} / {sectionTotal} Punkte</p>
+              <button
+                onClick={() => { save("sprechen", sectionEarned, sectionTotal); if (allDone) setShowSummary(true); }}
+                className="px-5 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-semibold transition-colors"
+              >
+                Ergebnis speichern ✓
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+      {sectionSaved && (
+        <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-4 flex items-center justify-between gap-4">
+          <p className="text-sm font-semibold text-gray-600">✓ Sprechen gespeichert: {scores.sprechen.earned} / {scores.sprechen.total} Punkte</p>
+          <button onClick={() => setShowSummary(true)} className="text-xs text-blue-600 hover:underline font-semibold">
+            {allDone ? "📊 Gesamtergebnis anzeigen" : "Weiter zum nächsten Abschnitt →"}
+          </button>
+        </div>
+      )}
+
+      {showSummary && (
+        <ExamSummary scores={scores}
+          onReset={() => { reset(); setShowSummary(false); setPartRatings([null, null, null]); }} />
+      )}
     </div>
   );
 }

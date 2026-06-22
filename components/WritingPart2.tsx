@@ -3,9 +3,17 @@
 import { useState } from "react";
 import type { WritingPart2Data } from "@/data/writing";
 
-export default function WritingPart2({ data }: { data: WritingPart2Data }) {
+const SELF_RATINGS = [
+  { label: "Ausgezeichnet", points: 10, emoji: "🌟" },
+  { label: "Gut",           points: 7,  emoji: "😊" },
+  { label: "OK",            points: 5,  emoji: "😐" },
+  { label: "Schwach",       points: 2,  emoji: "😓" },
+];
+
+export default function WritingPart2({ data, onSubmit }: { data: WritingPart2Data; onSubmit?: (earned: number, total: number) => void }) {
   const [text, setText] = useState("");
   const [showModel, setShowModel] = useState(false);
+  const [selfRating, setSelfRating] = useState<number | null>(null);
 
   const wordCount = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
   const onTarget = wordCount >= 25 && wordCount <= 40;
@@ -86,9 +94,32 @@ export default function WritingPart2({ data }: { data: WritingPart2Data }) {
             {showModel ? "Musterlösung ausblenden ▲" : "Musterlösung anzeigen ▼"}
           </button>
           {showModel && (
-            <pre className="mt-3 text-sm text-gray-700 bg-yellow-50 border border-yellow-200 rounded-lg p-4 whitespace-pre-wrap font-sans leading-relaxed">
-              {data.modelAnswer}
-            </pre>
+            <>
+              <pre className="mt-3 text-sm text-gray-700 bg-yellow-50 border border-yellow-200 rounded-lg p-4 whitespace-pre-wrap font-sans leading-relaxed">
+                {data.modelAnswer}
+              </pre>
+              <div className="mt-4">
+                <p className="text-xs font-bold uppercase tracking-wide text-gray-400 mb-2">Selbstbewertung — Wie gut war deine E-Mail?</p>
+                <div className="flex flex-wrap gap-2">
+                  {SELF_RATINGS.map((r) => (
+                    <button
+                      key={r.label}
+                      onClick={() => { setSelfRating(r.points); onSubmit?.(r.points, 10); }}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors ${
+                        selfRating === r.points
+                          ? "bg-yellow-100 border-yellow-500 text-yellow-800"
+                          : "border-gray-300 text-gray-600 hover:border-yellow-400 hover:bg-yellow-50"
+                      }`}
+                    >
+                      {r.emoji} {r.label} ({r.points} Pkt.)
+                    </button>
+                  ))}
+                </div>
+                {selfRating !== null && (
+                  <p className="text-xs text-green-600 font-semibold mt-2">✓ Bewertet: {selfRating} / 10 Punkte</p>
+                )}
+              </div>
+            </>
           )}
         </div>
       </div>

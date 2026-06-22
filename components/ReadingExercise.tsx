@@ -6,7 +6,7 @@ import MaxBubble from "@/components/MaxBubble";
 
 const MATCH_OPTIONS = ["a", "b", "c", "d", "e", "f", "X"];
 
-export default function ReadingExercise({ part }: { part: ReadingPart }) {
+export default function ReadingExercise({ part, onSubmit }: { part: ReadingPart; onSubmit?: (earned: number, total: number) => void }) {
   const [answers, setAnswers] = useState<Record<string, string | boolean>>({});
   const [submitted, setSubmitted] = useState(false);
 
@@ -193,7 +193,7 @@ export default function ReadingExercise({ part }: { part: ReadingPart }) {
           </>
         ) : (
           <button
-            onClick={() => setSubmitted(true)}
+            onClick={() => { setSubmitted(true); onSubmit?.(score, part.questions.length); }}
             disabled={!allAnswered}
             className="ml-auto px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold transition-colors"
           >

@@ -4,7 +4,7 @@ import { useState } from "react";
 import type { WritingPart1Data } from "@/data/writing";
 import MaxBubble from "@/components/MaxBubble";
 
-export default function WritingPart1({ data }: { data: WritingPart1Data }) {
+export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Data; onSubmit?: (earned: number, total: number) => void }) {
   const [values, setValues] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
 
@@ -118,7 +118,7 @@ export default function WritingPart1({ data }: { data: WritingPart1Data }) {
           </>
         ) : (
           <button
-            onClick={() => setSubmitted(true)}
+            onClick={() => { setSubmitted(true); onSubmit?.(score, data.formFields.length); }}
             disabled={!allFilled}
             className="ml-auto px-5 py-2 rounded-lg bg-yellow-600 hover:bg-yellow-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold transition-colors"
           >

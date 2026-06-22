@@ -1,7 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { writingExamSets } from "@/data/writing";
 import { useRandomIndex } from "@/hooks/useRandomIndex";
+import { useExamScore } from "@/hooks/useExamScore";
+import ExamSummary from "@/components/ExamSummary";
 import WritingPart1 from "@/components/WritingPart1";
 import WritingPart2 from "@/components/WritingPart2";
 import PatternTips, { type PatternGroup } from "@/components/PatternTips";
@@ -57,8 +60,24 @@ const TIPS: PatternGroup[] = [
 export default function WritingPage() {
   const [setIdx, setSetIdx] = useRandomIndex(writingExamSets.length);
   const { part1, part2 } = writingExamSets[setIdx];
+  const { scores, save, reset, allDone } = useExamScore();
+  const [partScores, setPartScores] = useState<(number | null)[]>([null, null]);
+  const [showSummary, setShowSummary] = useState(false);
 
-  const nextSet = () => setSetIdx((i) => (i + 1) % writingExamSets.length);
+  const nextSet = () => { setSetIdx((i) => (i + 1) % writingExamSets.length); setPartScores([null, null]); };
+
+  const handlePartScore = (idx: number, earned: number, outOf: number) => {
+    // scale to section total (part1: 5pts, part2: 10pts = 15 total)
+    const scaled = idx === 0
+      ? Math.round((earned / outOf) * part1.points)
+      : earned; // part2 self-assessed in points directly
+    setPartScores((prev) => { const next = [...prev]; next[idx] = scaled; return next; });
+  };
+
+  const sectionEarned = partScores.reduce<number>((a, s) => a + (s ?? 0), 0);
+  const sectionTotal = part1.points + part2.points;
+  const allPartsScored = partScores.every((s) => s !== null);
+  const sectionSaved = scores.schreiben.completed;
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -88,9 +107,41 @@ export default function WritingPage() {
       </div>
 
       <div className="space-y-10">
-        <div id="schreiben-teil-1" key={`${setIdx}-1`}><WritingPart1 data={part1} /></div>
-        <div id="schreiben-teil-2" key={`${setIdx}-2`}><WritingPart2 data={part2} /></div>
+        <div id="schreiben-teil-1" key={`${setIdx}-1`}>
+          <WritingPart1 data={part1} onSubmit={(earned, total) => handlePartScore(0, earned, total)} />
+        </div>
+        <div id="schreiben-teil-2" key={`${setIdx}-2`}>
+          <WritingPart2 data={part2} onSubmit={(earned) => handlePartScore(1, earned, 10)} />
+        </div>
       </div>
+
+      {allPartsScored && !sectionSaved && (
+        <div className="mt-8 rounded-xl border border-yellow-300 bg-yellow-50 p-5 flex items-center justify-between gap-4">
+          <div>
+            <p className="font-bold text-yellow-800">Schreiben abgeschlossen — {sectionEarned} / {sectionTotal} Punkte</p>
+            <p className="text-sm text-yellow-700 mt-0.5">Speichere dein Ergebnis, um es in der Gesamtauswertung zu sehen.</p>
+          </div>
+          <button
+            onClick={() => { save("schreiben", sectionEarned, sectionTotal); if (allDone) setShowSummary(true); }}
+            className="flex-shrink-0 px-5 py-2 rounded-lg bg-yellow-600 hover:bg-yellow-700 text-white text-sm font-semibold transition-colors"
+          >
+            Ergebnis speichern ✓
+          </button>
+        </div>
+      )}
+      {sectionSaved && (
+        <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-4 flex items-center justify-between gap-4">
+          <p className="text-sm font-semibold text-gray-600">✓ Schreiben gespeichert: {scores.schreiben.earned} / {scores.schreiben.total} Punkte</p>
+          <button onClick={() => setShowSummary(true)} className="text-xs text-blue-600 hover:underline font-semibold">
+            {allDone ? "📊 Gesamtergebnis anzeigen" : "Weiter zum nächsten Abschnitt →"}
+          </button>
+        </div>
+      )}
+
+      {showSummary && (
+        <ExamSummary scores={scores}
+          onReset={() => { reset(); setShowSummary(false); setPartScores([null, null]); }} />
+      )}
     </div>
   );
 }

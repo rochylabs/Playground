@@ -1,4 +1,9 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import { useExamScore } from "@/hooks/useExamScore";
+import ExamSummary from "@/components/ExamSummary";
 
 const sections = [
   {
@@ -43,7 +48,18 @@ const sections = [
   },
 ];
 
+const SECTION_KEYS = [
+  { key: "lesen",     icon: "📖", label: "Lesen",     href: "/reading" },
+  { key: "hoeren",    icon: "🎧", label: "Hören",     href: "/listening" },
+  { key: "schreiben", icon: "✏️", label: "Schreiben", href: "/writing" },
+  { key: "sprechen",  icon: "🎤", label: "Sprechen",  href: "/speaking" },
+] as const;
+
 export default function HomePage() {
+  const { scores, allDone, reset } = useExamScore();
+  const [showSummary, setShowSummary] = useState(false);
+  const completedCount = Object.values(scores).filter((s) => s.completed).length;
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
       <div className="text-center mb-10">
@@ -55,6 +71,40 @@ export default function HomePage() {
           Wählen Sie einen Bereich, um zu beginnen.
         </p>
       </div>
+
+      {/* Progress tracker */}
+      {completedCount > 0 && (
+        <div className="mb-6 rounded-xl border border-gray-200 bg-white p-4">
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-sm font-bold text-gray-700">Prüfungsfortschritt — {completedCount}/4 Abschnitte abgeschlossen</p>
+            <div className="flex gap-2">
+              {allDone && (
+                <button onClick={() => setShowSummary(true)}
+                  className="text-xs font-bold text-white bg-green-600 hover:bg-green-700 px-3 py-1 rounded-full transition-colors">
+                  📊 Gesamtergebnis anzeigen
+                </button>
+              )}
+              <button onClick={reset} className="text-xs text-gray-400 hover:text-red-500 font-medium transition-colors">
+                Zurücksetzen
+              </button>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            {SECTION_KEYS.map(({ key, icon, label }) => {
+              const s = scores[key];
+              return (
+                <div key={key} className={`flex-1 rounded-lg p-2 text-center text-xs font-semibold border ${
+                  s.completed ? "bg-green-50 border-green-300 text-green-700" : "bg-gray-50 border-gray-200 text-gray-400"
+                }`}>
+                  <div className="text-lg mb-0.5">{s.completed ? "✅" : icon}</div>
+                  {label}
+                  {s.completed && <div className="text-green-600 font-bold">{s.earned}/{s.total}</div>}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         {sections.map((s) => (
@@ -87,6 +137,10 @@ export default function HomePage() {
           </Link>
         ))}
       </div>
+
+      {showSummary && (
+        <ExamSummary scores={scores} onReset={() => { reset(); setShowSummary(false); }} />
+      )}
 
       <div className="mt-8 rounded-xl bg-white border border-gray-200 p-5 flex gap-4 items-start">
         <div className="text-5xl flex-shrink-0">🐶</div>
