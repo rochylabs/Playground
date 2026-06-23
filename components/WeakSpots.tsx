@@ -35,11 +35,6 @@ export default function WeakSpots({ results }: Props) {
   );
 
   const types = Object.keys(grouped) as QuestionResult["questionType"][];
-  const hasWeakSpot = types.some(({ }) => {
-    return true; // show all types regardless
-  });
-
-  if (!hasWeakSpot) return null;
 
   return (
     <div className="mt-6 rounded-xl border border-purple-200 bg-purple-50 p-5">

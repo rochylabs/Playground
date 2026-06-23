@@ -8,14 +8,10 @@ export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Dat
   const [values, setValues] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
 
+  const [displayScore, setDisplayScore] = useState(0);
   const allFilled = data.formFields.every((f) => (values[f.label] ?? "").trim().length > 0);
-  const score = submitted
-    ? data.formFields.filter(
-        (f) => values[f.label]?.trim().toLowerCase() === f.correctAnswer.toLowerCase()
-      ).length
-    : 0;
 
-  const reset = () => { setValues({}); setSubmitted(false); };
+  const reset = () => { setValues({}); setSubmitted(false); setDisplayScore(0); };
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
@@ -109,8 +105,8 @@ export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Dat
       <div className="px-6 py-4 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
         {submitted ? (
           <>
-            <span className={`text-sm font-bold ${score === data.formFields.length ? "text-green-600" : score >= data.formFields.length / 2 ? "text-yellow-600" : "text-red-600"}`}>
-              Ergebnis: {score} / {data.formFields.length} Punkte
+            <span className={`text-sm font-bold ${displayScore === data.formFields.length ? "text-green-600" : displayScore >= data.formFields.length / 2 ? "text-yellow-600" : "text-red-600"}`}>
+              Ergebnis: {displayScore} / {data.formFields.length} Punkte
             </span>
             <button onClick={reset} className="px-4 py-1.5 rounded-lg bg-gray-200 hover:bg-gray-300 text-sm font-medium text-gray-700 transition-colors">
               Nochmal versuchen
@@ -122,6 +118,7 @@ export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Dat
               const computed = data.formFields.filter(
                 (f) => values[f.label]?.trim().toLowerCase() === f.correctAnswer.toLowerCase()
               ).length;
+              setDisplayScore(computed);
               setSubmitted(true);
               onSubmit?.(computed, data.formFields.length);
             }}

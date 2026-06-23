@@ -85,14 +85,20 @@ export default function WritingPart2({ data, onSubmit }: { data: WritingPart2Dat
           </div>
         </div>
 
-        {/* Model answer */}
+        {/* Model answer — locked until user has written at least 10 words */}
         <div>
-          <button
-            onClick={() => setShowModel((v) => !v)}
-            className="text-sm font-semibold text-yellow-700 hover:underline"
-          >
-            {showModel ? "Musterlösung ausblenden ▲" : "Musterlösung anzeigen ▼"}
-          </button>
+          {wordCount < 10 ? (
+            <p className="text-xs text-gray-400 italic">
+              ✏️ Schreiben Sie zuerst Ihre Antwort — die Musterlösung wird dann freigeschaltet.
+            </p>
+          ) : (
+            <button
+              onClick={() => setShowModel((v) => !v)}
+              className="text-sm font-semibold text-yellow-700 hover:underline"
+            >
+              {showModel ? "Musterlösung ausblenden ▲" : "Musterlösung anzeigen ▼"}
+            </button>
+          )}
           {showModel && (
             <>
               <pre className="mt-3 text-sm text-gray-700 bg-yellow-50 border border-yellow-200 rounded-lg p-4 whitespace-pre-wrap font-sans leading-relaxed">

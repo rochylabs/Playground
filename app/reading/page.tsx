@@ -120,6 +120,20 @@ export default function ReadingPage() {
         </div>
       </div>
 
+      {/* Part progress tracker */}
+      <div className="mb-6 flex gap-3">
+        {parts.map((p, idx) => {
+          const done = partScores[idx] !== null;
+          return (
+            <div key={idx} className={`flex-1 flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-semibold transition-colors ${done ? "bg-blue-50 border-blue-300 text-blue-700" : "bg-gray-50 border-gray-200 text-gray-400"}`}>
+              <span>{done ? "✅" : `${idx + 1}.`}</span>
+              <span>{p.taskLabel}</span>
+              {done && <span className="ml-auto font-bold">{partScores[idx]}/{p.questions.length}</span>}
+            </div>
+          );
+        })}
+      </div>
+
       <div className="mb-8">
         <PatternTips groups={TIPS} accent="blue" />
       </div>

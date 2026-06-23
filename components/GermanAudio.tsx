@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 interface Props {
   /** Script ID matching a file in /public/audio/, e.g. "h1-1" */
@@ -15,6 +15,15 @@ export default function GermanAudio({ audioId, text, maxPlays }: Props) {
   const [plays, setPlays]     = useState(0);
   const [error, setError]     = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Reset when the audio source changes (e.g. user switches to a new exam set)
+  useEffect(() => {
+    audioRef.current?.pause();
+    audioRef.current = null;
+    setPlaying(false);
+    setPlays(0);
+    setError(false);
+  }, [audioId]);
 
   const exhausted = maxPlays !== undefined && plays >= maxPlays;
 

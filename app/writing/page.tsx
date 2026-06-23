@@ -107,6 +107,20 @@ export default function WritingPage() {
         </div>
       </div>
 
+      {/* Part progress tracker */}
+      <div className="mb-6 flex gap-3">
+        {[{ label: "Aufgabe 1 — Formular", pts: part1.points }, { label: "Aufgabe 2 — E-Mail", pts: part2.points }].map((p, idx) => {
+          const done = partScores[idx] !== null;
+          return (
+            <div key={idx} className={`flex-1 flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-semibold transition-colors ${done ? "bg-yellow-50 border-yellow-300 text-yellow-700" : "bg-gray-50 border-gray-200 text-gray-400"}`}>
+              <span>{done ? "✅" : `${idx + 1}.`}</span>
+              <span>{p.label}</span>
+              {done && <span className="ml-auto font-bold">{partScores[idx]}/{p.pts}</span>}
+            </div>
+          );
+        })}
+      </div>
+
       <div className="mb-8">
         <PatternTips groups={TIPS} accent="yellow" />
       </div>
