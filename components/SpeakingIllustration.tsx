@@ -12,7 +12,6 @@ export type IllustrationKey =
   | "medical" | "calendar" | "ticket" | "library-book" | "pool" | "quiet"
   | "train" | "tshirt";
 
-const G = { stroke: "#374151", strokeWidth: 2.5, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, fill: "none" };
 const LT = "#374151"; // line/text color
 const BG = "#f9fafb"; // light bg
 const RED = "#dc2626";
