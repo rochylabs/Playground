@@ -8,8 +8,8 @@ import CookieBanner from "@/components/CookieBanner";
 export default function PostHogProvider({ children }: { children: React.ReactNode }) {
   const handleConsent = useCallback((state: "accepted" | "declined") => {
     if (state === "accepted" && !posthog.__loaded) {
-      posthog.init("phc_oDA5w6vDeGkiv3YFsEL8urURh64QMw3ZKpJXqe2SHW2K", {
-        api_host: "https://us.i.posthog.com",
+      posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
+        api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com",
         capture_pageview: true,
         capture_pageleave: true,
       });

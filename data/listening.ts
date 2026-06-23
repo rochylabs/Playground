@@ -65,10 +65,10 @@ const set1: ListeningPart[] = [
       { label: "Ansage 4 — Flughafen", text: "Aufruf für Herrn Thomas Fischer: Bitte kommen Sie umgehend zu Schalter 12 in der Abflughalle. Ihr Flug nach Wien startet in 20 Minuten." },
     ],
     questions: [
-      { id: "h2-7", statement: "Der Zug nach München fährt von Gleis 7 ab.", answer: "richtig", explanation: "Richtig. Die Ansage sagt: Der Zug fährt heute von Gleis 7 ab. (Correct: the train departs from platform 7 today.)" },
-      { id: "h2-8", statement: "Das Kaufhaus schließt heute zwei Stunden früher als normal.", answer: "falsch", explanation: "Falsch. Das Kaufhaus schließt nur eine Stunde früher (um 19 Uhr statt 20 Uhr). (False: it closes only one hour early.)" },
-      { id: "h2-9", statement: "Das Hallenbad ist am Samstag wegen einer Schulveranstaltung geschlossen.", answer: "richtig", explanation: "Richtig. Die Ansage sagt genau das. (Correct: the announcement states exactly this.)" },
-      { id: "h2-10", statement: "Herr Fischer soll sofort zum Flugzeug gehen.", answer: "falsch", explanation: "Falsch. Herr Fischer soll zu Schalter 12 in der Abflughalle gehen, nicht direkt zum Flugzeug. (False: he is called to counter 12, not directly to the aircraft.)" },
+      { id: "h2-7", statement: "Der Zug nach München fährt von Gleis 7 ab.", answer: true, explanation: "Richtig. Die Ansage sagt: Der Zug fährt heute von Gleis 7 ab. (Correct: the train departs from platform 7 today.)" },
+      { id: "h2-8", statement: "Das Kaufhaus schließt heute zwei Stunden früher als normal.", answer: false, explanation: "Falsch. Das Kaufhaus schließt nur eine Stunde früher (um 19 Uhr statt 20 Uhr). (False: it closes only one hour early.)" },
+      { id: "h2-9", statement: "Das Hallenbad ist am Samstag wegen einer Schulveranstaltung geschlossen.", answer: true, explanation: "Richtig. Die Ansage sagt genau das. (Correct: the announcement states exactly this.)" },
+      { id: "h2-10", statement: "Herr Fischer soll sofort zum Flugzeug gehen.", answer: false, explanation: "Falsch. Herr Fischer soll zu Schalter 12 in der Abflughalle gehen, nicht direkt zum Flugzeug. (False: he is called to counter 12, not directly to the aircraft.)" },
     ],
   },
   {
@@ -132,10 +132,10 @@ const set2: ListeningPart[] = [
       { label: "Ansage 4 — Bushaltestelle", text: "Achtung, Fahrgäste! Die Linie 42 fährt heute wegen Straßenarbeiten nicht über die Hauptstraße. Bitte nutzen Sie die Haltestelle Parkstraße als Ersatz. Wir bitten um Entschuldigung." },
     ],
     questions: [
-      { id: "s2-h2-7", statement: "Die Bibliothek schließt heute um 17 Uhr.", answer: "richtig", explanation: "Richtig. Die Ansage sagt: die Stadtbibliothek schließt heute bereits um 17 Uhr. (Correct: the library closes at 17:00 today.)" },
-      { id: "s2-h2-8", statement: "Das Angebot im Supermarkt gilt für alle Produkte.", answer: "falsch", explanation: "Falsch. Nur Milchprodukte sind 20% günstiger, nicht alle Produkte. (False: only dairy products are discounted.)" },
-      { id: "s2-h2-9", statement: "Das Museum ist montags und dienstags geschlossen.", answer: "falsch", explanation: "Falsch. Nur dienstags ist das Museum geschlossen, nicht montags. (False: only on Tuesdays, not Mondays.)" },
-      { id: "s2-h2-10", statement: "Der Bus fährt heute eine andere Route.", answer: "richtig", explanation: "Richtig. Die Linie 42 fährt wegen Straßenarbeiten eine andere Strecke. (Correct: bus 42 takes an alternative route due to road works.)" },
+      { id: "s2-h2-7", statement: "Die Bibliothek schließt heute um 17 Uhr.", answer: true, explanation: "Richtig. Die Ansage sagt: die Stadtbibliothek schließt heute bereits um 17 Uhr. (Correct: the library closes at 17:00 today.)" },
+      { id: "s2-h2-8", statement: "Das Angebot im Supermarkt gilt für alle Produkte.", answer: false, explanation: "Falsch. Nur Milchprodukte sind 20% günstiger, nicht alle Produkte. (False: only dairy products are discounted.)" },
+      { id: "s2-h2-9", statement: "Das Museum ist montags und dienstags geschlossen.", answer: false, explanation: "Falsch. Nur dienstags ist das Museum geschlossen, nicht montags. (False: only on Tuesdays, not Mondays.)" },
+      { id: "s2-h2-10", statement: "Der Bus fährt heute eine andere Route.", answer: true, explanation: "Richtig. Die Linie 42 fährt wegen Straßenarbeiten eine andere Strecke. (Correct: bus 42 takes an alternative route due to road works.)" },
     ],
   },
   {
@@ -199,10 +199,10 @@ const set3: ListeningPart[] = [
       { label: "Ansage 4 — Stadtbus", text: "Achtung! Der Bus der Linie 7 hat heute circa 15 Minuten Verspätung. Grund ist ein Unfall auf der Berliner Allee. Wir bitten alle Fahrgäste um Geduld. Vielen Dank." },
     ],
     questions: [
-      { id: "s3-h2-7", statement: "Die Löwenfütterung findet um 14 Uhr in Bereich C statt.", answer: "richtig", explanation: "Richtig. Die Ansage sagt genau das. (Correct: the lion feeding is at 14:00 in area C.)" },
-      { id: "s3-h2-8", statement: "Das Konzert beginnt eine Stunde später als geplant.", answer: "falsch", explanation: "Falsch. Das Konzert beginnt nur 30 Minuten später (um 20:30 statt 20:00). (False: it starts 30 minutes late, not one hour.)" },
-      { id: "s3-h2-9", statement: "Das Einkaufszentrum ist auch sonntags geöffnet.", answer: "falsch", explanation: "Falsch. Sonntags bleibt das Einkaufszentrum geschlossen. (False: it is closed on Sundays.)" },
-      { id: "s3-h2-10", statement: "Der Bus hat wegen eines Unfalls Verspätung.", answer: "richtig", explanation: "Richtig. Die Ansage nennt einen Unfall als Grund für die Verspätung. (Correct: an accident is the reason for the delay.)" },
+      { id: "s3-h2-7", statement: "Die Löwenfütterung findet um 14 Uhr in Bereich C statt.", answer: true, explanation: "Richtig. Die Ansage sagt genau das. (Correct: the lion feeding is at 14:00 in area C.)" },
+      { id: "s3-h2-8", statement: "Das Konzert beginnt eine Stunde später als geplant.", answer: false, explanation: "Falsch. Das Konzert beginnt nur 30 Minuten später (um 20:30 statt 20:00). (False: it starts 30 minutes late, not one hour.)" },
+      { id: "s3-h2-9", statement: "Das Einkaufszentrum ist auch sonntags geöffnet.", answer: false, explanation: "Falsch. Sonntags bleibt das Einkaufszentrum geschlossen. (False: it is closed on Sundays.)" },
+      { id: "s3-h2-10", statement: "Der Bus hat wegen eines Unfalls Verspätung.", answer: true, explanation: "Richtig. Die Ansage nennt einen Unfall als Grund für die Verspätung. (Correct: an accident is the reason for the delay.)" },
     ],
   },
   {
@@ -266,10 +266,10 @@ const set4: ListeningPart[] = [
       { label: "Ansage 4 — Parkhaus", text: "Achtung! Das Parkhaus am Marktplatz ist ab morgen für zwei Wochen wegen Renovierungsarbeiten geschlossen. Bitte nutzen Sie das Parkhaus am Bahnhof als Alternative." },
     ],
     questions: [
-      { id: "s4-h2-7", statement: "Kinder dürfen alleine auf die Station.", answer: "falsch", explanation: "Falsch. Kinder unter 12 Jahren dürfen nur mit einem Erwachsenen auf die Station. (False: children under 12 must be accompanied by an adult.)" },
-      { id: "s4-h2-8", statement: "Der Flug nach Lissabon fährt von Gate B7 ab.", answer: "richtig", explanation: "Richtig. Die Ansage sagt: Der Flug wurde auf Gate B7 verlegt. (Correct: the flight has been moved to gate B7.)" },
-      { id: "s4-h2-9", statement: "Der Kochkurs am Dienstag findet nicht statt.", answer: "richtig", explanation: "Richtig. Der Kurs muss wegen Krankheit der Kursleitung ausfallen. (Correct: the course is cancelled due to the instructor being ill.)" },
-      { id: "s4-h2-10", statement: "Das Parkhaus am Marktplatz ist ab morgen für einen Monat geschlossen.", answer: "falsch", explanation: "Falsch. Es ist nur für zwei Wochen geschlossen, nicht einen Monat. (False: only two weeks, not a month.)" },
+      { id: "s4-h2-7", statement: "Kinder dürfen alleine auf die Station.", answer: false, explanation: "Falsch. Kinder unter 12 Jahren dürfen nur mit einem Erwachsenen auf die Station. (False: children under 12 must be accompanied by an adult.)" },
+      { id: "s4-h2-8", statement: "Der Flug nach Lissabon fährt von Gate B7 ab.", answer: true, explanation: "Richtig. Die Ansage sagt: Der Flug wurde auf Gate B7 verlegt. (Correct: the flight has been moved to gate B7.)" },
+      { id: "s4-h2-9", statement: "Der Kochkurs am Dienstag findet nicht statt.", answer: true, explanation: "Richtig. Der Kurs muss wegen Krankheit der Kursleitung ausfallen. (Correct: the course is cancelled due to the instructor being ill.)" },
+      { id: "s4-h2-10", statement: "Das Parkhaus am Marktplatz ist ab morgen für einen Monat geschlossen.", answer: false, explanation: "Falsch. Es ist nur für zwei Wochen geschlossen, nicht einen Monat. (False: only two weeks, not a month.)" },
     ],
   },
   {
