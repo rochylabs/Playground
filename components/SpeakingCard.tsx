@@ -8,6 +8,7 @@ import type {
   Part3CardType,
 } from "@/data/speaking";
 import MaxBubble from "@/components/MaxBubble";
+import SpeakingIllustration, { type IllustrationKey } from "@/components/SpeakingIllustration";
 
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
@@ -143,8 +144,8 @@ export function SpeakingPart2({ data }: { data: SpeakingPart2Data }) {
             {/* Face-up picture card */}
             <div className="rounded-2xl border-2 border-red-300 overflow-hidden shadow-lg">
               {/* Picture area */}
-              <div className="h-36 bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center border-b border-red-100">
-                <span className="text-7xl">{card.emoji}</span>
+              <div className="h-44 bg-white flex items-center justify-center border-b border-red-100 p-2">
+                <SpeakingIllustration imageKey={card.imageKey as IllustrationKey} className="w-full h-full" />
               </div>
               {/* Card text */}
               <div className="p-4 bg-white">
@@ -245,8 +246,8 @@ export function SpeakingPart3({ data }: { data: SpeakingPart3Data }) {
             {/* Picture card */}
             <div className="rounded-2xl border-2 border-red-300 overflow-hidden shadow-lg">
               {/* Picture area */}
-              <div className="h-36 bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center border-b border-red-100 relative">
-                <span className="text-7xl">{card.emoji}</span>
+              <div className="h-44 bg-white flex items-center justify-center border-b border-red-100 relative p-2">
+                <SpeakingIllustration imageKey={card.imageKey as IllustrationKey} className="w-full h-full" />
                 {/* Type badge */}
                 <span className={`absolute top-2 right-2 text-xs font-bold px-2.5 py-1 rounded-full ${config.bg} ${config.color} border ${config.border}`}>
                   {config.label}
