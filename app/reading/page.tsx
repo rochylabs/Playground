@@ -121,14 +121,14 @@ export default function ReadingPage() {
       </div>
 
       {/* Part progress tracker */}
-      <div className="mb-6 flex gap-3">
+      <div className="mb-6 flex flex-wrap gap-2">
         {parts.map((p, idx) => {
           const done = partScores[idx] !== null;
           return (
-            <div key={idx} className={`flex-1 flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-semibold transition-colors ${done ? "bg-blue-50 border-blue-300 text-blue-700" : "bg-gray-50 border-gray-200 text-gray-400"}`}>
+            <div key={idx} className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-semibold transition-colors ${done ? "bg-blue-50 border-blue-300 text-blue-700" : "bg-gray-50 border-gray-200 text-gray-400"}`}>
               <span>{done ? "✅" : `${idx + 1}.`}</span>
               <span>{p.taskLabel}</span>
-              {done && <span className="ml-auto font-bold">{partScores[idx]}/{p.questions.length}</span>}
+              {done && <span className="font-bold whitespace-nowrap">{partScores[idx]}/{p.questions.length}</span>}
             </div>
           );
         })}
@@ -149,7 +149,7 @@ export default function ReadingPage() {
       {allResults.length > 0 && <WeakSpots results={allResults} />}
 
       {allPartsScored && !sessionSaved && (
-        <div className="mt-8 rounded-xl border border-blue-300 bg-blue-50 p-5 flex items-center justify-between gap-4">
+        <div className="mt-8 rounded-xl border border-blue-300 bg-blue-50 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <p className="font-bold text-blue-800">Lesen abgeschlossen — {sectionEarned} / {sectionTotal} Punkte</p>
             <p className="text-sm text-blue-700 mt-0.5">Speichere dein Ergebnis, um es in der Gesamtauswertung zu sehen.</p>
@@ -163,7 +163,7 @@ export default function ReadingPage() {
         </div>
       )}
       {sessionSaved && (
-        <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-4 flex items-center justify-between gap-4">
+        <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <p className="text-sm font-semibold text-gray-600">✓ Lesen gespeichert: {scores.lesen.earned} / {scores.lesen.total} Punkte</p>
           <button onClick={() => setShowSummary(true)} className="text-xs text-blue-600 hover:underline font-semibold">
             {allDone ? "📊 Gesamtergebnis anzeigen" : "Weiter zum nächsten Abschnitt →"}

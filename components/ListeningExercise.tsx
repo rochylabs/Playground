@@ -64,7 +64,7 @@ export default function ListeningExercise({ part, onSubmit }: { part: ListeningP
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
       {/* Exam header */}
-      <div className="bg-green-700 px-6 py-3 flex items-center justify-between">
+      <div className="bg-green-700 px-4 sm:px-6 py-3 flex items-center justify-between gap-2">
         <div>
           <span className="text-xs font-bold uppercase tracking-widest text-green-200">{part.partLabel}</span>
           <h2 className="text-white font-bold text-base mt-0.5">{part.taskLabel}</h2>
@@ -193,7 +193,7 @@ export default function ListeningExercise({ part, onSubmit }: { part: ListeningP
       </div>
 
       {/* Footer */}
-      <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 flex items-center justify-between">
+      <div className="px-4 sm:px-6 py-4 border-t border-gray-200 bg-gray-50 flex flex-wrap items-center justify-between gap-3">
         {submitted ? (
           <>
             <span className={`text-sm font-bold ${score === part.questions.length ? "text-green-600" : score >= part.questions.length / 2 ? "text-yellow-600" : "text-red-600"}`}>

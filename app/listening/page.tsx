@@ -121,14 +121,14 @@ export default function ListeningPage() {
       </div>
 
       {/* Part progress tracker */}
-      <div className="mb-6 flex gap-3">
+      <div className="mb-6 flex flex-wrap gap-2">
         {parts.map((p, idx) => {
           const done = partScores[idx] !== null;
           return (
-            <div key={idx} className={`flex-1 flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-semibold transition-colors ${done ? "bg-green-50 border-green-300 text-green-700" : "bg-gray-50 border-gray-200 text-gray-400"}`}>
+            <div key={idx} className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-semibold transition-colors ${done ? "bg-green-50 border-green-300 text-green-700" : "bg-gray-50 border-gray-200 text-gray-400"}`}>
               <span>{done ? "✅" : `${idx + 1}.`}</span>
-              <span>{p.taskLabel}</span>
-              {done && <span className="ml-auto font-bold">{partScores[idx]}/{p.questions.length}</span>}
+              <span className="truncate">{p.taskLabel}</span>
+              {done && <span className="font-bold whitespace-nowrap">{partScores[idx]}/{p.questions.length}</span>}
             </div>
           );
         })}
@@ -150,7 +150,7 @@ export default function ListeningPage() {
 
       {/* Section completion */}
       {allPartsScored && !sessionSaved && (
-        <div className="mt-8 rounded-xl border border-green-300 bg-green-50 p-5 flex items-center justify-between gap-4">
+        <div className="mt-8 rounded-xl border border-green-300 bg-green-50 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <p className="font-bold text-green-800">Hören abgeschlossen — {sectionEarned} / {sectionTotal} Punkte</p>
             <p className="text-sm text-green-700 mt-0.5">Speichere dein Ergebnis, um es in der Gesamtauswertung zu sehen.</p>
@@ -164,7 +164,7 @@ export default function ListeningPage() {
         </div>
       )}
       {sessionSaved && (
-        <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-4 flex items-center justify-between gap-4">
+        <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <p className="text-sm font-semibold text-gray-600">✓ Hören gespeichert: {scores.hoeren.earned} / {scores.hoeren.total} Punkte</p>
           <button onClick={() => setShowSummary(true)} className="text-xs text-blue-600 hover:underline font-semibold">
             {allDone ? "📊 Gesamtergebnis anzeigen" : "Weiter zum nächsten Abschnitt →"}

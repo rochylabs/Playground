@@ -176,7 +176,7 @@ export default function SpeakingPage() {
             </div>
           ))}
           {allRated && (
-            <div className="flex items-center justify-between pt-2 border-t border-red-200">
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-red-200">
               <p className="font-bold text-red-800">Gesamt: {sectionEarned} / {sectionTotal} Punkte</p>
               <button
                 onClick={() => { setSessionSaved(true); save("sprechen", sectionEarned, sectionTotal); if (allDone) setShowSummary(true); }}
@@ -189,7 +189,7 @@ export default function SpeakingPage() {
         </div>
       )}
       {sessionSaved && (
-        <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-4 flex items-center justify-between gap-4">
+        <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <p className="text-sm font-semibold text-gray-600">✓ Sprechen gespeichert: {scores.sprechen.earned} / {scores.sprechen.total} Punkte</p>
           <button onClick={() => setShowSummary(true)} className="text-xs text-blue-600 hover:underline font-semibold">
             {allDone ? "📊 Gesamtergebnis anzeigen" : "Weiter zum nächsten Abschnitt →"}

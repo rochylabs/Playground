@@ -19,19 +19,19 @@ export default function Navbar() {
         <Link href="/" className="font-bold text-lg tracking-tight text-gray-800">
           🇩🇪 A1 Deutsch
         </Link>
-        <div className="flex gap-1">
+        <div className="flex gap-0.5 sm:gap-1">
           {sections.map((s) => (
             <Link
               key={s.href}
               href={s.href}
-              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+              className={`px-2 sm:px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
                 pathname.startsWith(s.href)
                   ? "bg-gray-100 " + s.color
                   : "text-gray-500 hover:text-gray-800 hover:bg-gray-50"
               }`}
             >
-              <span className="mr-1">{s.icon}</span>
-              {s.label}
+              <span className="sm:mr-1">{s.icon}</span>
+              <span className="hidden sm:inline">{s.label}</span>
             </Link>
           ))}
         </div>

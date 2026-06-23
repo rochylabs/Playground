@@ -15,7 +15,7 @@ export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Dat
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
       {/* Exam header */}
-      <div className="bg-yellow-600 px-6 py-3 flex items-center justify-between">
+      <div className="bg-yellow-600 px-4 sm:px-6 py-3 flex items-center justify-between gap-2">
         <div>
           <span className="text-xs font-bold uppercase tracking-widest text-yellow-100">{data.partLabel}</span>
           <h2 className="text-white font-bold text-base mt-0.5">{data.taskLabel}</h2>
@@ -57,7 +57,7 @@ export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Dat
                   <div key={f.label} className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       <span className="text-xs font-bold text-yellow-600 w-4">{idx + 1}.</span>
-                      <label className="text-xs font-semibold text-gray-500 w-32 flex-shrink-0">{f.label}</label>
+                      <label className="text-xs font-semibold text-gray-500 w-24 sm:w-32 flex-shrink-0">{f.label}</label>
                       <input
                         type="text"
                         value={val}
@@ -92,7 +92,7 @@ export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Dat
       </div>
 
       {/* Footer */}
-      <div className="px-6 py-4 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
+      <div className="px-4 sm:px-6 py-4 border-t border-gray-100 bg-gray-50 flex flex-wrap items-center justify-between gap-3">
         {submitted ? (
           <>
             <span className={`text-sm font-bold ${displayScore === data.formFields.length ? "text-green-600" : displayScore >= data.formFields.length / 2 ? "text-yellow-600" : "text-red-600"}`}>
