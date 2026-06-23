@@ -2,7 +2,7 @@ export interface ListeningQuestion {
   id: string;
   statement: string;
   options?: string[];
-  answer: string;
+  answer: string | boolean;
   explanation?: string;
 }
 
