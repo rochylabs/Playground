@@ -11,14 +11,16 @@ interface Props {
 }
 
 export default function CookieBanner({ onConsent }: Props) {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const stored = localStorage.getItem(CONSENT_KEY);
+    return stored !== "accepted" && stored !== "declined";
+  });
 
   useEffect(() => {
     const stored = localStorage.getItem(CONSENT_KEY) as ConsentState;
     if (stored === "accepted" || stored === "declined") {
       onConsent(stored);
-    } else {
-      setVisible(true);
     }
   }, [onConsent]);
 
