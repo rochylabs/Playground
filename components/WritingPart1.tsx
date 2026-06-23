@@ -4,6 +4,17 @@ import { useState } from "react";
 import type { WritingPart1Data } from "@/data/writing";
 import MaxBubble from "@/components/MaxBubble";
 
+// Normalize a date string so "14.7.1988" matches "14.07.1988"
+function normalizeDate(s: string): string {
+  return s.replace(/\b(\d)\b/g, "0$1");
+}
+
+function isAnswerCorrect(input: string, correct: string): boolean {
+  const a = normalizeDate(input.trim().toLowerCase());
+  const b = normalizeDate(correct.toLowerCase());
+  return a === b;
+}
+
 export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Data; onSubmit?: (earned: number, total: number) => void }) {
   const [values, setValues] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
@@ -52,7 +63,7 @@ export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Dat
             <div className="divide-y divide-gray-100">
               {data.formFields.map((f, idx) => {
                 const val = values[f.label] ?? "";
-                const isCorrect = val.trim().toLowerCase() === f.correctAnswer.toLowerCase();
+                const isCorrect = isAnswerCorrect(val, f.correctAnswer);
                 return (
                   <div key={f.label} className="px-4 py-3">
                     <div className="flex items-center gap-3">
@@ -106,7 +117,7 @@ export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Dat
           <button
             onClick={() => {
               const computed = data.formFields.filter(
-                (f) => values[f.label]?.trim().toLowerCase() === f.correctAnswer.toLowerCase()
+                (f) => isAnswerCorrect(values[f.label] ?? "", f.correctAnswer)
               ).length;
               setDisplayScore(computed);
               setSubmitted(true);

@@ -21,6 +21,11 @@ export default function FeedbackButton() {
 
   const submit = () => {
     if (!rating) return;
+    if (!posthog.__loaded) {
+      setStep("thanks");
+      setTimeout(() => { setStep("closed"); setRating(null); setComment(""); }, 3000);
+      return;
+    }
     posthog.capture("user_feedback", {
       rating,
       comment: comment.trim() || null,

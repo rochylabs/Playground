@@ -40,6 +40,19 @@ function TranscriptBubbles({ text }: { text: string }) {
 
 const qOffsets = [0, 6, 10];
 
+// Richtig-falsch questions store boolean answers; multiple-choice store "a"/"b"/"c" strings.
+function answerMatches(given: string, correct: string | boolean): boolean {
+  if (typeof correct === "boolean") {
+    return (correct ? "richtig" : "falsch") === given.toLowerCase();
+  }
+  return given.toLowerCase() === correct.toLowerCase();
+}
+
+function answerLabel(correct: string | boolean, isTF: boolean): string {
+  if (isTF) return typeof correct === "boolean" ? (correct ? "Richtig" : "Falsch") : correct;
+  return typeof correct === "string" ? correct.toUpperCase() : String(correct);
+}
+
 export default function ListeningExercise({ part, onSubmit }: { part: ListeningPart; onSubmit?: (earned: number, total: number, results: QuestionResult[]) => void }) {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
@@ -52,7 +65,7 @@ export default function ListeningExercise({ part, onSubmit }: { part: ListeningP
 
   const allAnswered = part.questions.every((q) => answers[q.id]);
   const score = part.questions.filter(
-    (q) => answers[q.id]?.toLowerCase() === q.answer.toLowerCase()
+    (q) => answers[q.id] !== undefined && answerMatches(answers[q.id], q.answer)
   ).length;
 
   const reset = () => { setAnswers({}); setSubmitted(false); setShowTranscript({}); };
@@ -84,7 +97,7 @@ export default function ListeningExercise({ part, onSubmit }: { part: ListeningP
       <div className="divide-y divide-gray-100">
         {part.questions.map((q, idx) => {
           const given = answers[q.id];
-          const correct = given?.toLowerCase() === q.answer.toLowerCase();
+          const correct = given !== undefined && answerMatches(given, q.answer);
           const isTF = part.type === "richtig-falsch";
           const script = part.scripts[idx];
           const transcriptOpen = showTranscript[idx] ?? false;
@@ -125,7 +138,7 @@ export default function ListeningExercise({ part, onSubmit }: { part: ListeningP
                       {["richtig", "falsch"].map((val) => {
                         const label = val === "richtig" ? "Richtig" : "Falsch";
                         const isSelected = given === val;
-                        const isCorrectOpt = val === q.answer;
+                        const isCorrectOpt = answerMatches(val, q.answer);
                         let cls = "px-5 py-2 rounded-lg border text-sm font-semibold transition-colors ";
                         if (submitted) {
                           if (isSelected && correct) cls += "bg-green-100 border-green-500 text-green-700";
@@ -149,7 +162,7 @@ export default function ListeningExercise({ part, onSubmit }: { part: ListeningP
                       {(q.options ?? []).map((opt) => {
                         const optKey = opt.charAt(0).toLowerCase();
                         const isSelected = given === optKey;
-                        const isCorrectOpt = optKey === q.answer;
+                        const isCorrectOpt = answerMatches(optKey, q.answer);
                         let cls = "px-4 py-2 rounded-lg border text-sm font-medium transition-colors text-left ";
                         if (submitted) {
                           if (isSelected && correct) cls += "bg-green-100 border-green-500 text-green-700";
@@ -177,9 +190,7 @@ export default function ListeningExercise({ part, onSubmit }: { part: ListeningP
                         correct
                           ? `Sehr gut! ${q.explanation}`
                           : `Leider falsch. Die richtige Antwort ist: ${
-                              isTF
-                                ? q.answer === "richtig" ? "Richtig" : "Falsch"
-                                : q.answer.toUpperCase()
+                              answerLabel(q.answer, isTF)
                             }. ${q.explanation}`
                       }
                       className="mt-3"
@@ -210,7 +221,7 @@ export default function ListeningExercise({ part, onSubmit }: { part: ListeningP
               setSubmitted(true);
               const results: QuestionResult[] = part.questions.map((q) => ({
                 questionType: part.type === "richtig-falsch" ? "richtig-falsch" : "multiple-choice",
-                correct: answers[q.id]?.toLowerCase() === q.answer.toLowerCase(),
+                correct: answers[q.id] !== undefined && answerMatches(answers[q.id], q.answer),
               }));
               onSubmit?.(score, part.questions.length, results);
             }}
