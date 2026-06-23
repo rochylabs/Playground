@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import type { WritingPart1Data } from "@/data/writing";
 import MaxBubble from "@/components/MaxBubble";
+
+const SPECIAL_CHARS = ["ä", "ö", "ü", "Ä", "Ö", "Ü", "ß"];
 
 // Normalize a date string so "14.7.1988" matches "14.07.1988"
 function normalizeDate(s: string): string {
@@ -19,9 +21,26 @@ export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Dat
   const [values, setValues] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [displayScore, setDisplayScore] = useState(0);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+  const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
   const allFilled = data.formFields.every((f) => (values[f.label] ?? "").trim().length > 0);
-  const reset = () => { setValues({}); setSubmitted(false); setDisplayScore(0); };
+  const reset = () => { setValues({}); setSubmitted(false); setDisplayScore(0); setFocusedField(null); };
+
+  const insertChar = (label: string, char: string) => {
+    const input = inputRefs.current[label];
+    if (!input) return;
+    const start = input.selectionStart ?? input.value.length;
+    const end = input.selectionEnd ?? input.value.length;
+    const current = values[label] ?? "";
+    const next = current.slice(0, start) + char + current.slice(end);
+    setValues((v) => ({ ...v, [label]: next }));
+    // restore cursor after React re-render
+    requestAnimationFrame(() => {
+      input.focus();
+      input.setSelectionRange(start + char.length, start + char.length);
+    });
+  };
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
@@ -70,9 +89,12 @@ export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Dat
                       <span className="text-xs font-bold text-yellow-600 w-4">{idx + 1}.</span>
                       <label className="text-xs font-semibold text-gray-500 w-24 sm:w-32 flex-shrink-0">{f.label}</label>
                       <input
+                        ref={(el) => { inputRefs.current[f.label] = el; }}
                         type="text"
                         value={val}
                         onChange={(e) => setValues((v) => ({ ...v, [f.label]: e.target.value }))}
+                        onFocus={() => setFocusedField(f.label)}
+                        onBlur={() => setFocusedField(null)}
                         disabled={submitted}
                         placeholder={f.hint ?? ""}
                         className={`flex-1 border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 disabled:bg-gray-50 ${
@@ -84,6 +106,22 @@ export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Dat
                         }`}
                       />
                     </div>
+                    {/* German special character bar — shown when this field is focused */}
+                    {focusedField === f.label && !submitted && (
+                      <div className="mt-1.5 ml-7 flex gap-1 flex-wrap">
+                        {SPECIAL_CHARS.map((ch) => (
+                          <button
+                            key={ch}
+                            type="button"
+                            onMouseDown={(e) => { e.preventDefault(); insertChar(f.label, ch); }}
+                            className="px-2 py-0.5 rounded border border-yellow-300 bg-yellow-50 text-yellow-800 text-sm font-semibold hover:bg-yellow-100 transition-colors"
+                          >
+                            {ch}
+                          </button>
+                        ))}
+                        <span className="text-xs text-gray-400 self-center ml-1">Sonderzeichen</span>
+                      </div>
+                    )}
                     {submitted && !isCorrect && (
                       <MaxBubble
                         correct={false}

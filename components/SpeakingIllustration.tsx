@@ -33,7 +33,7 @@ function ProhibitionRing({ cx, cy, r = 22 }: { cx: number; cy: number; r?: numbe
 /* ── Part 2 illustrations ─────────────────────────────────────────────────── */
 
 function Food() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     <circle cx="60" cy="68" r="35" fill="#fef9ee" stroke={LT} strokeWidth={2.5} />
     <circle cx="60" cy="68" r="23" fill="#fde68a" stroke={LT} strokeWidth={1.5} />
     {/* fork */}
@@ -49,7 +49,7 @@ function Food() {
 }
 
 function Sport() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     <circle cx="60" cy="60" r="42" fill={BG} stroke={LT} strokeWidth={2.5} />
     {/* black patches on soccer ball */}
     <polygon points="60,30 72,40 68,55 52,55 48,40" fill={LT} />
@@ -62,7 +62,7 @@ function Sport() {
 }
 
 function Family() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* adult 1 */}
     <circle cx="32" cy="28" r="10" fill="#fde68a" stroke={LT} strokeWidth={2} />
     <path d="M20 80 Q20 55 32 52 Q44 55 44 80" fill="#dbeafe" stroke={LT} strokeWidth={2} />
@@ -84,7 +84,7 @@ function Family() {
 }
 
 function Apartment() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     <rect x="20" y="35" width="80" height="75" rx="2" fill="#dbeafe" stroke={LT} strokeWidth={2.5} />
     <rect x="30" y="45" width="14" height="14" rx="1" fill="#93c5fd" stroke={LT} strokeWidth={1.5} />
     <rect x="53" y="45" width="14" height="14" rx="1" fill="#93c5fd" stroke={LT} strokeWidth={1.5} />
@@ -98,7 +98,7 @@ function Apartment() {
 }
 
 function Clock() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     <circle cx="60" cy="62" r="44" fill={BG} stroke={LT} strokeWidth={3} />
     <circle cx="60" cy="62" r="4" fill={LT} />
     {/* hour hand pointing to 8 */}
@@ -120,7 +120,7 @@ function Clock() {
 }
 
 function Airplane() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* sky */}
     <rect x="8" y="8" width="104" height="104" rx="8" fill="#eff6ff" />
     {/* clouds */}
@@ -136,7 +136,7 @@ function Airplane() {
 }
 
 function Subway() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     <rect x="15" y="30" width="90" height="60" rx="10" fill="#dbeafe" stroke={LT} strokeWidth={2.5} />
     {/* windows */}
     <rect x="22" y="40" width="28" height="20" rx="4" fill="#bfdbfe" stroke={LT} strokeWidth={2} />
@@ -158,7 +158,7 @@ function Subway() {
 }
 
 function Jogging() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* ground */}
     <path d="M5 98 Q30 88 60 90 Q90 92 115 82" stroke="#d1fae5" strokeWidth={3} strokeLinecap="round" />
     {/* body */}
@@ -181,7 +181,7 @@ function Jogging() {
 }
 
 function Shopping() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* cart */}
     <path d="M12 25 L25 25 L38 72 L95 72 L108 38 L33 38" stroke={LT} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />
     {/* items in cart */}
@@ -197,7 +197,7 @@ function Shopping() {
 }
 
 function Sun() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     <circle cx="60" cy="60" r="24" fill="#fde68a" stroke="#d97706" strokeWidth={2.5} />
     {[0,45,90,135,180,225,270,315].map(deg => {
       const rad = deg * Math.PI / 180;
@@ -214,7 +214,7 @@ function Sun() {
 }
 
 function Books() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* book 3 (bottom) */}
     <rect x="18" y="78" width="84" height="16" rx="3" fill="#fca5a5" stroke={LT} strokeWidth={2} />
     <line x1="30" y1="78" x2="30" y2="94" stroke={LT} strokeWidth={1.5} />
@@ -234,7 +234,7 @@ function Books() {
 }
 
 function Smartphone() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     <rect x="32" y="10" width="56" height="100" rx="10" fill="#1e293b" stroke={LT} strokeWidth={2.5} />
     <rect x="38" y="22" width="44" height="68" rx="3" fill="#dbeafe" />
     {/* screen content */}
@@ -250,7 +250,7 @@ function Smartphone() {
 }
 
 function City() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* sky */}
     <rect x="0" y="0" width="120" height="120" rx="6" fill="#eff6ff" />
     {/* buildings */}
@@ -283,7 +283,7 @@ function City() {
 }
 
 function Cinema() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* screen */}
     <rect x="10" y="15" width="100" height="60" rx="4" fill="#1e293b" stroke={LT} strokeWidth={2.5} />
     <rect x="16" y="21" width="88" height="48" rx="2" fill="#fefce8" />
@@ -301,7 +301,7 @@ function Cinema() {
 }
 
 function Breakfast() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* table */}
     <rect x="8" y="85" width="104" height="6" rx="3" fill="#d6d3d1" stroke={LT} strokeWidth={2} />
     {/* cup */}
@@ -325,7 +325,7 @@ function Breakfast() {
 }
 
 function Speech() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* main bubble */}
     <path d="M10 15 Q10 8 17 8 L103 8 Q110 8 110 15 L110 68 Q110 75 103 75 L65 75 L55 95 L48 75 L17 75 Q10 75 10 68 Z"
       fill="#dbeafe" stroke={BLUE} strokeWidth={2.5} />
@@ -342,7 +342,7 @@ function Speech() {
 }
 
 function Globe() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     <circle cx="60" cy="60" r="48" fill="#dbeafe" stroke={LT} strokeWidth={2.5} />
     {/* latitude lines */}
     <ellipse cx="60" cy="60" rx="48" ry="16" stroke={LT} strokeWidth={1.5} strokeDasharray="3 2" />
@@ -362,7 +362,7 @@ function Globe() {
 }
 
 function Alarm() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     <circle cx="60" cy="65" r="42" fill={BG} stroke={LT} strokeWidth={2.5} />
     <circle cx="60" cy="65" r="4" fill={LT} />
     {/* 8:00 */}
@@ -385,7 +385,7 @@ function Alarm() {
 }
 
 function Stethoscope() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* earpieces */}
     <circle cx="30" cy="20" r="6" fill="#374151" stroke={LT} strokeWidth={1.5} />
     <circle cx="90" cy="20" r="6" fill="#374151" stroke={LT} strokeWidth={1.5} />
@@ -403,7 +403,7 @@ function Stethoscope() {
 }
 
 function Briefcase() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* handle */}
     <path d="M42 30 L42 22 Q42 14 60 14 Q78 14 78 22 L78 30" stroke={LT} strokeWidth={2.5} fill="none" />
     {/* body */}
@@ -420,7 +420,7 @@ function Briefcase() {
 }
 
 function Cooking() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* stove surface */}
     <rect x="12" y="72" width="96" height="38" rx="4" fill="#e5e7eb" stroke={LT} strokeWidth={2.5} />
     {/* burner */}
@@ -446,7 +446,7 @@ function Cooking() {
 }
 
 function Reading() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* open book */}
     <path d="M10 25 Q10 20 15 20 L58 24 L58 102 L15 98 Q10 98 10 93 Z" fill="#fefce8" stroke={LT} strokeWidth={2.5} />
     <path d="M62 24 L105 20 Q110 20 110 25 L110 93 Q110 98 105 98 L62 102 Z" fill="#fefce8" stroke={LT} strokeWidth={2.5} />
@@ -462,7 +462,7 @@ function Reading() {
 }
 
 function House() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* roof */}
     <path d="M10 58 L60 12 L110 58" fill="#fca5a5" stroke={LT} strokeWidth={2.5} strokeLinejoin="round" />
     {/* chimney */}
@@ -488,7 +488,7 @@ function House() {
 }
 
 function Germany() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* flag */}
     <rect x="15" y="20" width="90" height="26" rx="0" fill="#1e293b" />
     <rect x="15" y="46" width="90" height="27" fill={RED} />
@@ -503,7 +503,7 @@ function Germany() {
 /* ── Part 3 illustrations ─────────────────────────────────────────────────── */
 
 function Pencil() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* pencil body diagonal */}
     <path d="M22 95 L85 18 L100 28 L38 108 Z" fill="#fde68a" stroke={LT} strokeWidth={2.5} strokeLinejoin="round" />
     {/* eraser */}
@@ -521,7 +521,7 @@ function Pencil() {
 }
 
 function Paper() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     <path d="M22 10 L84 10 L98 26 L98 110 L22 110 Z" fill="#fefce8" stroke={LT} strokeWidth={2.5} />
     <path d="M84 10 L84 26 L98 26" fill="#fde68a" stroke={LT} strokeWidth={2} />
     {/* text lines */}
@@ -532,7 +532,7 @@ function Paper() {
 }
 
 function NoPhone() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* phone */}
     <rect x="40" y="15" width="40" height="70" rx="8" fill="#1e293b" stroke={LT} strokeWidth={2} opacity={0.5} />
     <rect x="46" y="24" width="28" height="44" rx="2" fill="#93c5fd" opacity={0.5} />
@@ -545,7 +545,7 @@ function NoPhone() {
 }
 
 function Charger() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* phone */}
     <rect x="42" y="10" width="36" height="55" rx="6" fill="#1e293b" stroke={LT} strokeWidth={2} />
     <rect x="48" y="18" width="24" height="34" rx="2" fill="#4b5563" />
@@ -566,7 +566,7 @@ function Charger() {
 }
 
 function NoCamera() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* camera body */}
     <rect x="18" y="34" width="84" height="56" rx="8" fill="#374151" stroke={LT} strokeWidth={2} opacity={0.5} />
     <path d="M42 34 L48 20 L72 20 L78 34" fill="#4b5563" opacity={0.5} stroke={LT} strokeWidth={2} />
@@ -578,7 +578,7 @@ function NoCamera() {
 }
 
 function Handbag() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* handle */}
     <path d="M38 38 Q38 18 60 18 Q82 18 82 38" stroke={LT} strokeWidth={3} fill="none" />
     {/* bag body */}
@@ -596,7 +596,7 @@ function Handbag() {
 }
 
 function Tram() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* tram body */}
     <rect x="8" y="30" width="104" height="58" rx="8" fill="#bbf7d0" stroke={LT} strokeWidth={2.5} />
     {/* windows row 1 */}
@@ -627,7 +627,7 @@ function Tram() {
 }
 
 function Park() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* grass */}
     <ellipse cx="60" cy="108" rx="55" ry="10" fill="#bbf7d0" />
     {/* tree left */}
@@ -648,7 +648,7 @@ function Park() {
 }
 
 function Map() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* map paper */}
     <path d="M10 18 L42 12 L78 22 L110 14 L110 100 L78 108 L42 98 L10 104 Z"
       fill="#fefce8" stroke={LT} strokeWidth={2.5} />
@@ -670,7 +670,7 @@ function Map() {
 }
 
 function NoSmoking() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* cigarette */}
     <rect x="10" y="54" width="80" height="12" rx="4" fill="#f5f5f4" stroke={LT} strokeWidth={2} opacity={0.6} />
     <rect x="82" y="54" width="28" height="12" rx="2" fill="#fb923c" stroke={LT} strokeWidth={2} opacity={0.6} />
@@ -684,7 +684,7 @@ function NoSmoking() {
 }
 
 function Restaurant() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* plate */}
     <circle cx="60" cy="72" r="40" fill="#f5f5f4" stroke={LT} strokeWidth={2.5} />
     {/* cloche/dome cover */}
@@ -704,7 +704,7 @@ function Restaurant() {
 }
 
 function Hotel() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     <rect x="15" y="30" width="90" height="82" rx="3" fill="#dbeafe" stroke={LT} strokeWidth={2.5} />
     {/* windows grid */}
     {[42,58,74].map(y =>
@@ -729,7 +729,7 @@ function Hotel() {
 }
 
 function Medical() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* white cross on red background */}
     <circle cx="60" cy="60" r="50" fill="#fee2e2" stroke={RED} strokeWidth={2.5} />
     <rect x="42" y="28" width="36" height="64" rx="6" fill={RED} />
@@ -743,7 +743,7 @@ function Medical() {
 }
 
 function CalendarSvg() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* body */}
     <rect x="10" y="22" width="100" height="90" rx="6" fill="white" stroke={LT} strokeWidth={2.5} />
     {/* header */}
@@ -775,7 +775,7 @@ function CalendarSvg() {
 }
 
 function Ticket() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* ticket body */}
     <path d="M8 38 L8 52 Q18 52 18 60 Q18 68 8 68 L8 82 L112 82 L112 68 Q102 68 102 60 Q102 52 112 52 L112 38 Z"
       fill="#fde68a" stroke={LT} strokeWidth={2.5} strokeLinejoin="round" />
@@ -795,7 +795,7 @@ function Ticket() {
 }
 
 function LibraryBook() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* book */}
     <rect x="14" y="20" width="60" height="80" rx="4" fill="#93c5fd" stroke={LT} strokeWidth={2.5} />
     <rect x="14" y="20" width="10" height="80" rx="4" fill="#2563eb" stroke={LT} strokeWidth={2} />
@@ -816,7 +816,7 @@ function LibraryBook() {
 }
 
 function Pool() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* pool */}
     <rect x="8" y="55" width="104" height="55" rx="6" fill="#bfdbfe" stroke={BLUE} strokeWidth={2.5} />
     {/* waves */}
@@ -839,7 +839,7 @@ function Pool() {
 }
 
 function Quiet() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* person */}
     <circle cx="40" cy="38" r="16" fill="#fde68a" stroke={LT} strokeWidth={2.5} />
     {/* finger to lips */}
@@ -862,7 +862,7 @@ function Quiet() {
 }
 
 function Train() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* train body */}
     <rect x="8" y="25" width="104" height="62" rx="10" fill="#bfdbfe" stroke={LT} strokeWidth={2.5} />
     {/* front nose */}
@@ -891,7 +891,7 @@ function Train() {
 }
 
 function TShirt() {
-  return <svg viewBox="0 0 120 120" fill="none">
+  return <svg viewBox="0 0 120 120" width="100%" height="100%" fill="none">
     {/* t-shirt shape */}
     <path d="M20 20 L2 45 L22 52 L22 100 L98 100 L98 52 L118 45 L100 20 L80 35 Q60 42 40 35 Z"
       fill="#93c5fd" stroke={LT} strokeWidth={2.5} strokeLinejoin="round" />
