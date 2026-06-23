@@ -21,7 +21,7 @@ export default function WritingPart2({ data, onSubmit }: { data: WritingPart2Dat
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
       {/* Exam header */}
-      <div className="bg-yellow-600 px-6 py-3 flex items-center justify-between">
+      <div className="bg-yellow-600 px-4 sm:px-6 py-3 flex items-center justify-between gap-2">
         <div>
           <span className="text-xs font-bold uppercase tracking-widest text-yellow-100">{data.partLabel}</span>
           <h2 className="text-white font-bold text-base mt-0.5">{data.taskLabel}</h2>
