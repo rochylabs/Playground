@@ -6,6 +6,38 @@ import MaxBubble from "@/components/MaxBubble";
 import GermanAudio from "@/components/GermanAudio";
 import type { QuestionResult } from "@/components/WeakSpots";
 
+const SPEAKER_LINE_RE = /^([\w\s./äöüÄÖÜß]{1,35}):\s+(.+)$/;
+
+function TranscriptBubbles({ text }: { text: string }) {
+  const speakerColors = ["bg-blue-100 text-blue-900", "bg-purple-100 text-purple-900"];
+  const speakerOrder: string[] = [];
+  const lines = text.trim().split("\n").map((raw) => {
+    const m = SPEAKER_LINE_RE.exec(raw.trim());
+    if (!m) return { speaker: null, speech: raw.trim() };
+    const speaker = m[1].trim();
+    if (!speakerOrder.includes(speaker)) speakerOrder.push(speaker);
+    return { speaker, speech: m[2].trim() };
+  });
+
+  return (
+    <div className="space-y-2 border-t border-green-200 pt-2">
+      {lines.map((line, i) => {
+        if (!line.speaker) {
+          return <p key={i} className="text-xs text-gray-500 italic">{line.speech}</p>;
+        }
+        const idx = speakerOrder.indexOf(line.speaker);
+        const colorCls = speakerColors[idx % speakerColors.length];
+        return (
+          <div key={i} className={`rounded-lg px-2.5 py-1.5 text-xs ${colorCls}`}>
+            <span className="font-bold block text-[10px] uppercase tracking-wide opacity-70">{line.speaker}</span>
+            {line.speech}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 const qOffsets = [0, 6, 10];
 
 export default function ListeningExercise({ part, onSubmit }: { part: ListeningPart; onSubmit?: (earned: number, total: number, results: QuestionResult[]) => void }) {
@@ -76,10 +108,8 @@ export default function ListeningExercise({ part, onSubmit }: { part: ListeningP
                   >
                     {transcriptOpen ? "Transkript ausblenden ▲" : "Transkript anzeigen ▼"}
                   </button>
-                  {transcriptOpen && (
-                    <pre className="text-xs text-gray-600 whitespace-pre-wrap font-sans leading-relaxed border-t border-green-200 pt-2">
-                      {script?.text}
-                    </pre>
+                  {transcriptOpen && script?.text && (
+                    <TranscriptBubbles text={script.text} />
                   )}
                 </div>
 
@@ -108,7 +138,7 @@ export default function ListeningExercise({ part, onSubmit }: { part: ListeningP
                             : "border-gray-300 text-gray-600 hover:border-green-400 hover:bg-green-50";
                         }
                         return (
-                          <button key={val} className={cls} onClick={() => handleSelect(q.id, val)}>
+                          <button key={val} className={cls} onClick={() => handleSelect(q.id, val)} aria-pressed={isSelected}>
                             {label}
                           </button>
                         );
@@ -132,7 +162,7 @@ export default function ListeningExercise({ part, onSubmit }: { part: ListeningP
                             : "border-gray-300 text-gray-600 hover:border-green-400 hover:bg-green-50";
                         }
                         return (
-                          <button key={opt} className={cls} onClick={() => handleSelect(q.id, optKey)}>
+                          <button key={opt} className={cls} onClick={() => handleSelect(q.id, optKey)} aria-pressed={isSelected}>
                             {opt}
                           </button>
                         );

@@ -105,14 +105,14 @@ export default function SpeakingPage() {
   const { scores, save, reset, allDone } = useExamScore();
   const [partRatings, setPartRatings] = useState<(number | null)[]>([null, null, null]);
   const [showSummary, setShowSummary] = useState(false);
+  const [sessionSaved, setSessionSaved] = useState(false);
 
-  const timer = useExamTimer(15);
-  const nextSet = () => { setSetIdx((i) => (i + 1) % speakingExamSets.length); setPartRatings([null, null, null]); timer.reset(); };
+  const timer = useExamTimer(15, true);
+  const nextSet = () => { setSetIdx((i) => (i + 1) % speakingExamSets.length); setPartRatings([null, null, null]); setSessionSaved(false); timer.reset(); };
 
   const sectionEarned = partRatings.reduce<number>((a, r, i) => a + (r !== null ? Math.round(SPEAKING_PARTS[i].max * r) : 0), 0);
   const sectionTotal = SPEAKING_PARTS.reduce((a, p) => a + p.max, 0);
   const allRated = partRatings.every((r) => r !== null);
-  const sectionSaved = scores.sprechen.completed;
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -150,7 +150,7 @@ export default function SpeakingPage() {
       </div>
 
       {/* Self-assessment */}
-      {!sectionSaved && (
+      {!sessionSaved && (
         <div className="mt-8 rounded-xl border border-red-200 bg-red-50 p-5 space-y-4">
           <p className="font-bold text-red-800">Selbstbewertung — Wie gut hast du gesprochen?</p>
           <p className="text-sm text-red-700">Vergleiche deine Antworten mit den Musterlösungen und bewerte dich ehrlich.</p>
@@ -179,7 +179,7 @@ export default function SpeakingPage() {
             <div className="flex items-center justify-between pt-2 border-t border-red-200">
               <p className="font-bold text-red-800">Gesamt: {sectionEarned} / {sectionTotal} Punkte</p>
               <button
-                onClick={() => { save("sprechen", sectionEarned, sectionTotal); if (allDone) setShowSummary(true); }}
+                onClick={() => { setSessionSaved(true); save("sprechen", sectionEarned, sectionTotal); if (allDone) setShowSummary(true); }}
                 className="px-5 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-semibold transition-colors"
               >
                 Ergebnis speichern ✓
@@ -188,7 +188,7 @@ export default function SpeakingPage() {
           )}
         </div>
       )}
-      {sectionSaved && (
+      {sessionSaved && (
         <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-4 flex items-center justify-between gap-4">
           <p className="text-sm font-semibold text-gray-600">✓ Sprechen gespeichert: {scores.sprechen.earned} / {scores.sprechen.total} Punkte</p>
           <button onClick={() => setShowSummary(true)} className="text-xs text-blue-600 hover:underline font-semibold">

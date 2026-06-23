@@ -40,7 +40,13 @@ def pick_voice(speaker: str) -> str:
     return VOICE_NARRATOR
 
 def parse_script(text: str) -> list[tuple[str, str]]:
+    """
+    Assign voices to speakers. When two speakers resolve to the same gender voice,
+    the second unique speaker is flipped to the opposite voice so audio alternates.
+    """
     lines = []
+    speaker_voices: dict[str, str] = {}  # speaker name → assigned voice
+
     for raw in text.strip().split("\n"):
         raw = raw.strip()
         if not raw:
@@ -51,7 +57,14 @@ def parse_script(text: str) -> list[tuple[str, str]]:
             if re.search(r"[.!?]", speaker):
                 lines.append((VOICE_NARRATOR, raw))
             else:
-                lines.append((pick_voice(speaker), m.group(2).strip()))
+                if speaker not in speaker_voices:
+                    preferred = pick_voice(speaker)
+                    used = set(speaker_voices.values())
+                    # If preferred voice already assigned to another speaker, flip
+                    if preferred in used:
+                        preferred = VOICE_FEMALE if preferred == VOICE_MALE else VOICE_MALE
+                    speaker_voices[speaker] = preferred
+                lines.append((speaker_voices[speaker], m.group(2).strip()))
         else:
             lines.append((VOICE_NARRATOR, raw))
     return lines
@@ -88,9 +101,11 @@ async def synthesise(voice: str, text: str, path: str) -> None:
     communicate = edge_tts.Communicate(text, voice, rate="-10%")
     await communicate.save(path)
 
+REGEN_IDS = {"h1-4", "h1-5", "h1-6"}  # same-gender speaker pairs — must be re-generated
+
 async def generate(script_id: str, text: str, out_dir: str) -> None:
     out_path = os.path.join(out_dir, f"{script_id}.mp3")
-    if os.path.exists(out_path):
+    if os.path.exists(out_path) and script_id not in REGEN_IDS:
         print(f"  skip {script_id}")
         return
 

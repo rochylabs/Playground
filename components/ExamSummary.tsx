@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import type { ExamScores, SectionKey } from "@/hooks/useExamScore";
 import { scaleToGoethe, gradeLabel, GOETHE_SECTION_MAX, GOETHE_TOTAL_MAX, GOETHE_PASS_PCT } from "@/hooks/useExamScore";
@@ -43,6 +43,17 @@ export default function ExamSummary({ scores, onReset }: Props) {
   const percent = Math.round((goetheTotal / GOETHE_TOTAL_MAX) * 100);
 
   const [confetti] = useState(() => overallPass ? makeConfetti() : []);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    modalRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onReset(); };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onReset]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
@@ -61,11 +72,12 @@ export default function ExamSummary({ scores, onReset }: Props) {
         </span>
       ))}
 
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden">
+      <div ref={modalRef} role="dialog" aria-modal="true" aria-labelledby="exam-summary-heading"
+        tabIndex={-1} className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden outline-none">
         {/* Header */}
         <div className={`px-6 py-5 text-center ${overallPass ? "bg-green-600" : "bg-orange-500"}`}>
           <div className="text-4xl mb-2">{overallPass ? "🏆" : "💪"}</div>
-          <h2 className="text-xl font-bold text-white">
+          <h2 id="exam-summary-heading" className="text-xl font-bold text-white">
             {overallPass ? "Bestanden! Herzlichen Glückwunsch!" : "Noch nicht bestanden — nicht aufgeben!"}
           </h2>
           <p className="text-sm text-white/80 mt-1">

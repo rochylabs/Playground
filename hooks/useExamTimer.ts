@@ -2,17 +2,17 @@
 
 import { useState, useEffect } from "react";
 
-export function useExamTimer(minutes: number) {
+export function useExamTimer(minutes: number, autoStart = false) {
   const [timeLeft, setTimeLeft] = useState(minutes * 60);
-  const [running, setRunning] = useState(false);
+  const [running, setRunning] = useState(autoStart);
 
   useEffect(() => {
-    if (!running) return;
+    if (!running || timeLeft === 0) return;
     const id = setInterval(() => {
-      setTimeLeft((t) => (t > 0 ? t - 1 : 0));
+      setTimeLeft((t) => Math.max(0, t - 1));
     }, 1000);
     return () => clearInterval(id);
-  }, [running]);
+  }, [running, timeLeft]);
 
   const mm = String(Math.floor(timeLeft / 60)).padStart(2, "0");
   const ss = String(timeLeft % 60).padStart(2, "0");
@@ -24,6 +24,6 @@ export function useExamTimer(minutes: number) {
     display: `${mm}:${ss}`,
     start:  () => setRunning(true),
     pause:  () => setRunning(false),
-    reset:  () => { setRunning(false); setTimeLeft(minutes * 60); },
+    reset:  () => { setRunning(autoStart); setTimeLeft(minutes * 60); },
   };
 }

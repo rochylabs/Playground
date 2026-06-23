@@ -71,24 +71,26 @@ export default function ReadingPage() {
   const [partScores, setPartScores] = useState<(number | null)[]>([null, null, null]);
   const [allResults, setAllResults] = useState<QuestionResult[]>([]);
   const [showSummary, setShowSummary] = useState(false);
-  const timer = useExamTimer(25);
+  const [sessionSaved, setSessionSaved] = useState(false);
+  const timer = useExamTimer(25, true);
 
   const nextSet = () => {
     setSetIdx((i) => (i + 1) % readingExamSets.length);
     setPartScores([null, null, null]);
     setAllResults([]);
+    setSessionSaved(false);
     timer.reset();
   };
 
   const handlePartScore = (idx: number, earned: number, results: QuestionResult[]) => {
     setPartScores((prev) => { const next = [...prev]; next[idx] = earned; return next; });
     setAllResults((prev) => [...prev, ...results]);
+    setSessionSaved(false);
   };
 
   const sectionTotal = parts.reduce((a, p) => a + p.questions.length, 0);
   const sectionEarned = partScores.reduce<number>((a, s) => a + (s ?? 0), 0);
   const allPartsScored = partScores.every((s) => s !== null);
-  const sectionSaved = scores.lesen.completed;
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -132,21 +134,21 @@ export default function ReadingPage() {
 
       {allResults.length > 0 && <WeakSpots results={allResults} />}
 
-      {allPartsScored && !sectionSaved && (
+      {allPartsScored && !sessionSaved && (
         <div className="mt-8 rounded-xl border border-blue-300 bg-blue-50 p-5 flex items-center justify-between gap-4">
           <div>
             <p className="font-bold text-blue-800">Lesen abgeschlossen — {sectionEarned} / {sectionTotal} Punkte</p>
             <p className="text-sm text-blue-700 mt-0.5">Speichere dein Ergebnis, um es in der Gesamtauswertung zu sehen.</p>
           </div>
           <button
-            onClick={() => { save("lesen", sectionEarned, sectionTotal); if (allDone) setShowSummary(true); }}
+            onClick={() => { setSessionSaved(true); save("lesen", sectionEarned, sectionTotal); if (allDone) setShowSummary(true); }}
             className="flex-shrink-0 px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors"
           >
             Ergebnis speichern ✓
           </button>
         </div>
       )}
-      {sectionSaved && (
+      {sessionSaved && (
         <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-4 flex items-center justify-between gap-4">
           <p className="text-sm font-semibold text-gray-600">✓ Lesen gespeichert: {scores.lesen.earned} / {scores.lesen.total} Punkte</p>
           <button onClick={() => setShowSummary(true)} className="text-xs text-blue-600 hover:underline font-semibold">

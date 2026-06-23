@@ -118,7 +118,13 @@ export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Dat
           </>
         ) : (
           <button
-            onClick={() => { setSubmitted(true); onSubmit?.(score, data.formFields.length); }}
+            onClick={() => {
+              const computed = data.formFields.filter(
+                (f) => values[f.label]?.trim().toLowerCase() === f.correctAnswer.toLowerCase()
+              ).length;
+              setSubmitted(true);
+              onSubmit?.(computed, data.formFields.length);
+            }}
             disabled={!allFilled}
             className="ml-auto px-5 py-2 rounded-lg bg-yellow-600 hover:bg-yellow-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold transition-colors"
           >
