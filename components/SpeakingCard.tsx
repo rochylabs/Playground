@@ -260,10 +260,7 @@ export function SpeakingPart3({ data }: { data: SpeakingPart3Data }) {
                   {config.label}
                 </span>
               </div>
-              {/* Situation */}
-              <div className="p-4 bg-white">
-                <p className="text-sm font-semibold text-gray-800 leading-snug">{card.situation}</p>
-              </div>
+
             </div>
 
             <div className="mt-4 space-y-3">
