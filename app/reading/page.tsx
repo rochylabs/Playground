@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { readingExamSets } from "@/data/reading";
 import { useRandomIndex } from "@/hooks/useRandomIndex";
 import { useExamScore } from "@/hooks/useExamScore";
 import { useExamTimer } from "@/hooks/useExamTimer";
-import ExamSummary from "@/components/ExamSummary";
 import ExamTimer from "@/components/ExamTimer";
 import ReadingExercise from "@/components/ReadingExercise";
 import WeakSpots, { type QuestionResult } from "@/components/WeakSpots";
@@ -67,10 +67,9 @@ const TIPS: PatternGroup[] = [
 export default function ReadingPage() {
   const [setIdx, setSetIdx] = useRandomIndex(readingExamSets.length);
   const parts = readingExamSets[setIdx].parts;
-  const { scores, save, reset, allDone } = useExamScore();
+  const { scores, save } = useExamScore();
   const [partScores, setPartScores] = useState<(number | null)[]>([null, null, null]);
   const [allResults, setAllResults] = useState<QuestionResult[]>([]);
-  const [showSummary, setShowSummary] = useState(false);
   const [sessionSaved, setSessionSaved] = useState(false);
   const timer = useExamTimer(25, true);
 
@@ -155,7 +154,7 @@ export default function ReadingPage() {
             <p className="text-sm text-blue-700 mt-0.5">Speichere dein Ergebnis, um es in der Gesamtauswertung zu sehen.</p>
           </div>
           <button
-            onClick={() => { setSessionSaved(true); save("lesen", sectionEarned, sectionTotal); if (allDone) setShowSummary(true); }}
+            onClick={() => { save("lesen", sectionEarned, sectionTotal); setSessionSaved(true); }}
             className="flex-shrink-0 px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors"
           >
             Ergebnis speichern ✓
@@ -163,17 +162,15 @@ export default function ReadingPage() {
         </div>
       )}
       {sessionSaved && (
-        <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <p className="text-sm font-semibold text-gray-600">✓ Lesen gespeichert: {scores.lesen.earned} / {scores.lesen.total} Punkte</p>
-          <button onClick={() => setShowSummary(true)} className="text-xs text-blue-600 hover:underline font-semibold">
-            {allDone ? "📊 Gesamtergebnis anzeigen" : "Weiter zum nächsten Abschnitt →"}
-          </button>
+        <div className="mt-8 rounded-xl border border-green-300 bg-green-50 p-6 text-center">
+          <div className="text-4xl mb-2">✅</div>
+          <p className="font-bold text-green-800 text-lg">Lesen abgeschlossen!</p>
+          <p className="text-green-700 text-sm mt-1">{scores.lesen.earned} / {scores.lesen.total} Punkte gespeichert</p>
+          <p className="text-gray-500 text-sm mt-2">Wähle deinen nächsten Prüfungsteil auf der Startseite.</p>
+          <Link href="/" className="mt-4 inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm font-semibold transition-colors">
+            ← Zurück zur Startseite
+          </Link>
         </div>
-      )}
-
-      {showSummary && (
-        <ExamSummary scores={scores}
-          onReset={() => { reset(); setShowSummary(false); setPartScores([null, null, null]); }} />
       )}
     </div>
   );
