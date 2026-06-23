@@ -8,6 +8,7 @@ import type {
   Part3CardType,
 } from "@/data/speaking";
 import MaxBubble from "@/components/MaxBubble";
+import SpeakingIllustration, { type IllustrationKey } from "@/components/SpeakingIllustration";
 
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
@@ -122,15 +123,18 @@ export function SpeakingPart2({ data }: { data: SpeakingPart2Data }) {
         {/* Card counter */}
         <p className="text-xs text-gray-400 font-semibold self-end">Karte {idx + 1} / {total}</p>
 
-        {/* Picture card */}
+        {/* Exam-style text card */}
         {!drawn ? (
           <div className="flex flex-col items-center gap-4">
-            {/* Face-down card */}
-            <div className="w-48 h-60 rounded-2xl bg-gradient-to-br from-red-600 to-red-700 shadow-lg flex items-center justify-center cursor-pointer select-none border-4 border-red-300"
+            {/* Face-down card — plain back like real exam */}
+            <div className="w-56 rounded-lg bg-gray-800 shadow-lg overflow-hidden cursor-pointer select-none border border-gray-600"
               onClick={draw}>
-              <div className="text-center text-white">
-                <div className="text-4xl mb-2">🎴</div>
-                <p className="text-xs font-bold uppercase tracking-widest opacity-80">Themenkarte</p>
+              <div className="flex justify-between items-center px-3 py-1.5 bg-gray-700">
+                <span className="text-xs font-bold text-gray-300">Start Deutsch 1</span>
+                <span className="text-xs font-bold text-gray-300">Sprechen Teil 2</span>
+              </div>
+              <div className="h-36 flex items-center justify-center">
+                <p className="text-xs font-bold uppercase tracking-widest text-gray-500">Themenkarte</p>
               </div>
             </div>
             <button onClick={draw}
@@ -140,20 +144,24 @@ export function SpeakingPart2({ data }: { data: SpeakingPart2Data }) {
           </div>
         ) : (
           <div className="w-full max-w-sm">
-            {/* Face-up picture card */}
-            <div className="rounded-2xl border-2 border-red-300 overflow-hidden shadow-lg">
-              {/* Picture area */}
-              <div className="h-36 bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center border-b border-red-100">
-                <span className="text-7xl">{card.emoji}</span>
+            {/* Face-up exam card — text only, exactly like the real Kandidatenblätter */}
+            <div className="border border-gray-300 shadow-md overflow-hidden bg-white">
+              {/* Header bar */}
+              <div className="flex justify-between items-center px-3 py-1.5 bg-gray-700">
+                <span className="text-xs font-bold text-white">Start Deutsch 1</span>
+                <span className="text-xs font-bold text-white">Sprechen Teil 2</span>
               </div>
-              {/* Card text */}
-              <div className="p-4 bg-white">
-                <p className="text-xs font-bold uppercase tracking-widest text-red-400 mb-1">{card.theme}</p>
-                <p className="text-xl font-bold text-gray-900">{card.keyword}</p>
+              {/* Theme sub-header */}
+              <div className="bg-gray-200 px-3 py-1 text-center border-b border-gray-300">
+                <p className="text-xs font-bold text-gray-700">Thema: {card.theme}</p>
+              </div>
+              {/* Keyword — large bold centered, like the real cards */}
+              <div className="flex items-center justify-center px-6 py-10 min-h-[140px]">
+                <p className="text-4xl sm:text-5xl font-black text-gray-900 text-center leading-tight">{card.keyword}</p>
               </div>
             </div>
 
-            {/* Question + answer */}
+            {/* Practice area below the card */}
             <div className="mt-4 space-y-3">
               <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
                 <p className="text-xs font-bold uppercase tracking-wide text-gray-400 mb-1">Stellen Sie diese Frage:</p>
@@ -165,8 +173,8 @@ export function SpeakingPart2({ data }: { data: SpeakingPart2Data }) {
                 {showAnswer ? "Beispielantwort ausblenden ▲" : "Beispielantwort anzeigen ▼"}
               </button>
               {showAnswer && (
-                <div className="flex gap-2 items-start bg-red-50 rounded-xl p-3 border border-red-100">
-                  <span className="text-base flex-shrink-0">🐶</span>
+                <div className="bg-red-50 rounded-xl p-3 border border-red-100">
+                  <p className="text-xs font-semibold text-gray-500 mb-1">Beispielantwort:</p>
                   <p className="text-sm text-gray-700 italic">{card.exampleAnswer}</p>
                 </div>
               )}
@@ -245,8 +253,8 @@ export function SpeakingPart3({ data }: { data: SpeakingPart3Data }) {
             {/* Picture card */}
             <div className="rounded-2xl border-2 border-red-300 overflow-hidden shadow-lg">
               {/* Picture area */}
-              <div className="h-36 bg-gradient-to-br from-red-50 to-orange-50 flex items-center justify-center border-b border-red-100 relative">
-                <span className="text-7xl">{card.emoji}</span>
+              <div className="h-44 bg-white flex items-center justify-center border-b border-red-100 relative p-2">
+                <SpeakingIllustration imageKey={card.imageKey as IllustrationKey} className="w-full h-full" />
                 {/* Type badge */}
                 <span className={`absolute top-2 right-2 text-xs font-bold px-2.5 py-1 rounded-full ${config.bg} ${config.color} border ${config.border}`}>
                   {config.label}
