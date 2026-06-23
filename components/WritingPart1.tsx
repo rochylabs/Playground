@@ -7,10 +7,9 @@ import MaxBubble from "@/components/MaxBubble";
 export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Data; onSubmit?: (earned: number, total: number) => void }) {
   const [values, setValues] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
-
   const [displayScore, setDisplayScore] = useState(0);
-  const allFilled = data.formFields.every((f) => (values[f.label] ?? "").trim().length > 0);
 
+  const allFilled = data.formFields.every((f) => (values[f.label] ?? "").trim().length > 0);
   const reset = () => { setValues({}); setSubmitted(false); setDisplayScore(0); };
 
   return (
@@ -32,24 +31,15 @@ export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Dat
       </div>
 
       <div className="flex flex-col lg:flex-row gap-0">
-        {/* Info card (left) */}
+        {/* Situation text (left) — prose paragraph, no labels */}
         <div className="lg:w-1/2 border-b lg:border-b-0 lg:border-r border-gray-200 p-5 bg-gray-50">
-          <p className="text-xs font-bold uppercase tracking-wide text-gray-400 mb-3">Informationen</p>
-          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-            <div className="bg-yellow-600 px-4 py-2">
-              <p className="text-white font-bold text-sm">{data.personCard.title}</p>
-            </div>
-            <table className="w-full text-sm">
-              <tbody>
-                {data.personCard.info.map((row) => (
-                  <tr key={row.label} className="border-b border-gray-100 last:border-0">
-                    <td className="px-4 py-2 font-semibold text-gray-500 w-40 bg-gray-50">{row.label}</td>
-                    <td className="px-4 py-2 text-gray-800">{row.value}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <p className="text-xs font-bold uppercase tracking-wide text-gray-400 mb-3">{data.situationTitle}</p>
+          <div className="bg-white rounded-lg border border-gray-200 p-4">
+            <p className="text-sm text-gray-800 leading-relaxed">{data.situationText}</p>
           </div>
+          <p className="text-xs text-gray-400 mt-3 italic">
+            Tipp: Lesen Sie den Text sorgfältig. Nicht alle Informationen stehen direkt im Formular-Format — Sie müssen sie selbst herausfinden.
+          </p>
         </div>
 
         {/* Form (right) */}
@@ -57,7 +47,7 @@ export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Dat
           <p className="text-xs font-bold uppercase tracking-wide text-gray-400 mb-3">Formular</p>
           <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
             <div className="bg-gray-700 px-4 py-2">
-              <p className="text-white font-bold text-sm">Anmeldeformular</p>
+              <p className="text-white font-bold text-sm">{data.formTitle}</p>
             </div>
             <div className="divide-y divide-gray-100">
               {data.formFields.map((f, idx) => {
@@ -73,7 +63,7 @@ export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Dat
                         value={val}
                         onChange={(e) => setValues((v) => ({ ...v, [f.label]: e.target.value }))}
                         disabled={submitted}
-                        placeholder={f.hint}
+                        placeholder={f.hint ?? ""}
                         className={`flex-1 border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 disabled:bg-gray-50 ${
                           submitted
                             ? isCorrect
@@ -86,7 +76,7 @@ export default function WritingPart1({ data, onSubmit }: { data: WritingPart1Dat
                     {submitted && !isCorrect && (
                       <MaxBubble
                         correct={false}
-                        message={`Leider falsch. Die richtige Antwort ist: ${f.correctAnswer}. (The correct answer is: ${f.correctAnswer}.)`}
+                        message={`Leider falsch. Die richtige Antwort ist: ${f.correctAnswer}.`}
                         className="mt-2 ml-7"
                       />
                     )}
