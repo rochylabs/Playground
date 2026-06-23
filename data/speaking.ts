@@ -8,7 +8,6 @@ export interface SpeakingPart1Data {
 export interface SpeakingPart2Card {
   theme: string;
   keyword: string;
-  imageKey: string;
   exampleQuestion: string;
   exampleAnswer: string;
 }
@@ -62,12 +61,12 @@ const set1: SpeakingExamSet = {
     taskLabel: "Aufgabe 2", partLabel: "Sprechen · Teil 2",
     instruction: "Ziehen Sie eine Themenkarte. Stellen Sie Ihrem Partner eine Frage zum Thema und antworten Sie auch auf seine Frage.",
     cards: [
-      { theme: "Essen und Trinken", keyword: "Lieblingsessen", imageKey: "food",      exampleQuestion: "Was ist dein Lieblingsessen?", exampleAnswer: "Mein Lieblingsessen ist Pizza. Ich esse sehr gerne Pizza mit Tomaten und Käse." },
-      { theme: "Freizeit",          keyword: "Hobby",          imageKey: "sport",     exampleQuestion: "Was machst du in deiner Freizeit?", exampleAnswer: "In meiner Freizeit spiele ich Fußball und lese Bücher." },
-      { theme: "Familie",           keyword: "Geschwister",    imageKey: "family",    exampleQuestion: "Hast du Geschwister?", exampleAnswer: "Ja, ich habe eine Schwester. Sie wohnt in Hamburg." },
-      { theme: "Wohnen",            keyword: "Wohnung",        imageKey: "apartment", exampleQuestion: "Wo wohnst du?", exampleAnswer: "Ich wohne in einer kleinen Wohnung in der Stadtmitte. Es gibt zwei Zimmer." },
-      { theme: "Arbeit / Schule",   keyword: "Arbeitszeiten",  imageKey: "clock",     exampleQuestion: "Wann fängst du morgens an zu arbeiten?", exampleAnswer: "Ich fange um acht Uhr an. Ich arbeite bis fünf Uhr nachmittags." },
-      { theme: "Reisen",            keyword: "Lieblingsstadt", imageKey: "airplane",  exampleQuestion: "Welche Stadt magst du am liebsten?", exampleAnswer: "Ich mag Wien am liebsten. Die Stadt ist sehr schön und hat viele Museen." },
+      { theme: "Essen und Trinken", keyword: "Frühstück",      exampleQuestion: "Was isst du zum Frühstück?", exampleAnswer: "Ich esse Brot mit Butter und trinke Kaffee." },
+      { theme: "Essen und Trinken", keyword: "Lieblingsessen", exampleQuestion: "Was ist dein Lieblingsessen?", exampleAnswer: "Mein Lieblingsessen ist Pizza." },
+      { theme: "Essen und Trinken", keyword: "Kaffee",         exampleQuestion: "Trinkst du gern Kaffee?", exampleAnswer: "Ja, ich trinke jeden Morgen einen Kaffee." },
+      { theme: "Essen und Trinken", keyword: "Brot",           exampleQuestion: "Isst du gern Brot?", exampleAnswer: "Ja, ich esse gern Brot. Ich esse es zum Frühstück." },
+      { theme: "Essen und Trinken", keyword: "Obst",           exampleQuestion: "Isst du gern Obst?", exampleAnswer: "Ja, ich esse gern Obst. Ich mag Äpfel und Bananen." },
+      { theme: "Essen und Trinken", keyword: "Wasser",         exampleQuestion: "Trinkst du viel Wasser?", exampleAnswer: "Ja, ich trinke jeden Tag viel Wasser." },
     ],
     tip: "Hören Sie Ihrem Partner gut zu. Stellen Sie eine klare Frage und antworten Sie in einem vollständigen Satz. (Listen carefully to your partner. Ask a clear question and answer in a complete sentence.)",
   },
@@ -105,12 +104,12 @@ const set2: SpeakingExamSet = {
     taskLabel: "Aufgabe 2", partLabel: "Sprechen · Teil 2",
     instruction: "Ziehen Sie eine Themenkarte. Stellen Sie Ihrem Partner eine Frage zum Thema und antworten Sie auch auf seine Frage.",
     cards: [
-      { theme: "Verkehr",       keyword: "Transportmittel",  imageKey: "subway",     exampleQuestion: "Wie fährst du zur Arbeit?", exampleAnswer: "Ich fahre mit der U-Bahn. Das dauert ungefähr 20 Minuten." },
-      { theme: "Gesundheit",    keyword: "Sport",            imageKey: "jogging",    exampleQuestion: "Machst du Sport?", exampleAnswer: "Ja, ich gehe dreimal pro Woche joggen. Das macht mir viel Spaß." },
-      { theme: "Einkaufen",     keyword: "Lieblingsgeschäft",imageKey: "shopping",   exampleQuestion: "Wo kaufst du am liebsten ein?", exampleAnswer: "Ich kaufe meistens im Supermarkt ein. Manchmal gehe ich auch auf den Markt." },
-      { theme: "Wetter",        keyword: "Jahreszeit",       imageKey: "sun",        exampleQuestion: "Welche Jahreszeit magst du am liebsten?", exampleAnswer: "Ich mag den Sommer am liebsten, weil es warm und sonnig ist." },
-      { theme: "Schule / Kurse",keyword: "Lernmethode",     imageKey: "books",      exampleQuestion: "Wie lernst du Deutsch?", exampleAnswer: "Ich lerne mit einem Kurs und auch mit Apps auf dem Handy." },
-      { theme: "Technologie",   keyword: "Handy",            imageKey: "smartphone", exampleQuestion: "Wozu benutzt du dein Handy?", exampleAnswer: "Ich benutze es für Nachrichten, Musik und Navigation." },
+      { theme: "Freizeit",      keyword: "Sport",       exampleQuestion: "Machst du gern Sport?", exampleAnswer: "Ja, ich spiele Fußball. Das macht mir viel Spaß." },
+      { theme: "Freizeit",      keyword: "Kino",        exampleQuestion: "Gehst du gern ins Kino?", exampleAnswer: "Ja, ich gehe gern ins Kino. Ich mag Komödien." },
+      { theme: "Freizeit",      keyword: "Musik",       exampleQuestion: "Hörst du gern Musik?", exampleAnswer: "Ja, ich höre gern Musik. Ich mag Pop." },
+      { theme: "Freizeit",      keyword: "Bücher",      exampleQuestion: "Liest du gern Bücher?", exampleAnswer: "Ja, ich lese gern. Ich mag Romane." },
+      { theme: "Freizeit",      keyword: "Freunde",     exampleQuestion: "Triffst du oft Freunde?", exampleAnswer: "Ja, wir treffen uns oft am Wochenende." },
+      { theme: "Freizeit",      keyword: "Wochenende",  exampleQuestion: "Was machst du am Wochenende?", exampleAnswer: "Ich gehe spazieren und treffe Freunde." },
     ],
     tip: "Wenn Sie eine Frage nicht verstehen, sagen Sie: Können Sie das bitte wiederholen? oder Ich verstehe das nicht ganz. (If you don't understand, say: Can you repeat that? or I don't quite understand.)",
   },
@@ -148,12 +147,12 @@ const set3: SpeakingExamSet = {
     taskLabel: "Aufgabe 2", partLabel: "Sprechen · Teil 2",
     instruction: "Ziehen Sie eine Themenkarte. Stellen Sie Ihrem Partner eine Frage zum Thema und antworten Sie auch auf seine Frage.",
     cards: [
-      { theme: "Wohnen",    keyword: "Stadt oder Land", imageKey: "city",     exampleQuestion: "Lebst du lieber in der Stadt oder auf dem Land?", exampleAnswer: "Ich lebe lieber in der Stadt, weil alles nah ist und es viel zu tun gibt." },
-      { theme: "Freizeit",  keyword: "Kino",            imageKey: "cinema",   exampleQuestion: "Gehst du gerne ins Kino?", exampleAnswer: "Ja, ich gehe gerne ins Kino. Am liebsten schaue ich Komödien." },
-      { theme: "Essen",     keyword: "Frühstück",       imageKey: "breakfast",exampleQuestion: "Was isst du zum Frühstück?", exampleAnswer: "Ich esse meistens Brot mit Marmelade und trinke Tee." },
-      { theme: "Sprachen",  keyword: "Lerntipp",        imageKey: "speech",   exampleQuestion: "Hast du einen Tipp für das Deutschlernen?", exampleAnswer: "Ja! Höre jeden Tag deutsche Musik. Das hilft sehr." },
-      { theme: "Reisen",    keyword: "Traumreise",      imageKey: "globe",    exampleQuestion: "Wohin möchtest du gerne reisen?", exampleAnswer: "Ich möchte gerne nach Australien reisen. Die Natur dort ist fantastisch." },
-      { theme: "Alltag",    keyword: "Morgenroutine",   imageKey: "alarm",    exampleQuestion: "Was machst du morgens zuerst?", exampleAnswer: "Zuerst dusche ich, dann frühstücke ich und lese die Nachrichten." },
+      { theme: "Stadt",     keyword: "Supermarkt",  exampleQuestion: "Gehst du oft in den Supermarkt?", exampleAnswer: "Ja, ich gehe zweimal pro Woche in den Supermarkt." },
+      { theme: "Stadt",     keyword: "Park",        exampleQuestion: "Gehst du gern in den Park?", exampleAnswer: "Ja, ich gehe am Wochenende gern in den Park." },
+      { theme: "Stadt",     keyword: "Schule",      exampleQuestion: "Gehst du noch zur Schule?", exampleAnswer: "Nein, aber ich lerne Deutsch in einem Kurs." },
+      { theme: "Stadt",     keyword: "Bus",         exampleQuestion: "Fährst du gern mit dem Bus?", exampleAnswer: "Ja, ich fahre jeden Tag mit dem Bus zur Arbeit." },
+      { theme: "Stadt",     keyword: "Bahnhof",     exampleQuestion: "Bist du oft am Bahnhof?", exampleAnswer: "Ja, ich fahre oft mit dem Zug. Der Bahnhof ist nah." },
+      { theme: "Stadt",     keyword: "Markt",       exampleQuestion: "Gehst du gern auf den Markt?", exampleAnswer: "Ja, ich kaufe dort Obst und Gemüse." },
     ],
     tip: "Wenn Sie antworten, geben Sie auch einen Grund an. Benutzen Sie 'weil' oder 'denn'. Zum Beispiel: Ich mag Sommer, weil es warm ist. (When answering, give a reason using 'because'.)",
   },
@@ -191,12 +190,12 @@ const set4: SpeakingExamSet = {
     taskLabel: "Aufgabe 2", partLabel: "Sprechen · Teil 2",
     instruction: "Ziehen Sie eine Themenkarte. Stellen Sie Ihrem Partner eine Frage zum Thema und antworten Sie auch auf seine Frage.",
     cards: [
-      { theme: "Gesundheit", keyword: "Arztbesuch",      imageKey: "stethoscope", exampleQuestion: "Gehst du oft zum Arzt?", exampleAnswer: "Nein, ich gehe nur zum Arzt, wenn ich krank bin. Zum Glück bin ich selten krank." },
-      { theme: "Arbeit",     keyword: "Traumjob",        imageKey: "briefcase",   exampleQuestion: "Was ist dein Traumjob?", exampleAnswer: "Mein Traumjob ist Ärztin. Ich möchte Menschen helfen." },
-      { theme: "Essen",      keyword: "Kochen",          imageKey: "cooking",     exampleQuestion: "Kochst du gerne?", exampleAnswer: "Ja, ich koche sehr gerne. Ich mache oft arabische Gerichte." },
-      { theme: "Freizeit",   keyword: "Lesen",           imageKey: "reading",     exampleQuestion: "Was liest du gerne?", exampleAnswer: "Ich lese gerne Romane. Gerade lese ich ein Buch auf Deutsch!" },
-      { theme: "Wohnen",     keyword: "Traumwohnung",    imageKey: "house",       exampleQuestion: "Wie sieht deine Traumwohnung aus?", exampleAnswer: "Meine Traumwohnung ist groß und hell, mit einem Balkon und Blick auf das Wasser." },
-      { theme: "Deutschland",keyword: "Unterschiede",    imageKey: "germany",     exampleQuestion: "Was ist anders in Deutschland als in deiner Heimat?", exampleAnswer: "Das Wetter ist sehr anders! In Ägypten ist es viel wärmer. Aber ich mag den deutschen Sommer." },
+      { theme: "Familie",   keyword: "Familie",    exampleQuestion: "Hast du eine große Familie?", exampleAnswer: "Ja, ich habe zwei Geschwister und viele Cousins." },
+      { theme: "Familie",   keyword: "Kinder",     exampleQuestion: "Hast du Kinder?", exampleAnswer: "Nein, ich habe keine Kinder." },
+      { theme: "Familie",   keyword: "Haustier",   exampleQuestion: "Hast du ein Haustier?", exampleAnswer: "Ja, ich habe einen Hund. Er heißt Max." },
+      { theme: "Arbeit",    keyword: "Arbeit",     exampleQuestion: "Wo arbeitest du?", exampleAnswer: "Ich arbeite in einem Büro. Ich beginne um acht Uhr." },
+      { theme: "Arbeit",    keyword: "Beruf",      exampleQuestion: "Was bist du von Beruf?", exampleAnswer: "Ich bin Lehrerin. Ich arbeite in einer Schule." },
+      { theme: "Arbeit",    keyword: "Urlaub",     exampleQuestion: "Machst du gern Urlaub?", exampleAnswer: "Ja, ich fahre gern ans Meer. Ich mag das Wasser." },
     ],
     tip: "Versuchen Sie, nicht nur 'Ja' oder 'Nein' zu sagen. Geben Sie immer eine kurze Erklärung dazu. (Try not to just say yes or no. Always add a short explanation.)",
   },

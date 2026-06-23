@@ -39,14 +39,17 @@ export default function PatternTips({ groups, accent = "blue" }: Props) {
         onClick={() => setOpen((v) => !v)}
         className={`w-full flex items-center justify-between px-5 py-3 ${c.light} hover:brightness-95 transition-all`}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <span className="text-lg">💡</span>
-          <span className={`text-sm font-bold ${c.text}`}>Prüfungstipps &amp; Satzmuster</span>
+          <div>
+            <p className={`text-sm font-bold ${c.text}`}>Prüfungstipps &amp; Satzmuster</p>
+            <p className="text-xs text-gray-400 font-normal">Exam Tips &amp; Sentence Patterns</p>
+          </div>
           <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${c.tag}`}>
             {groups.length} Kategorien
           </span>
         </div>
-        <span className={`text-sm font-semibold ${c.text}`}>{open ? "Ausblenden ▲" : "Anzeigen ▼"}</span>
+        <span className={`text-sm font-semibold ${c.text} flex-shrink-0`}>{open ? "Hide ▲" : "Show ▼"}</span>
       </button>
 
       {open && (
