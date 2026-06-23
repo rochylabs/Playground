@@ -929,7 +929,7 @@ export default function SpeakingIllustration({ imageKey, className = "" }: { ima
   const Illustration = ILLUSTRATIONS[imageKey];
   if (!Illustration) return null;
   return (
-    <div className={`flex items-center justify-center ${className}`}>
+    <div className={`flex items-center justify-center [&>svg]:w-full [&>svg]:h-full ${className}`}>
       <Illustration />
     </div>
   );
