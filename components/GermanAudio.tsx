@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 
 interface Props {
   /** Script ID matching a file in /public/audio/, e.g. "h1-1" */
@@ -16,14 +16,9 @@ export default function GermanAudio({ audioId, text, maxPlays }: Props) {
   const [error, setError]     = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Reset when the audio source changes (e.g. user switches to a new exam set)
-  useEffect(() => {
-    audioRef.current?.pause();
-    audioRef.current = null;
-    setPlaying(false);
-    setPlays(0);
-    setError(false);
-  }, [audioId]);
+  // State resets automatically when the parent remounts this component via key prop.
+  // The listening/reading pages use key={`${setIdx}-${part}`} on each exercise wrapper,
+  // so switching exam sets fully remounts GermanAudio with fresh state.
 
   const exhausted = maxPlays !== undefined && plays >= maxPlays;
 
@@ -31,10 +26,8 @@ export default function GermanAudio({ audioId, text, maxPlays }: Props) {
     if (exhausted) return;
 
     if (audioId) {
-      // Pre-generated file path
-      const src = `/audio/${audioId}.mp3`;
       if (!audioRef.current) {
-        const el = new Audio(src);
+        const el = new Audio(`/audio/${audioId}.mp3`);
         el.onended = () => { setPlaying(false); setPlays((p) => p + 1); };
         el.onerror = () => { setError(true); setPlaying(false); fallbackTTS(); };
         audioRef.current = el;
