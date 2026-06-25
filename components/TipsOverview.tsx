@@ -52,7 +52,10 @@ export default function TipsOverview({ groups, accent, sectionName, onStart }: P
                         <p className="text-xs font-mono bg-gray-50 border border-gray-100 rounded px-2 py-1 text-gray-700 leading-relaxed">
                           {p.template}
                         </p>
-                        <p className="text-xs text-gray-500 italic">e.g.: {p.example}</p>
+                        {p.translation && (
+                          <p className="text-xs text-gray-400 italic">{p.translation}</p>
+                        )}
+                        <p className="text-xs text-gray-500 italic">z.B.: {p.example}</p>
                       </div>
                     </div>
                   ))}
