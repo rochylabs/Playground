@@ -9,69 +9,71 @@ import { useExamTimer } from "@/hooks/useExamTimer";
 import ExamTimer from "@/components/ExamTimer";
 import ReadingExercise from "@/components/ReadingExercise";
 import WeakSpots, { type QuestionResult } from "@/components/WeakSpots";
-import PatternTips, { type PatternGroup } from "@/components/PatternTips";
+import LessonView from "@/components/LessonView";
+import { type PatternGroup } from "@/components/PatternTips";
 
 const TIPS: PatternGroup[] = [
   {
-    title: "Strategie — Allgemein",
+    title: "General Strategy",
     emoji: "📋",
     color: "blue",
     patterns: [
-      { label: "Fragen zuerst", template: "Lesen Sie die Aussagen/Aufgaben ZUERST, dann den Text.", example: "So wissen Sie, worauf Sie beim Lesen achten müssen." },
-      { label: "Schlüsselwörter", template: "Unterstreichen Sie Schlüsselwörter in der Aussage und suchen Sie sie im Text.", example: "Aussage: 'drei Tage' → suchen Sie Datumsangaben im Text." },
-      { label: "Falle: ähnliche Wörter", template: "Achtung! Ähnliche Wörter ≠ gleiche Bedeutung.", example: "'eine Stunde früher' im Text ≠ 'zwei Stunden früher' in der Aussage → FALSCH" },
+      { label: "Read questions first", template: "Read the statements/tasks FIRST, then read the text.", example: "That way you know exactly what to look for as you read." },
+      { label: "Keywords", template: "Underline key words in the statement and scan for them in the text.", example: "Statement: 'three days' → look for date references in the text." },
+      { label: "Trap: similar words", template: "Watch out! Similar words ≠ same meaning.", example: "'one hour earlier' in the text ≠ 'two hours earlier' in the statement → FALSE" },
     ],
   },
   {
-    title: "Teil 1 — Richtig / Falsch (kurze Texte)",
+    title: "Part 1 — True / False (short texts)",
     emoji: "✅",
     color: "green",
     patterns: [
-      { label: "Richtig = steht im Text", template: "Richtig nur wenn GENAU das im Text steht — nicht raten.", example: "Text: 'bis 14:00 Uhr' → Aussage: 'den ganzen Tag' → FALSCH" },
-      { label: "Zahlen vergleichen", template: "Vergleichen Sie Zahlen, Tage, Zeiten, Mengen genau.", example: "'3 bis 5. März' = 3 Tage ✓ / 'wegen Feier' wenn Text 'Umbauarbeiten' sagt → ✗" },
-      { label: "Negation", template: "Achten Sie auf 'nicht', 'kein', 'leider' — sie ändern die Bedeutung komplett.", example: "'Kinder dürfen NICHT alleine' ≠ 'Kinder dürfen alleine'" },
+      { label: "True = stated in the text", template: "Only mark True if it is EXACTLY stated in the text — don't guess.", example: "Text: 'until 2:00 PM' → Statement: 'all day long' → FALSE" },
+      { label: "Compare numbers", template: "Compare numbers, days, times, and amounts precisely.", example: "'March 3–5' = 3 days ✓ / 'due to a celebration' when text says 'renovations' → ✗" },
+      { label: "Negation", template: "Watch for 'not', 'no', 'unfortunately' — they completely change the meaning.", example: "'Children are NOT allowed alone' ≠ 'Children are allowed alone'" },
     ],
   },
   {
-    title: "Teil 2 — Zuordnung (Anzeigen a–f)",
+    title: "Part 2 — Matching (Ads a–f)",
     emoji: "🔗",
     color: "yellow",
     patterns: [
-      { label: "Person → Anzeige", template: "Lesen Sie die Person: Was sucht sie? Wann hat sie Zeit? Was braucht sie?", example: "Pedro arbeitet tagsüber → suche Abendkurs → Anzeige a (18:30 Uhr)" },
-      { label: "Option X", template: "Wenn keine Anzeige passt → X schreiben. Jede Anzeige passt max. 1× (außer X).", example: "Sporttrainerin gesucht? Keine Anzeige → X" },
-      { label: "Alle Details prüfen", template: "Prüfen Sie ALLE Details: Preis, Zeit, Ort, Thema.", example: "Anna möchte SAMSTAGS kochen → Kurs am Samstag ✓ / Kurs am Montag ✗" },
+      { label: "Person → Ad", template: "Read about the person: What are they looking for? When are they free? What do they need?", example: "Pedro works during the day → look for evening class → Ad a (6:30 PM)" },
+      { label: "Option X", template: "If no ad fits → write X. Each ad can only be used once (except X).", example: "Looking for a sports trainer? No matching ad → X" },
+      { label: "Check all details", template: "Check ALL details: price, time, location, topic.", example: "Anna wants to cook on SATURDAYS → Saturday class ✓ / Monday class ✗" },
     ],
   },
   {
-    title: "Teil 3 — Richtig / Falsch (längerer Text / E-Mail)",
+    title: "Part 3 — True / False (longer text / email)",
     emoji: "📧",
     color: "orange",
     patterns: [
-      { label: "Paragraph pro Frage", template: "Jede Aussage bezieht sich meist auf einen bestimmten Abschnitt des Textes.", example: "Aussage 1 → Einleitung, Aussage 2 → Absatz 2 usw." },
-      { label: "Vorsicht: 'fast richtig'", template: "Aussagen können 'fast richtig' sein — ein falsches Detail macht sie FALSCH.", example: "Text: 'fährt mit dem Fahrrad' → Aussage: 'fährt mit der U-Bahn' → FALSCH" },
-      { label: "Nicht im Text = falsch", template: "Wenn die Information nicht im Text erwähnt wird → kann nicht 'richtig' sein.", example: "Text erwähnt keinen Hund → 'Sie hat einen Hund' → FALSCH" },
+      { label: "One paragraph per question", template: "Each statement usually refers to a specific section of the text.", example: "Statement 1 → introduction, Statement 2 → paragraph 2, etc." },
+      { label: "Watch out: 'almost correct'", template: "Statements can be 'almost correct' — one wrong detail makes them FALSE.", example: "Text: 'rides a bicycle' → Statement: 'takes the subway' → FALSE" },
+      { label: "Not in text = false", template: "If the information is not mentioned in the text → it cannot be 'true'.", example: "Text doesn't mention a dog → 'She has a dog' → FALSE" },
     ],
   },
   {
-    title: "🆘 Wenn Sie die Antwort nicht wissen",
+    title: "🆘 When you don't know the answer",
     emoji: "🆘",
     color: "purple",
     patterns: [
-      { label: "Immer ankreuzen",    template: "Lassen Sie keine Antwort leer — auch wenn Sie unsicher sind, kreuzen Sie an.", example: "Kein Punktabzug für falsche Antworten im Lesen!" },
-      { label: "50/50 bei R/F",      template: "Bei Richtig/Falsch: Wenn Sie es nicht wissen, wählen Sie 'Falsch' — Aussagen sind oft zu extrem formuliert.", example: "'immer', 'nie', 'alle' in einer Aussage → meist FALSCH" },
-      { label: "Zuordnung: eliminieren", template: "Bei Teil 2: Streichen Sie Anzeigen, die Sie sicher zugeordnet haben, um die Auswahl zu verkleinern.", example: "Anzeige b = Pedro → für alle anderen Fragen kommt b nicht mehr in Frage." },
+      { label: "Always answer",        template: "Never leave an answer blank — even if unsure, mark something.", example: "No point deductions for wrong answers in Reading!" },
+      { label: "50/50 on True/False",  template: "For True/False: if unsure, choose False — statements are often worded too extremely to be true.", example: "'always', 'never', 'all' in a statement → usually FALSE" },
+      { label: "Matching: eliminate",  template: "For Part 2: cross out ads you've already matched to narrow down choices.", example: "Ad b = Pedro → ad b can't be used for any other question." },
     ],
   },
 ];
 
 export default function ReadingPage() {
+  const [mode, setMode] = useState<"lesson" | "exam">("lesson");
   const [setIdx, setSetIdx] = useRandomIndex(readingExamSets.length);
   const parts = readingExamSets[setIdx].parts;
   const { scores, save } = useExamScore();
   const [partScores, setPartScores] = useState<(number | null)[]>([null, null, null]);
   const [allResults, setAllResults] = useState<QuestionResult[]>([]);
   const [sessionSaved, setSessionSaved] = useState(false);
-  const timer = useExamTimer(25, true);
+  const timer = useExamTimer(25, false);
 
   const nextSet = () => {
     setSetIdx((i) => (i + 1) % readingExamSets.length);
@@ -90,6 +92,10 @@ export default function ReadingPage() {
   const sectionTotal = parts.reduce((a, p) => a + p.questions.length, 0);
   const sectionEarned = partScores.reduce<number>((a, s) => a + (s ?? 0), 0);
   const allPartsScored = partScores.every((s) => s !== null);
+
+  if (mode === "lesson") {
+    return <LessonView groups={TIPS} sectionName="Reading (Lesen)" accent="blue" onStart={() => { setMode("exam"); timer.start(); }} />;
+  }
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -131,10 +137,6 @@ export default function ReadingPage() {
             </div>
           );
         })}
-      </div>
-
-      <div className="mb-8">
-        <PatternTips groups={TIPS} accent="blue" />
       </div>
 
       <div className="space-y-10">

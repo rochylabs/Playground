@@ -8,81 +8,82 @@ import { useExamScore } from "@/hooks/useExamScore";
 import { useExamTimer } from "@/hooks/useExamTimer";
 import ExamTimer from "@/components/ExamTimer";
 import { SpeakingPart1, SpeakingPart2, SpeakingPart3 } from "@/components/SpeakingCard";
-import PatternTips, { type PatternGroup } from "@/components/PatternTips";
+import LessonView from "@/components/LessonView";
+import { type PatternGroup } from "@/components/PatternTips";
 
 const TIPS: PatternGroup[] = [
   {
-    title: "Teil 1 — Sich vorstellen",
+    title: "Part 1 — Self-Introduction",
     emoji: "🙋",
     color: "red",
     patterns: [
-      { label: "Name",     template: "Mein Name ist [Name]. / Ich heiße [Name].", example: "Mein Name ist Maria Reyes." },
-      { label: "Herkunft", template: "Ich komme aus [Land / Stadt].", example: "Ich komme aus den Philippinen, aus Manila." },
-      { label: "Wohnort",  template: "Ich wohne in [Stadt] / Ich lebe seit [Zeit] in [Stadt].", example: "Ich wohne seit einem Jahr in Berlin." },
-      { label: "Beruf",    template: "Ich bin [Beruf]. / Ich arbeite als [Beruf].", example: "Ich bin Lehrerin. / Ich arbeite als Ingenieur." },
-      { label: "Sprachen", template: "Ich spreche [Sprache] und lerne [Sprache].", example: "Ich spreche Englisch und lerne Deutsch." },
-      { label: "Hobbys",   template: "In meiner Freizeit [Verb + Aktivität].", example: "In meiner Freizeit spiele ich Gitarre." },
+      { label: "Name",      template: "My name is [Name]. / I'm [Name].",                                  example: "My name is Maria Reyes." },
+      { label: "Origin",    template: "I'm from [Country / City].",                                         example: "I'm from the Philippines, from Manila." },
+      { label: "Where you live", template: "I live in [City]. / I've been living in [City] for [time].", example: "I've been living in Berlin for a year." },
+      { label: "Job",       template: "I am a [job]. / I work as a [job].",                                example: "I'm a teacher. / I work as an engineer." },
+      { label: "Languages", template: "I speak [language] and I'm learning [language].",                   example: "I speak English and I'm learning German." },
+      { label: "Hobbies",   template: "In my free time I [verb + activity].",                              example: "In my free time I play guitar." },
     ],
   },
   {
-    title: "Teil 2 — Fragen stellen (Thema + Stichwort)",
+    title: "Part 2 — Asking Questions (Topic + Keyword)",
     emoji: "❓",
     color: "orange",
     patterns: [
-      { label: "Was?",     template: "Was ist dein/Ihr [Stichwort]?",              example: "Was ist dein Lieblingsessen?" },
-      { label: "Wie?",     template: "Wie [Verb] du/Sie [Stichwort]?",             example: "Wie fährst du zur Arbeit?" },
-      { label: "Wo?",      template: "Wo [Verb] du/Sie [Stichwort]?",              example: "Wo wohnst du gerne?" },
-      { label: "Hast du?", template: "Hast du / Haben Sie [Stichwort]?",           example: "Hast du Geschwister?" },
-      { label: "Magst du?",template: "Was magst du / mögen Sie am liebsten [Kontext]?", example: "Welche Stadt magst du am liebsten?" },
-      { label: "Machst du?",template: "Machst du / Machen Sie [Stichwort]?",      example: "Machst du Sport?" },
+      { label: "What?",       template: "What is your [keyword]?",                              example: "What is your favourite food?" },
+      { label: "How?",        template: "How do you [verb] [keyword]?",                         example: "How do you get to work?" },
+      { label: "Where?",      template: "Where do you [verb] [keyword]?",                       example: "Where do you like to live?" },
+      { label: "Do you have?",template: "Do you have [keyword]?",                               example: "Do you have siblings?" },
+      { label: "Do you like?",template: "What do you like most about [context]?",               example: "Which city do you like the most?" },
+      { label: "Do you do?",  template: "Do you [keyword]?",                                    example: "Do you do sport?" },
     ],
   },
   {
-    title: "Teil 3 — Bitten (eine Bitte stellen)",
+    title: "Part 3 — Making a Request",
     emoji: "🙏",
     color: "blue",
     patterns: [
-      { label: "Können Sie / Kannst du?", template: "Können Sie / Kannst du bitte [Infinitiv]?", example: "Kannst du mir bitte einen Stift leihen?" },
-      { label: "Darf ich?",   template: "Darf ich bitte [Infinitiv]?",       example: "Darf ich bitte kurz Ihr Telefon benutzen?" },
-      { label: "Ich hätte gern", template: "Ich hätte gern [Objekt], bitte.", example: "Ich hätte gern ein Glas Wasser, bitte." },
-      { label: "Haben Sie?",  template: "Haben Sie [Objekt] für mich?",      example: "Haben Sie ein Wörterbuch für mich?" },
-      { label: "Helfen",      template: "Können Sie mir bitte helfen? Ich [Problem].", example: "Können Sie mir bitte helfen? Ich suche den Bahnhof." },
+      { label: "Can you...?",     template: "Can you / Could you please [infinitive]?",         example: "Could you lend me a pen, please?" },
+      { label: "May I...?",       template: "May I please [infinitive]?",                       example: "May I use your phone for a moment, please?" },
+      { label: "I'd like...",     template: "I'd like [object], please.",                       example: "I'd like a glass of water, please." },
+      { label: "Do you have...?", template: "Do you have [object] for me?",                    example: "Do you have a dictionary for me?" },
+      { label: "Help",            template: "Could you help me, please? I [problem].",          example: "Could you help me, please? I'm looking for the train station." },
     ],
   },
   {
-    title: "Teil 3 — Verboten (erklären, was nicht erlaubt ist)",
+    title: "Part 3 — Prohibited (explaining what's not allowed)",
     emoji: "🚫",
     color: "red",
     patterns: [
-      { label: "Das ist verboten",  template: "Tut mir leid, das ist hier leider verboten.",               example: "Tut mir leid, das ist hier leider verboten." },
-      { label: "Darf man nicht",    template: "Hier darf man nicht [Infinitiv].",                          example: "Hier darf man nicht rauchen." },
-      { label: "Nicht erlaubt",     template: "Das ist hier leider nicht erlaubt.",                        example: "Fotografieren ist hier leider nicht erlaubt." },
-      { label: "Bitte + Schild",    template: "Bitte lesen Sie das Schild — [Was] ist hier verboten.",     example: "Bitte lesen Sie das Schild — Rauchen ist hier verboten." },
-      { label: "Kombination",       template: "Tut mir leid, aber hier darf man nicht [Infinitiv]. [Erklärung].", example: "Tut mir leid, aber hier darf man nicht essen. Das ist die Ruhezone." },
+      { label: "That's forbidden",   template: "I'm sorry, that's unfortunately not allowed here.",            example: "I'm sorry, that's unfortunately not allowed here." },
+      { label: "You can't...",        template: "You're not allowed to [infinitive] here.",                    example: "You're not allowed to smoke here." },
+      { label: "Not permitted",       template: "That's unfortunately not permitted here.",                    example: "Photography is unfortunately not permitted here." },
+      { label: "Please + sign",       template: "Please read the sign — [what] is forbidden here.",           example: "Please read the sign — smoking is forbidden here." },
+      { label: "Combination",         template: "I'm sorry, but you're not allowed to [infinitive] here. [Explanation].", example: "I'm sorry, but you're not allowed to eat here. This is the quiet zone." },
     ],
   },
   {
-    title: "Teil 3 — Reagieren (auf eine Bitte antworten)",
+    title: "Part 3 — Responding to a Request",
     emoji: "💬",
     color: "green",
     patterns: [
-      { label: "Ja, gerne",      template: "Ja, natürlich. / Ja, gerne! Hier bitte.",           example: "Ja, natürlich! Hier ist mein Stift." },
-      { label: "Kein Problem",   template: "Kein Problem. / Das mache ich gerne.",               example: "Kein Problem. Ich passe kurz auf Ihre Tasche auf." },
-      { label: "Leider nein",    template: "Tut mir leid, das geht leider nicht, weil [Grund].", example: "Tut mir leid, ich habe kein Ladekabel dabei." },
-      { label: "Alternative",    template: "Das geht leider nicht, aber [Alternative].",         example: "Das geht leider nicht, aber Sie können Zimmer 302 nehmen." },
+      { label: "Yes, of course",  template: "Yes, of course. / Sure! Here you go.",                          example: "Yes, of course! Here's my pen." },
+      { label: "No problem",      template: "No problem. / I'm happy to help.",                               example: "No problem. I'll watch your bag for a moment." },
+      { label: "Unfortunately no",template: "I'm sorry, that's unfortunately not possible because [reason].", example: "I'm sorry, I don't have a charger with me." },
+      { label: "Alternative",     template: "That's not possible, but [alternative].",                        example: "That's not possible, but you can take room 302." },
     ],
   },
   {
-    title: "🆘 Wenn Sie nicht wissen / nicht verstehen",
+    title: "🆘 When you don't know / don't understand",
     emoji: "🆘",
     color: "purple",
     patterns: [
-      { label: "Ich verstehe nicht",  template: "Entschuldigung, ich verstehe das nicht ganz. Können Sie das bitte wiederholen?", example: "Können Sie das bitte langsamer sagen?" },
-      { label: "Ich bin nicht sicher",template: "Ich bin nicht sicher, aber ich glaube, [Antwort].",   example: "Ich bin nicht sicher, aber ich glaube, das ist ein Café." },
-      { label: "Auf dem Bild sehe ich",template: "Auf dem Bild sehe ich [Person / Ort / Objekt].",     example: "Auf dem Bild sehe ich eine Person in einem Restaurant." },
-      { label: "Ich denke",           template: "Ich denke, hier ist [Ort / Situation]. Vielleicht ...", example: "Ich denke, hier ist ein Supermarkt. Vielleicht kauft die Person Lebensmittel." },
-      { label: "Wie sagt man?",       template: "Wie sagt man [Wort] auf Deutsch?",                    example: "Wie sagt man 'ticket' auf Deutsch?" },
-      { label: "Noch einmal bitte",   template: "Können Sie das bitte noch einmal sagen? / Wie bitte?", example: "Wie bitte? Ich habe das nicht verstanden." },
+      { label: "I don't understand",   template: "Excuse me, I don't quite understand. Could you repeat that, please?", example: "Could you say that more slowly, please?" },
+      { label: "I'm not sure",         template: "I'm not sure, but I think [answer].",                               example: "I'm not sure, but I think that's a café." },
+      { label: "In the picture I see", template: "In the picture I can see [person / place / object].",               example: "In the picture I can see a person in a restaurant." },
+      { label: "I think",              template: "I think this is [place / situation]. Maybe ...",                    example: "I think this is a supermarket. Maybe the person is buying food." },
+      { label: "How do you say?",      template: "How do you say [word] in German?",                                  example: "How do you say 'ticket' in German?" },
+      { label: "Once more please",     template: "Could you say that again, please? / Pardon?",                       example: "Pardon? I didn't understand that." },
     ],
   },
 ];
@@ -100,18 +101,23 @@ const SELF_RATINGS = [
 ];
 
 export default function SpeakingPage() {
+  const [mode, setMode] = useState<"lesson" | "exam">("lesson");
   const [setIdx, setSetIdx] = useRandomIndex(speakingExamSets.length);
   const { part1, part2, part3 } = speakingExamSets[setIdx];
   const { scores, save } = useExamScore();
   const [partRatings, setPartRatings] = useState<(number | null)[]>([null, null, null]);
   const [sessionSaved, setSessionSaved] = useState(false);
 
-  const timer = useExamTimer(15, true);
+  const timer = useExamTimer(15, false);
   const nextSet = () => { setSetIdx((i) => (i + 1) % speakingExamSets.length); setPartRatings([null, null, null]); setSessionSaved(false); timer.reset(); };
 
   const sectionEarned = partRatings.reduce<number>((a, r, i) => a + (r !== null ? Math.round(SPEAKING_PARTS[i].max * r) : 0), 0);
   const sectionTotal = SPEAKING_PARTS.reduce((a, p) => a + p.max, 0);
   const allRated = partRatings.every((r) => r !== null);
+
+  if (mode === "lesson") {
+    return <LessonView groups={TIPS} sectionName="Speaking (Sprechen)" accent="red" onStart={() => { setMode("exam"); timer.start(); }} />;
+  }
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -138,17 +144,12 @@ export default function SpeakingPage() {
         </div>
       </div>
 
-      <div className="mb-8">
-        <PatternTips groups={TIPS} accent="red" />
-      </div>
-
       <div className="space-y-10">
         <div id="sprechen-teil-1" key={`${setIdx}-1`}><SpeakingPart1 data={part1} /></div>
         <div id="sprechen-teil-2" key={`${setIdx}-2`}><SpeakingPart2 data={part2} /></div>
         <div id="sprechen-teil-3" key={`${setIdx}-3`}><SpeakingPart3 data={part3} /></div>
       </div>
 
-      {/* Self-assessment */}
       {!sessionSaved && (
         <div className="mt-8 rounded-xl border border-red-200 bg-red-50 p-5 space-y-4">
           <p className="font-bold text-red-800">Selbstbewertung — Wie gut hast du gesprochen?</p>

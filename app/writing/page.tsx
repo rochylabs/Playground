@@ -9,71 +9,72 @@ import { useExamTimer } from "@/hooks/useExamTimer";
 import ExamTimer from "@/components/ExamTimer";
 import WritingPart1 from "@/components/WritingPart1";
 import WritingPart2 from "@/components/WritingPart2";
-import PatternTips, { type PatternGroup } from "@/components/PatternTips";
+import LessonView from "@/components/LessonView";
+import { type PatternGroup } from "@/components/PatternTips";
 
 const TIPS: PatternGroup[] = [
   {
-    title: "Teil 1 — Formular ausfüllen (Steckbrief)",
+    title: "Part 1 — Fill in the Form",
     emoji: "📝",
     color: "yellow",
     patterns: [
-      { label: "Abschreiben, nicht umschreiben", template: "Schreiben Sie die Information GENAU aus dem Steckbrief — keine eigenen Wörter.", example: "Steckbrief: 'österreichisch' → Formular: 'österreichisch' ✓ (nicht 'Österreich')" },
-      { label: "Format beachten", template: "Datum: TT.MM.JJJJ / Telefon: mit Vorwahl / Name: Groß geschrieben", example: "14.07.1988 ✓ / 14 Juli 1988 ✗ (falsches Format)" },
-      { label: "Vollständig ausfüllen", template: "Lassen Sie kein Feld leer — auch wenn die Information im Steckbrief fehlt.", example: "Alle 5 Felder müssen ausgefüllt sein." },
+      { label: "Copy, don't rephrase", template: "Write the information EXACTLY as it appears in the profile — no own words.", example: "Profile: 'Austrian' → Form: 'Austrian' ✓ (not 'Austria')" },
+      { label: "Watch the format", template: "Date: DD.MM.YYYY / Phone: include area code / Name: capitalized", example: "14.07.1988 ✓ / 14 July 1988 ✗ (wrong format)" },
+      { label: "Fill in completely", template: "Leave no field empty — all 5 fields must be filled in.", example: "Even if an item seems obvious, write it in." },
     ],
   },
   {
-    title: "Teil 2 — E-Mail schreiben (~30 Wörter)",
+    title: "Part 2 — Write an Email (~30 words)",
     emoji: "📧",
     color: "orange",
     patterns: [
-      { label: "Anrede",       template: "Liebe/r [Name], (informell) / Sehr geehrte Damen und Herren, (formell)",  example: "Lieber Peter, / Liebe Maria, / Sehr geehrte Damen und Herren," },
-      { label: "Danken",       template: "Vielen Dank für [Akkusativ]. / Danke für Ihre/deine [Sache].",            example: "Vielen Dank für die Einladung. / Danke für deine Nachricht." },
-      { label: "Absage",       template: "Leider kann ich nicht [kommen / teilnehmen], weil [Grund].",              example: "Leider kann ich nicht kommen, weil ich arbeiten muss." },
-      { label: "Vorschlag",    template: "Können wir uns [Zeit] treffen? / Wie wäre es mit [Alternativvorschlag]?", example: "Können wir uns am Freitag treffen? / Wie wäre es am Mittwoch?" },
-      { label: "Bitte/Anfrage",template: "Ich möchte [Infinitiv]. / Könnten Sie bitte [Infinitiv]?",               example: "Ich möchte das Zimmer besichtigen. / Könnten Sie mir bitte antworten?" },
-      { label: "Abschluss",    template: "Liebe Grüße, [Name] (informell) / Mit freundlichen Grüßen, [Name] (formell)", example: "Liebe Grüße, Maria / Mit freundlichen Grüßen, Herr Mendez" },
+      { label: "Greeting",   template: "Dear [Name], (informal) / Dear Sir or Madam, (formal)",                example: "Dear Peter, / Dear Maria, / Dear Sir or Madam," },
+      { label: "Thank",      template: "Thank you very much for [noun]. / Thanks for your [thing].",            example: "Thank you for the invitation. / Thanks for your message." },
+      { label: "Decline",    template: "Unfortunately I can't [come / attend] because [reason].",               example: "Unfortunately I can't come because I have to work." },
+      { label: "Suggestion", template: "Can we meet [time]? / How about [alternative]?",                       example: "Can we meet on Friday? / How about Wednesday?" },
+      { label: "Request",    template: "I would like to [infinitive]. / Could you please [infinitive]?",        example: "I'd like to view the room. / Could you please reply?" },
+      { label: "Closing",    template: "Best regards, [Name] (informal) / Yours sincerely, [Name] (formal)",   example: "Best regards, Maria / Yours sincerely, Mr. Mendez" },
     ],
   },
   {
-    title: "Alle 3 Punkte ansprechen",
+    title: "Address all 3 points",
     emoji: "✅",
     color: "green",
     patterns: [
-      { label: "Punkt 1",  template: "Beginnen Sie mit dem ersten Punkt — oft: sich bedanken oder das Problem erklären.", example: "Vielen Dank für die Einladung." },
-      { label: "Punkt 2",  template: "Zweiter Satz: der Hauptinhalt (Absage, Anfrage, Erklärung).",                    example: "Leider kann ich nicht kommen, weil ich krank bin." },
-      { label: "Punkt 3",  template: "Dritter Satz: Frage oder Vorschlag — etwas, das eine Reaktion erwartet.",        example: "Können wir uns nächste Woche treffen?" },
-      { label: "Wörter zählen", template: "Schreiben Sie ca. 30 Wörter — 25–40 Wörter sind akzeptabel.",             example: "Zu kurz (unter 20 Wörter) kostet Punkte. Zu lang ist kein Problem." },
+      { label: "Point 1",       template: "Start with the first point — often: say thank you or explain the situation.", example: "Thank you for the invitation." },
+      { label: "Point 2",       template: "Second sentence: the main content (decline, request, explanation).",          example: "Unfortunately I can't come because I'm sick." },
+      { label: "Point 3",       template: "Third sentence: a question or suggestion — something that expects a reply.",  example: "Can we meet next week?" },
+      { label: "Word count",    template: "Write approximately 30 words — 25–40 words is acceptable.",                  example: "Too short (under 20 words) loses points. Too long is fine." },
     ],
   },
   {
-    title: "🆘 Wenn Sie nicht wissen, was schreiben",
+    title: "🆘 When you don't know what to write",
     emoji: "🆘",
     color: "purple",
     patterns: [
-      { label: "Standard-Absage",   template: "Leider kann ich nicht kommen, weil ich [Grund] muss.",               example: "...weil ich arbeiten muss. / ...weil ich einen Termin habe." },
-      { label: "Standard-Grund",    template: "Ich muss [Aktivität]. / Ich bin krank. / Ich habe einen Termin.",     example: "Ich muss meine Familie besuchen. / Ich bin leider krank." },
-      { label: "Standard-Vorschlag",template: "Können wir uns [Zeitangabe] treffen, vielleicht am [Wochentag]?",    example: "Können wir uns nächste Woche treffen, vielleicht am Montag?" },
-      { label: "Standard-Anfrage",  template: "Wann haben Sie / hast du Zeit? Ich bin [Zeitangabe] frei.",          example: "Ich bin nächste Woche frei. Wann passt es dir?" },
+      { label: "Standard decline",    template: "Unfortunately I can't come because I have to [reason].",          example: "...because I have to work. / ...because I have an appointment." },
+      { label: "Standard reason",     template: "I have to [activity]. / I'm sick. / I have an appointment.",     example: "I have to visit my family. / I'm unfortunately sick." },
+      { label: "Standard suggestion", template: "Can we meet [timeframe], maybe on [day of the week]?",           example: "Can we meet next week, maybe on Monday?" },
+      { label: "Standard request",    template: "When are you / is your free time? I'm free [timeframe].",        example: "I'm free next week. When works for you?" },
     ],
   },
 ];
 
 export default function WritingPage() {
+  const [mode, setMode] = useState<"lesson" | "exam">("lesson");
   const [setIdx, setSetIdx] = useRandomIndex(writingExamSets.length);
   const { part1, part2 } = writingExamSets[setIdx];
   const { scores, save } = useExamScore();
   const [partScores, setPartScores] = useState<(number | null)[]>([null, null]);
   const [sessionSaved, setSessionSaved] = useState(false);
 
-  const timer = useExamTimer(20, true);
+  const timer = useExamTimer(20, false);
   const nextSet = () => { setSetIdx((i) => (i + 1) % writingExamSets.length); setPartScores([null, null]); setSessionSaved(false); timer.reset(); };
 
   const handlePartScore = (idx: number, earned: number, outOf: number) => {
-    // scale to section total (part1: 5pts, part2: 10pts = 15 total)
     const scaled = idx === 0
       ? Math.round((earned / outOf) * part1.points)
-      : earned; // part2 self-assessed in points directly
+      : earned;
     setPartScores((prev) => { const next = [...prev]; next[idx] = scaled; return next; });
     setSessionSaved(false);
   };
@@ -81,6 +82,10 @@ export default function WritingPage() {
   const sectionEarned = partScores.reduce<number>((a, s) => a + (s ?? 0), 0);
   const sectionTotal = part1.points + part2.points;
   const allPartsScored = partScores.every((s) => s !== null);
+
+  if (mode === "lesson") {
+    return <LessonView groups={TIPS} sectionName="Writing (Schreiben)" accent="yellow" onStart={() => { setMode("exam"); timer.start(); }} />;
+  }
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -118,10 +123,6 @@ export default function WritingPage() {
             </div>
           );
         })}
-      </div>
-
-      <div className="mb-8">
-        <PatternTips groups={TIPS} accent="yellow" />
       </div>
 
       <div className="space-y-10">
