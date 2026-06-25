@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { speakingExamSets } from "@/data/speaking";
-import { useRandomIndex } from "@/hooks/useRandomIndex";
 import { useExamScore } from "@/hooks/useExamScore";
 import { useExamTimer } from "@/hooks/useExamTimer";
 import ExamTimer from "@/components/ExamTimer";
@@ -102,7 +101,7 @@ const SELF_RATINGS = [
 
 export default function SpeakingPage() {
   const [mode, setMode] = useState<"lesson" | "exam">("lesson");
-  const [setIdx, setSetIdx] = useRandomIndex(speakingExamSets.length);
+  const [setIdx, setSetIdx] = useState(() => Math.floor(Math.random() * speakingExamSets.length));
   const { part1, part2, part3 } = speakingExamSets[setIdx];
   const { scores, save } = useExamScore();
   const [partRatings, setPartRatings] = useState<(number | null)[]>([null, null, null]);
@@ -126,7 +125,7 @@ export default function SpeakingPage() {
           <span className="text-2xl">🎤</span>
           <h1 className="text-2xl font-bold text-gray-900">Sprechen</h1>
           <span className="text-xs font-semibold bg-red-100 text-red-700 rounded-full px-3 py-1">25 Punkte · 15 Minuten</span>
-          <ExamTimer {...timer} onStart={timer.start} onPause={timer.pause} onReset={timer.reset} />
+          <ExamTimer {...timer} />
           <button
             onClick={nextSet}
             className="ml-auto flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-red-400 text-red-700 text-xs font-semibold hover:bg-red-50 transition-colors"

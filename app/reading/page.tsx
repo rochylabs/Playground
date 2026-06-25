@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { readingExamSets } from "@/data/reading";
-import { useRandomIndex } from "@/hooks/useRandomIndex";
 import { useExamScore } from "@/hooks/useExamScore";
 import { useExamTimer } from "@/hooks/useExamTimer";
 import ExamTimer from "@/components/ExamTimer";
@@ -67,7 +66,7 @@ const TIPS: PatternGroup[] = [
 
 export default function ReadingPage() {
   const [mode, setMode] = useState<"lesson" | "exam">("lesson");
-  const [setIdx, setSetIdx] = useRandomIndex(readingExamSets.length);
+  const [setIdx, setSetIdx] = useState(() => Math.floor(Math.random() * readingExamSets.length));
   const parts = readingExamSets[setIdx].parts;
   const { scores, save } = useExamScore();
   const [partScores, setPartScores] = useState<(number | null)[]>([null, null, null]);
@@ -104,7 +103,7 @@ export default function ReadingPage() {
           <span className="text-2xl">📖</span>
           <h1 className="text-2xl font-bold text-gray-900">Lesen</h1>
           <span className="text-xs font-semibold bg-blue-100 text-blue-700 rounded-full px-3 py-1">15 Punkte · 25 Minuten</span>
-          <ExamTimer {...timer} onStart={timer.start} onPause={timer.pause} onReset={timer.reset} />
+          <ExamTimer {...timer} />
           <button
             onClick={nextSet}
             className="ml-auto flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-blue-400 text-blue-700 text-xs font-semibold hover:bg-blue-50 transition-colors"

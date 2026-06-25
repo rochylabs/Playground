@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { writingExamSets } from "@/data/writing";
-import { useRandomIndex } from "@/hooks/useRandomIndex";
 import { useExamScore } from "@/hooks/useExamScore";
 import { useExamTimer } from "@/hooks/useExamTimer";
 import ExamTimer from "@/components/ExamTimer";
@@ -62,7 +61,7 @@ const TIPS: PatternGroup[] = [
 
 export default function WritingPage() {
   const [mode, setMode] = useState<"lesson" | "exam">("lesson");
-  const [setIdx, setSetIdx] = useRandomIndex(writingExamSets.length);
+  const [setIdx, setSetIdx] = useState(() => Math.floor(Math.random() * writingExamSets.length));
   const { part1, part2 } = writingExamSets[setIdx];
   const { scores, save } = useExamScore();
   const [partScores, setPartScores] = useState<(number | null)[]>([null, null]);
@@ -94,7 +93,7 @@ export default function WritingPage() {
           <span className="text-2xl">✏️</span>
           <h1 className="text-2xl font-bold text-gray-900">Schreiben</h1>
           <span className="text-xs font-semibold bg-yellow-100 text-yellow-700 rounded-full px-3 py-1">15 Punkte · 20 Minuten</span>
-          <ExamTimer {...timer} onStart={timer.start} onPause={timer.pause} onReset={timer.reset} />
+          <ExamTimer {...timer} />
           <button
             onClick={nextSet}
             className="ml-auto flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-yellow-400 text-yellow-700 text-xs font-semibold hover:bg-yellow-50 transition-colors"
