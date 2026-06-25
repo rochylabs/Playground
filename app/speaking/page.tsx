@@ -7,7 +7,8 @@ import { useExamScore } from "@/hooks/useExamScore";
 import { useExamTimer } from "@/hooks/useExamTimer";
 import ExamTimer from "@/components/ExamTimer";
 import { SpeakingPart1, SpeakingPart2, SpeakingPart3 } from "@/components/SpeakingCard";
-import LessonView from "@/components/LessonView";
+import TipsOverview from "@/components/TipsOverview";
+import PartLesson, { type PartLessonContent } from "@/components/PartLesson";
 import { type PatternGroup } from "@/components/PatternTips";
 
 const TIPS: PatternGroup[] = [
@@ -87,6 +88,93 @@ const TIPS: PatternGroup[] = [
   },
 ];
 
+const PART_LESSONS: PartLessonContent[] = [
+  {
+    partName: "Part 1 — Self-Introduction",
+    intro: "In Part 1 you introduce yourself to the examiner using a keyword card. You'll see 6 topics (name, origin, city, job, languages, hobbies) and speak one or two sentences about each. Speak clearly and don't rush — the examiner wants to hear you, not test your speed.",
+    tips: [TIPS[0]],
+    workedExample: {
+      setup: "Keyword card shows: \"Wohnort\" (where you live)",
+      question: "What do you say for this keyword?",
+      steps: [
+        "See the keyword: 'Wohnort' — this asks where you live now.",
+        "Choose your template: 'Ich wohne in [Stadt].' or 'Ich lebe seit [Zeit] in [Stadt].'",
+        "Fill in your real information: 'Ich wohne in Berlin.' or 'Ich lebe seit zwei Jahren in München.'",
+        "Say it clearly — one or two sentences is perfect. Don't over-explain.",
+      ],
+      answer: "✅ 'Ich wohne in Berlin.' — short, clear, complete. You can add one detail: 'Ich lebe seit einem Jahr in Berlin.' But one sentence is always enough for each keyword.",
+    },
+    tryIt: {
+      setup: "Keyword card shows: \"Sprachen\" (languages)",
+      question: "Which sentence best answers this keyword?",
+      options: [
+        "Ich spreche Englisch und lerne Deutsch.",
+        "Sprachen sind sehr wichtig für die Arbeit.",
+        "Ich bin Lehrerin.",
+      ],
+      answer: "Ich spreche Englisch und lerne Deutsch.",
+      hint: "Use the template: 'Ich spreche [language] und lerne [language].' — fill in YOUR languages. Don't define the word or give an unrelated answer.",
+      explanation: "✅ 'Ich spreche Englisch und lerne Deutsch.' — directly answers 'Sprachen' using the right template. Option 2 talks about languages in general (not personal). Option 3 gives your job — completely off-topic. Always stay personal and use the keyword as your guide.",
+    },
+  },
+  {
+    partName: "Part 2 — Asking Questions (Topic + Keyword)",
+    intro: "In Part 2 you draw a picture card showing a theme and keyword. You form a question about that keyword and ask your partner (or the examiner). Use simple question words — Was? Wie? Wo? Wann? — to build your question.",
+    tips: [TIPS[1]],
+    workedExample: {
+      setup: "Picture card shows:\nTheme: Essen (Food)\nKeyword: Lieblingsessen (favourite food)",
+      question: "What question do you ask?",
+      steps: [
+        "See the theme (Essen) and keyword (Lieblingsessen). Your task: form a question about this keyword.",
+        "Choose a question word: 'Lieblingsessen' is a thing/preference → 'Was?' (What?) fits perfectly.",
+        "Build the question: 'Was ist dein Lieblingsessen?' (informal) or 'Was ist Ihr Lieblingsessen?' (formal).",
+        "Say it naturally — don't overthink it. One clear question is all you need.",
+      ],
+      answer: "✅ 'Was ist dein Lieblingsessen?' — uses 'Was?' for preference/thing questions. Simple and direct. You could also say 'Was isst du am liebsten?' (What do you like to eat most?) — both work.",
+    },
+    tryIt: {
+      setup: "Picture card shows:\nTheme: Sport\nKeyword: trainieren (to train / exercise)",
+      question: "Which is the best question to ask about this keyword?",
+      options: [
+        "Wie oft trainierst du?",
+        "Trainieren ist sehr gesund.",
+        "Was ist dein Name?",
+      ],
+      answer: "Wie oft trainierst du?",
+      hint: "Think about what information you'd want to know about someone's training habits. Use Wie? (How?), Wann? (When?), or Was? (What?). Avoid statements and off-topic questions.",
+      explanation: "✅ 'Wie oft trainierst du?' (How often do you train?) — directly relates to 'trainieren' using 'Wie?' Option 2 is a statement, not a question. Option 3 is completely off-topic. Always form a question using the keyword as your topic.",
+    },
+  },
+  {
+    partName: "Part 3 — Situations (Bitten / Verboten / Reagieren)",
+    intro: "In Part 3 you draw situation cards — each one asks you to do something different: make a request (Bitten), explain something is forbidden (Verboten), or respond to someone else's request (Reagieren). Read the card type badge first — it tells you exactly what to do.",
+    tips: [TIPS[2], TIPS[3], TIPS[4]],
+    workedExample: {
+      setup: "Card type: VERBOTEN 🚫\nSituation: Someone is about to eat food in the library reading room.",
+      question: "What do you say?",
+      steps: [
+        "Read the card type first: 'Verboten' → your job is to explain that something is NOT allowed.",
+        "Choose your template: 'Tut mir leid, aber hier darf man nicht [verb].' — polite but clear.",
+        "Fill in the action: eating = 'essen'. → 'Tut mir leid, aber hier darf man nicht essen.'",
+        "Optional: add an explanation. 'Das ist die Ruhezone.' — makes your answer more complete.",
+      ],
+      answer: "✅ 'Tut mir leid, aber hier darf man nicht essen. Das ist die Ruhezone.' — politely explains the rule and gives a reason. Always start with 'Tut mir leid' (I'm sorry) to be polite, then state the rule.",
+    },
+    tryIt: {
+      setup: "Card type: REAGIEREN 💬\nSituation: Your partner says — 'Kannst du bitte kurz auf meine Tasche aufpassen?'",
+      question: "Which response is correct for a 'Reagieren' card?",
+      options: [
+        "Ja, natürlich. Kein Problem!",
+        "Tut mir leid, aber hier darf man nicht essen.",
+        "Können Sie mir bitte helfen?",
+      ],
+      answer: "Ja, natürlich. Kein Problem!",
+      hint: "For 'Reagieren', someone asked YOU something. You need to respond — either agree or politely decline. Look for the option that directly responds to the request.",
+      explanation: "✅ 'Ja, natürlich. Kein Problem!' — responds directly to the request to watch the bag. Option 2 is a 'Verboten' response (wrong card type). Option 3 is making a request (Bitten) — not responding to one. Always match your response to the card type shown.",
+    },
+  },
+];
+
 const SPEAKING_PARTS = [
   { label: "Teil 1 – Sich vorstellen", max: 8 },
   { label: "Teil 2 – Thema & Fragen",  max: 8 },
@@ -99,24 +187,58 @@ const SELF_RATINGS = [
   { label: "Schwach",  pct: 0.35, emoji: "😓" },
 ];
 
+type Phase = { stage: "overview" } | { stage: "lesson"; partIdx: number } | { stage: "exam"; partIdx: number };
+
 export default function SpeakingPage() {
-  const [mode, setMode] = useState<"lesson" | "exam">("lesson");
+  const [phase, setPhase] = useState<Phase>({ stage: "overview" });
   const [setIdx, setSetIdx] = useState(() => Math.floor(Math.random() * speakingExamSets.length));
   const { part1, part2, part3 } = speakingExamSets[setIdx];
   const { scores, save } = useExamScore();
   const [partRatings, setPartRatings] = useState<(number | null)[]>([null, null, null]);
   const [sessionSaved, setSessionSaved] = useState(false);
-
   const timer = useExamTimer(15, false);
-  const nextSet = () => { setSetIdx((i) => (i + 1) % speakingExamSets.length); setPartRatings([null, null, null]); setSessionSaved(false); timer.reset(); };
+
+  const nextSet = () => {
+    setSetIdx((i) => (i + 1) % speakingExamSets.length);
+    setPartRatings([null, null, null]);
+    setSessionSaved(false);
+    setPhase({ stage: "overview" });
+    timer.reset();
+  };
+
+  const handleRating = (idx: number, pct: number) => {
+    setPartRatings((prev) => { const next = [...prev]; next[idx] = pct; return next; });
+  };
+
+  const handlePartDone = (idx: number) => {
+    const nextIdx = idx + 1;
+    if (nextIdx < 3) setPhase({ stage: "lesson", partIdx: nextIdx });
+  };
 
   const sectionEarned = partRatings.reduce<number>((a, r, i) => a + (r !== null ? Math.round(SPEAKING_PARTS[i].max * r) : 0), 0);
   const sectionTotal = SPEAKING_PARTS.reduce((a, p) => a + p.max, 0);
   const allRated = partRatings.every((r) => r !== null);
 
-  if (mode === "lesson") {
-    return <LessonView groups={TIPS} sectionName="Speaking (Sprechen)" accent="red" onStart={() => { setMode("exam"); timer.start(); }} />;
+  if (phase.stage === "overview") {
+    return <TipsOverview groups={TIPS} accent="red" sectionName="Speaking — Sprechen" onStart={() => setPhase({ stage: "lesson", partIdx: 0 })} />;
   }
+
+  if (phase.stage === "lesson") {
+    const { partIdx } = phase;
+    return (
+      <PartLesson
+        content={PART_LESSONS[partIdx]}
+        accent="red"
+        onReady={() => {
+          if (partIdx === 0) timer.start();
+          setPhase({ stage: "exam", partIdx });
+        }}
+      />
+    );
+  }
+
+  const { partIdx } = phase as { stage: "exam"; partIdx: number };
+  const sp = SPEAKING_PARTS[partIdx];
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -126,65 +248,61 @@ export default function SpeakingPage() {
           <h1 className="text-2xl font-bold text-gray-900">Sprechen</h1>
           <span className="text-xs font-semibold bg-red-100 text-red-700 rounded-full px-3 py-1">25 Punkte · 15 Minuten</span>
           <ExamTimer {...timer} />
-          <button
-            onClick={nextSet}
-            className="ml-auto flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-red-400 text-red-700 text-xs font-semibold hover:bg-red-50 transition-colors"
-          >
+          <button onClick={nextSet} className="ml-auto flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-red-400 text-red-700 text-xs font-semibold hover:bg-red-50 transition-colors">
             🔀 Neues Übungsset <span className="text-red-400">({setIdx + 1}/{speakingExamSets.length})</span>
           </button>
         </div>
-        <p className="text-gray-500 text-sm mt-1">
-          Der Prüfungsteil <strong>Sprechen</strong> hat drei Aufgaben. Lesen Sie jede Karte laut vor und vergleichen Sie mit der Musterlösung.
-        </p>
-        <div className="mt-3 flex gap-2 text-xs">
-          <a href="#sprechen-teil-1" className="px-3 py-1 rounded-full bg-red-100 text-red-700 font-semibold hover:bg-red-200 transition-colors">Aufgabe 1</a>
-          <a href="#sprechen-teil-2" className="px-3 py-1 rounded-full bg-red-100 text-red-700 font-semibold hover:bg-red-200 transition-colors">Aufgabe 2</a>
-          <a href="#sprechen-teil-3" className="px-3 py-1 rounded-full bg-red-100 text-red-700 font-semibold hover:bg-red-200 transition-colors">Aufgabe 3</a>
+        <div className="mt-3 flex gap-2 flex-wrap text-xs">
+          {SPEAKING_PARTS.map((p, i) => {
+            const done = partRatings[i] !== null;
+            const active = (phase as { stage: "exam"; partIdx: number }).partIdx === i;
+            return (
+              <span key={i} className={`px-3 py-1 rounded-full font-semibold border transition-colors ${done ? "bg-red-100 text-red-700 border-red-300" : active ? "bg-red-600 text-white border-red-600" : "bg-gray-100 text-gray-400 border-gray-200"}`}>
+                {done ? "✅" : ""} {p.label}
+              </span>
+            );
+          })}
         </div>
       </div>
 
-      <div className="space-y-10">
-        <div id="sprechen-teil-1" key={`${setIdx}-1`}><SpeakingPart1 data={part1} /></div>
-        <div id="sprechen-teil-2" key={`${setIdx}-2`}><SpeakingPart2 data={part2} /></div>
-        <div id="sprechen-teil-3" key={`${setIdx}-3`}><SpeakingPart3 data={part3} /></div>
+      <div className="space-y-8">
+        {partIdx === 0 && <SpeakingPart1 data={part1} />}
+        {partIdx === 1 && <SpeakingPart2 data={part2} />}
+        {partIdx === 2 && <SpeakingPart3 data={part3} />}
       </div>
 
-      {!sessionSaved && (
-        <div className="mt-8 rounded-xl border border-red-200 bg-red-50 p-5 space-y-4">
-          <p className="font-bold text-red-800">Selbstbewertung — Wie gut hast du gesprochen?</p>
-          <p className="text-sm text-red-700">Vergleiche deine Antworten mit den Musterlösungen und bewerte dich ehrlich.</p>
-          {SPEAKING_PARTS.map((sp, idx) => (
-            <div key={idx}>
-              <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5">{sp.label} (max. {sp.max} Pkt.)</p>
-              <div className="flex flex-wrap gap-2">
-                {SELF_RATINGS.map((r) => {
-                  const pts = Math.round(sp.max * r.pct);
-                  const selected = partRatings[idx] === r.pct;
-                  return (
-                    <button key={r.label}
-                      onClick={() => setPartRatings((prev) => { const next = [...prev]; next[idx] = r.pct; return next; })}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-sm font-semibold transition-colors ${
-                        selected ? "bg-red-100 border-red-500 text-red-800" : "border-gray-300 text-gray-600 hover:border-red-400 hover:bg-red-50"
-                      }`}
-                    >
-                      {r.emoji} {r.label} ({pts} Pkt.)
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-          {allRated && (
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-red-200">
-              <p className="font-bold text-red-800">Gesamt: {sectionEarned} / {sectionTotal} Punkte</p>
-              <button
-                onClick={() => { save("sprechen", sectionEarned, sectionTotal); setSessionSaved(true); }}
-                className="px-5 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-semibold transition-colors"
-              >
-                Ergebnis speichern ✓
-              </button>
-            </div>
-          )}
+      {/* Self-assessment for current part */}
+      {!sessionSaved && partRatings[partIdx] === null && (
+        <div className="mt-8 rounded-xl border border-red-200 bg-red-50 p-5 space-y-3">
+          <p className="font-bold text-red-800">Rate yourself — {sp.label} (max. {sp.max} pts)</p>
+          <p className="text-sm text-red-700">Compare your answer to the model, then rate honestly.</p>
+          <div className="flex flex-wrap gap-2">
+            {SELF_RATINGS.map((r) => {
+              const pts = Math.round(sp.max * r.pct);
+              return (
+                <button key={r.label}
+                  onClick={() => {
+                    handleRating(partIdx, r.pct);
+                    if (partIdx < 2) handlePartDone(partIdx);
+                  }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-sm font-semibold border-gray-300 text-gray-600 hover:border-red-400 hover:bg-red-50 transition-colors"
+                >
+                  {r.emoji} {r.label} ({pts} pts)
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Show all parts rated — save result */}
+      {allRated && !sessionSaved && (
+        <div className="mt-6 rounded-xl border border-red-300 bg-red-50 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <p className="font-bold text-red-800">Gesamt: {sectionEarned} / {sectionTotal} Punkte</p>
+          <button onClick={() => { save("sprechen", sectionEarned, sectionTotal); setSessionSaved(true); }}
+            className="px-5 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-semibold transition-colors">
+            Ergebnis speichern ✓
+          </button>
         </div>
       )}
       {sessionSaved && (
@@ -192,7 +310,6 @@ export default function SpeakingPage() {
           <div className="text-4xl mb-2">✅</div>
           <p className="font-bold text-green-800 text-lg">Sprechen abgeschlossen!</p>
           <p className="text-green-700 text-sm mt-1">{scores.sprechen.earned} / {scores.sprechen.total} Punkte gespeichert</p>
-          <p className="text-gray-500 text-sm mt-2">Wähle deinen nächsten Prüfungsteil auf der Startseite.</p>
           <Link href="/" className="mt-4 inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm font-semibold transition-colors">
             ← Zurück zur Startseite
           </Link>

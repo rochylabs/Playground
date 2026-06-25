@@ -8,7 +8,8 @@ import { useExamTimer } from "@/hooks/useExamTimer";
 import ExamTimer from "@/components/ExamTimer";
 import WritingPart1 from "@/components/WritingPart1";
 import WritingPart2 from "@/components/WritingPart2";
-import LessonView from "@/components/LessonView";
+import TipsOverview from "@/components/TipsOverview";
+import PartLesson, { type PartLessonContent } from "@/components/PartLesson";
 import { type PatternGroup } from "@/components/PatternTips";
 
 const TIPS: PatternGroup[] = [
@@ -59,32 +60,112 @@ const TIPS: PatternGroup[] = [
   },
 ];
 
+const PART_LESSONS: PartLessonContent[] = [
+  {
+    partName: "Part 1 — Fill in the Form",
+    intro: "In Part 1 you read a short profile text about a person and fill in 5 fields on a form. The rule is simple: copy exactly what you see. Don't rephrase, don't add extra words, and always use the right format.",
+    tips: [TIPS[0]],
+    workedExample: {
+      setup: "Profile text:\n\"Mein Name ist Carlos Ruiz. Ich bin am 12. März 1990 in Madrid geboren. Ich wohne jetzt in Hamburg und meine Handynummer ist 0176 234567.\"",
+      question: "Form field: \"Geburtsdatum:\" — What do you write?",
+      steps: [
+        "Find the field label: 'Geburtsdatum' means date of birth. You're looking for a date in the profile.",
+        "Find the date in the text: '12. März 1990' — that's the birth date.",
+        "Format it correctly: the form uses DD.MM.YYYY. 'März' = March = 03.",
+        "Write: 12.03.1990 — exactly in that format. Don't write '12. März 1990' or 'March 12'.",
+      ],
+      answer: "12.03.1990 ✅ — Always convert month names to numbers and use dots as separators. The format matters — wrong format = wrong answer.",
+    },
+    tryIt: {
+      setup: "Same profile text:\n\"Mein Name ist Carlos Ruiz. Ich bin am 12. März 1990 in Madrid geboren. Ich wohne jetzt in Hamburg und meine Handynummer ist 0176 234567.\"\n\nForm field: \"Wohnort:\"",
+      question: "What do you write in the 'Wohnort' (place of residence) field?",
+      options: ["Hamburg", "Madrid", "Hamburg, Deutschland"],
+      answer: "Hamburg",
+      hint: "Where does Carlos live NOW? Look for the verb 'wohne' (live) in the text. Is it Madrid or Hamburg?",
+      explanation: "'Hamburg' ✅ — Carlos was BORN in Madrid, but he LIVES in Hamburg ('Ich wohne jetzt in Hamburg'). Don't confuse birthplace with current residence. Also: write only 'Hamburg', not 'Hamburg, Deutschland' — copy only what's in the text.",
+    },
+  },
+  {
+    partName: "Part 2 — Write an Email (~30 words)",
+    intro: "In Part 2 you write a short email (around 30 words) responding to a situation. You must address 3 specific points. Use simple, clear sentences — one sentence per point is perfect.",
+    tips: [TIPS[1], TIPS[2]],
+    workedExample: {
+      setup: "Task: Your friend invited you to their birthday party on Saturday. You can't come because you have to work. Suggest meeting next week instead.\n\nPoints to address:\n1. Thank for the invitation\n2. Decline with a reason\n3. Suggest an alternative",
+      question: "Write the complete email (~30 words):",
+      steps: [
+        "Start with a greeting: 'Liebe/r [Name],' — use 'Liebe' for female, 'Lieber' for male names.",
+        "Point 1 — Thank: 'Vielen Dank für die Einladung zu deiner Geburtstagsparty.'",
+        "Point 2 — Decline + reason: 'Leider kann ich nicht kommen, weil ich arbeiten muss.' The 'weil' (because) structure is key.",
+        "Point 3 — Suggest: 'Können wir uns nächste Woche treffen?' — a question that expects a reply.",
+        "Close: 'Liebe Grüße, [Your Name]' — always end with a closing.",
+      ],
+      answer: "✅ Model email:\n\"Lieber Tom, vielen Dank für die Einladung zu deiner Geburtstagsparty. Leider kann ich nicht kommen, weil ich arbeiten muss. Können wir uns nächste Woche treffen? Liebe Grüße, Maria\"\n\n32 words — all 3 points covered.",
+    },
+    tryIt: {
+      setup: "Task: A colleague invited you to lunch tomorrow. You can't make it (you have a doctor's appointment). Propose Thursday instead.\n\nPoint 2 is: Decline with a reason.",
+      question: "Which sentence correctly handles Point 2 — decline with reason?",
+      options: [
+        "Leider kann ich nicht kommen, weil ich einen Arzttermin habe.",
+        "Ich gehe morgen zum Arzt.",
+        "Leider habe ich keine Zeit für Mittagessen.",
+      ],
+      answer: "Leider kann ich nicht kommen, weil ich einen Arzttermin habe.",
+      hint: "A good decline sentence has two parts: 1) the decline itself ('Leider kann ich nicht kommen') and 2) the reason using 'weil' (because). Do all three options have both parts?",
+      explanation: "✅ 'Leider kann ich nicht kommen, weil ich einen Arzttermin habe.' — this has both parts: the decline + the specific reason with 'weil'. Option 2 only states the reason without declining. Option 3 declines but the reason is vague ('keine Zeit'). Always use the 'Leider kann ich nicht... weil...' structure.",
+    },
+  },
+];
+
+type Phase = { stage: "overview" } | { stage: "lesson"; partIdx: number } | { stage: "exam"; partIdx: number };
+
 export default function WritingPage() {
-  const [mode, setMode] = useState<"lesson" | "exam">("lesson");
+  const [phase, setPhase] = useState<Phase>({ stage: "overview" });
   const [setIdx, setSetIdx] = useState(() => Math.floor(Math.random() * writingExamSets.length));
   const { part1, part2 } = writingExamSets[setIdx];
   const { scores, save } = useExamScore();
   const [partScores, setPartScores] = useState<(number | null)[]>([null, null]);
   const [sessionSaved, setSessionSaved] = useState(false);
-
   const timer = useExamTimer(20, false);
-  const nextSet = () => { setSetIdx((i) => (i + 1) % writingExamSets.length); setPartScores([null, null]); setSessionSaved(false); timer.reset(); };
+
+  const nextSet = () => {
+    setSetIdx((i) => (i + 1) % writingExamSets.length);
+    setPartScores([null, null]);
+    setSessionSaved(false);
+    setPhase({ stage: "overview" });
+    timer.reset();
+  };
 
   const handlePartScore = (idx: number, earned: number, outOf: number) => {
-    const scaled = idx === 0
-      ? Math.round((earned / outOf) * part1.points)
-      : earned;
+    const scaled = idx === 0 ? Math.round((earned / outOf) * part1.points) : earned;
     setPartScores((prev) => { const next = [...prev]; next[idx] = scaled; return next; });
     setSessionSaved(false);
+    const nextIdx = idx + 1;
+    if (nextIdx < 2) setPhase({ stage: "lesson", partIdx: nextIdx });
   };
 
   const sectionEarned = partScores.reduce<number>((a, s) => a + (s ?? 0), 0);
   const sectionTotal = part1.points + part2.points;
   const allPartsScored = partScores.every((s) => s !== null);
 
-  if (mode === "lesson") {
-    return <LessonView groups={TIPS} sectionName="Writing (Schreiben)" accent="yellow" onStart={() => { setMode("exam"); timer.start(); }} />;
+  if (phase.stage === "overview") {
+    return <TipsOverview groups={TIPS} accent="yellow" sectionName="Writing — Schreiben" onStart={() => setPhase({ stage: "lesson", partIdx: 0 })} />;
   }
+
+  if (phase.stage === "lesson") {
+    const { partIdx } = phase;
+    return (
+      <PartLesson
+        content={PART_LESSONS[partIdx]}
+        accent="yellow"
+        onReady={() => {
+          if (partIdx === 0) timer.start();
+          setPhase({ stage: "exam", partIdx });
+        }}
+      />
+    );
+  }
+
+  const { partIdx } = phase as { stage: "exam"; partIdx: number };
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -94,43 +175,34 @@ export default function WritingPage() {
           <h1 className="text-2xl font-bold text-gray-900">Schreiben</h1>
           <span className="text-xs font-semibold bg-yellow-100 text-yellow-700 rounded-full px-3 py-1">15 Punkte · 20 Minuten</span>
           <ExamTimer {...timer} />
-          <button
-            onClick={nextSet}
-            className="ml-auto flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-yellow-400 text-yellow-700 text-xs font-semibold hover:bg-yellow-50 transition-colors"
-          >
+          <button onClick={nextSet} className="ml-auto flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-yellow-400 text-yellow-700 text-xs font-semibold hover:bg-yellow-50 transition-colors">
             🔀 Neues Übungsset <span className="text-yellow-500">({setIdx + 1}/{writingExamSets.length})</span>
           </button>
         </div>
-        <p className="text-gray-500 text-sm mt-1">
-          Der Prüfungsteil <strong>Schreiben</strong> hat zwei Aufgaben: ein Formular ausfüllen und eine kurze E-Mail schreiben.
-        </p>
-        <div className="mt-3 flex gap-2 text-xs">
-          <a href="#schreiben-teil-1" className="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 font-semibold hover:bg-yellow-200 transition-colors">Aufgabe 1</a>
-          <a href="#schreiben-teil-2" className="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 font-semibold hover:bg-yellow-200 transition-colors">Aufgabe 2</a>
+        <div className="mt-3 flex gap-2 flex-wrap text-xs">
+          {[{ label: "Aufgabe 1 — Formular" }, { label: "Aufgabe 2 — E-Mail" }].map((p, i) => {
+            const done = partScores[i] !== null;
+            const active = phase.stage === "exam" && (phase as { stage: "exam"; partIdx: number }).partIdx === i;
+            return (
+              <span key={i} className={`px-3 py-1 rounded-full font-semibold border transition-colors ${done ? "bg-yellow-100 text-yellow-700 border-yellow-300" : active ? "bg-yellow-500 text-white border-yellow-500" : "bg-gray-100 text-gray-400 border-gray-200"}`}>
+                {done ? "✅" : ""} {p.label}
+              </span>
+            );
+          })}
         </div>
-      </div>
-
-      {/* Part progress tracker */}
-      <div className="mb-6 flex flex-wrap gap-2">
-        {[{ label: "Aufgabe 1 — Formular", pts: part1.points }, { label: "Aufgabe 2 — E-Mail", pts: part2.points }].map((p, idx) => {
-          const done = partScores[idx] !== null;
-          return (
-            <div key={idx} className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-semibold transition-colors ${done ? "bg-yellow-50 border-yellow-300 text-yellow-700" : "bg-gray-50 border-gray-200 text-gray-400"}`}>
-              <span>{done ? "✅" : `${idx + 1}.`}</span>
-              <span>{p.label}</span>
-              {done && <span className="font-bold whitespace-nowrap">{partScores[idx]}/{p.pts}</span>}
-            </div>
-          );
-        })}
       </div>
 
       <div className="space-y-10">
-        <div id="schreiben-teil-1" key={`${setIdx}-1`}>
-          <WritingPart1 data={part1} onSubmit={(earned, total) => handlePartScore(0, earned, total)} />
-        </div>
-        <div id="schreiben-teil-2" key={`${setIdx}-2`}>
-          <WritingPart2 data={part2} onSubmit={(earned) => handlePartScore(1, earned, 10)} />
-        </div>
+        {partIdx === 0 && (
+          <div key={`${setIdx}-1`} id="schreiben-teil-1">
+            <WritingPart1 data={part1} onSubmit={(earned, total) => handlePartScore(0, earned, total)} />
+          </div>
+        )}
+        {partIdx === 1 && (
+          <div key={`${setIdx}-2`} id="schreiben-teil-2">
+            <WritingPart2 data={part2} onSubmit={(earned) => handlePartScore(1, earned, 10)} />
+          </div>
+        )}
       </div>
 
       {allPartsScored && !sessionSaved && (
@@ -139,10 +211,8 @@ export default function WritingPage() {
             <p className="font-bold text-yellow-800">Schreiben abgeschlossen — {sectionEarned} / {sectionTotal} Punkte</p>
             <p className="text-sm text-yellow-700 mt-0.5">Speichere dein Ergebnis, um es in der Gesamtauswertung zu sehen.</p>
           </div>
-          <button
-            onClick={() => { save("schreiben", sectionEarned, sectionTotal); setSessionSaved(true); }}
-            className="flex-shrink-0 px-5 py-2 rounded-lg bg-yellow-600 hover:bg-yellow-700 text-white text-sm font-semibold transition-colors"
-          >
+          <button onClick={() => { save("schreiben", sectionEarned, sectionTotal); setSessionSaved(true); }}
+            className="flex-shrink-0 px-5 py-2 rounded-lg bg-yellow-600 hover:bg-yellow-700 text-white text-sm font-semibold transition-colors">
             Ergebnis speichern ✓
           </button>
         </div>
@@ -152,7 +222,6 @@ export default function WritingPage() {
           <div className="text-4xl mb-2">✅</div>
           <p className="font-bold text-green-800 text-lg">Schreiben abgeschlossen!</p>
           <p className="text-green-700 text-sm mt-1">{scores.schreiben.earned} / {scores.schreiben.total} Punkte gespeichert</p>
-          <p className="text-gray-500 text-sm mt-2">Wähle deinen nächsten Prüfungsteil auf der Startseite.</p>
           <Link href="/" className="mt-4 inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm font-semibold transition-colors">
             ← Zurück zur Startseite
           </Link>
