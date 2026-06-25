@@ -14,53 +14,53 @@ import { type PatternGroup } from "@/components/PatternTips";
 
 const TIPS: PatternGroup[] = [
   {
-    title: "Strategy — Before Listening",
+    title: "Strategie — Vor dem Hören — Before Listening",
     emoji: "📋",
     color: "green",
     patterns: [
-      { label: "Read questions first", template: "Read the tasks BEFORE you listen to the audio.", example: "Read: 'When does the train leave?' → then listen specifically for a time." },
-      { label: "Keywords", template: "Highlight key words in the question: Who? What? When? Where?", example: "Question: 'Where is the cheese?' → keyword: location (aisle, shelf, next to...)" },
-      { label: "Scan all options", template: "Quickly look at all answer choices (a, b, c) before listening.", example: "If all options are times → listen especially for numbers." },
+      { label: "Fragen zuerst lesen — Read questions first", template: "Lesen Sie die Aufgaben BEVOR Sie den Text hören.", translation: "Read the tasks BEFORE you listen to the audio.", example: "Lesen: 'Wann fährt der Zug?' → dann gezielt auf eine Uhrzeit hören." },
+      { label: "Schlüsselwörter — Keywords", template: "Schlüsselwörter in der Frage markieren: Wer? Was? Wann? Wo?", translation: "Highlight key words in the question: Who? What? When? Where?", example: "Frage: 'Wo ist der Käse?' → Schlüsselwort: Ort (Gang, Regal, neben...)" },
+      { label: "Antworten vorbereiten — Scan all options", template: "Alle Antwortmöglichkeiten (a, b, c) kurz anschauen.", translation: "Quickly look at all answer choices (a, b, c) before listening.", example: "Alle Optionen sind Uhrzeiten → besonders auf Zahlen achten." },
     ],
   },
   {
-    title: "Part 1 — Short Dialogues (Multiple Choice)",
+    title: "Teil 1 — Kurze Gespräche (Multiple Choice)",
     emoji: "💬",
     color: "blue",
     patterns: [
-      { label: "Numbers & times", template: "Pay attention to numbers, times, prices — they're often the answer.", example: "'at 2:32 PM' / 'costs €18.50' / 'aisle 3'" },
-      { label: "Distraction", template: "The first answer mentioned is often wrong — listen for the last piece of information.", example: "First they say 3 PM, then correct: 'No, at 4 PM.'" },
-      { label: "Who says what?", template: "Listen to who is speaking — seller? customer? That matters for the answer.", example: "Question: 'What does Mr. Klein do?' → only Mr. Klein's statements count." },
+      { label: "Zahlen & Zeiten — Numbers & times", template: "Auf Zahlen, Zeiten, Preise achten — sie sind oft die Antwort.", translation: "Pay attention to numbers, times, prices — they're often the answer.", example: "'um 14:32 Uhr' / 'kostet 18,50 Euro' / 'Gang 3'" },
+      { label: "Ablenkung — Distraction", template: "Die erste Antwort im Gespräch ist oft falsch — auf die letzte Information achten.", translation: "The first answer mentioned is often wrong — listen for the last piece of information.", example: "Erst: 15 Uhr, dann Korrektur: 'Nein, um 16 Uhr.'" },
+      { label: "Wer sagt was? — Who says what?", template: "Hören: Wer spricht — Verkäufer? Kunde? Das ist wichtig für die Antwort.", translation: "Listen to who is speaking — seller? customer? That matters for the answer.", example: "Frage: 'Was macht Herr Klein?' → nur Herrn Kleins Aussagen zählen." },
     ],
   },
   {
-    title: "Part 2 — Announcements (True / False)",
+    title: "Teil 2 — Ansagen (Richtig / Falsch)",
     emoji: "📢",
     color: "yellow",
     patterns: [
-      { label: "Read carefully", template: "False = the announcement says it DIFFERENTLY — even if it sounds similar.", example: "'one hour earlier' ≠ 'two hours earlier' → false!" },
-      { label: "Watch out: numbers", template: "Pay attention to differences in numbers, days, and times.", example: "Track 7 ≠ Track 17 / 10 minutes ≠ 10 o'clock" },
-      { label: "Only in the announcement?", template: "The statement must come directly from the audio — don't guess!", example: "If the audio only says '1 hour earlier' → '2 hours earlier' is FALSE." },
+      { label: "Genau hören — Listen carefully", template: "Falsch = die Ansage sagt es ANDERS — auch wenn es ähnlich klingt.", translation: "False = the announcement says it DIFFERENTLY — even if it sounds similar.", example: "'eine Stunde früher' ≠ 'zwei Stunden früher' → falsch!" },
+      { label: "Achtung: Zahlen — Watch out: numbers", template: "Auf Unterschiede bei Zahlen, Tagen und Zeiten achten.", translation: "Pay attention to differences in numbers, days, and times.", example: "Gleis 7 ≠ Gleis 17 / 10 Minuten ≠ 10 Uhr" },
+      { label: "Nur aus der Ansage? — Only in the announcement?", template: "Die Aussage muss direkt aus dem Text kommen — nicht raten!", translation: "The statement must come directly from the audio — don't guess!", example: "Text sagt nur '1 Stunde früher' → '2 Stunden früher' ist FALSCH." },
     ],
   },
   {
-    title: "Part 3 — Voicemail Messages (Multiple Choice)",
+    title: "Teil 3 — Anrufbeantworter (Multiple Choice)",
     emoji: "📱",
     color: "orange",
     patterns: [
-      { label: "Who's calling?", template: "Listen first: Who is speaking? What is the message about?", example: "'this is Tanja' → friend / 'this is the doctor's office' → health" },
-      { label: "Main information", template: "The most important information usually comes at the beginning or end.", example: "'Please call me back!' → action required from the listener" },
-      { label: "Negation", template: "Watch for NOT: 'not at 3 PM, but at 4:30 PM'", example: "'does not start at 3 PM' → 3 PM is the WRONG answer!" },
+      { label: "Wer ruft an? — Who's calling?", template: "Zuerst hören: Wer spricht? Was ist das Thema der Nachricht?", translation: "Listen first: Who is speaking? What is the message about?", example: "'hier ist Tanja' → Freundin / 'hier ist die Arztpraxis' → Gesundheit" },
+      { label: "Hauptinformation — Main information", template: "Die wichtigste Information kommt meist am Anfang oder am Ende.", translation: "The most important information usually comes at the beginning or end.", example: "'Ruf mich bitte zurück!' → Aktion des Zuhörers" },
+      { label: "Verneinung — Negation", template: "Auf NICHT achten: 'nicht um 15 Uhr, sondern um 16:30 Uhr'", translation: "Watch for NOT: 'not at 3 PM, but at 4:30 PM'", example: "'beginnt nicht um 15 Uhr' → 15 Uhr ist die FALSCHE Antwort!" },
     ],
   },
   {
-    title: "🆘 When you don't know the answer",
+    title: "🆘 Wenn Sie die Antwort nicht wissen — When you don't know",
     emoji: "🆘",
     color: "purple",
     patterns: [
-      { label: "Guess!",          template: "No point deductions for wrong answers in Listening — always pick something.", example: "If unsure, choose the option you heard most often." },
-      { label: "Elimination",     template: "Cross out answers you can DEFINITELY rule out.", example: "You hear 'cheese' and 'milk' → option a (bread) is out." },
-      { label: "Use context",     template: "Use the setting: Where are the people? What are they buying/doing?", example: "Supermarket dialogue → answers relate to products or locations." },
+      { label: "Raten! — Guess!", template: "Im Hören gibt es keinen Punktabzug — immer eine Antwort wählen.", translation: "No point deductions for wrong answers in Listening — always pick something.", example: "Wenn unsicher: die Antwort wählen, die am häufigsten gehört wurde." },
+      { label: "Eliminieren — Elimination", template: "Antworten streichen, die SICHER ausgeschlossen werden können.", translation: "Cross out answers you can DEFINITELY rule out.", example: "'Käse' und 'Milch' gehört → Option a (Brot) fällt weg." },
+      { label: "Kontext nutzen — Use context", template: "Kontext nutzen: Wo sind die Personen? Was kaufen/machen sie?", translation: "Use the setting: Where are the people? What are they buying/doing?", example: "Supermarkt-Gespräch → Antworten beziehen sich auf Produkte oder Orte." },
     ],
   },
 ];

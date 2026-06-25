@@ -136,7 +136,10 @@ function TipsView({ content, accent, onNext }: { content: PartLessonContent; acc
               <p className="text-sm font-mono bg-gray-50 border border-gray-100 rounded-lg px-3 py-2 text-gray-800 leading-relaxed">
                 {p.template}
               </p>
-              <p className="text-xs text-gray-500 italic">e.g.: {p.example}</p>
+              {p.translation && (
+                <p className="text-xs text-gray-400 italic">{p.translation}</p>
+              )}
+              <p className="text-xs text-gray-500 italic">z.B.: {p.example}</p>
             </div>
           </div>
         ))}

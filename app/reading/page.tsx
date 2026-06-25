@@ -14,53 +14,53 @@ import { type PatternGroup } from "@/components/PatternTips";
 
 const TIPS: PatternGroup[] = [
   {
-    title: "General Strategy",
+    title: "Allgemeine Strategie — General Strategy",
     emoji: "📋",
     color: "blue",
     patterns: [
-      { label: "Read questions first", template: "Read the statements/tasks FIRST, then read the text.", example: "That way you know exactly what to look for as you read." },
-      { label: "Keywords", template: "Underline key words in the statement and scan for them in the text.", example: "Statement: 'three days' → look for date references in the text." },
-      { label: "Trap: similar words", template: "Watch out! Similar words ≠ same meaning.", example: "'one hour earlier' in the text ≠ 'two hours earlier' in the statement → FALSE" },
+      { label: "Fragen zuerst lesen — Read questions first", template: "Lesen Sie die Aussagen/Aufgaben ZUERST, dann den Text.", translation: "Read the statements/tasks FIRST, then the text.", example: "So wissen Sie, worauf Sie beim Lesen achten müssen. (You'll know exactly what to look for.)" },
+      { label: "Schlüsselwörter — Keywords", template: "Unterstreichen Sie Schlüsselwörter in der Aussage und suchen Sie sie im Text.", translation: "Underline key words in the statement and scan for them in the text.", example: "Aussage: 'drei Tage' → Datumsangaben im Text suchen." },
+      { label: "Falle: ähnliche Wörter — Trap: similar words", template: "Achtung! Ähnliche Wörter ≠ gleiche Bedeutung.", translation: "Watch out! Similar words ≠ same meaning.", example: "'eine Stunde früher' im Text ≠ 'zwei Stunden früher' in der Aussage → FALSCH" },
     ],
   },
   {
-    title: "Part 1 — True / False (short texts)",
+    title: "Teil 1 — Richtig / Falsch (kurze Texte)",
     emoji: "✅",
     color: "green",
     patterns: [
-      { label: "True = stated in the text", template: "Only mark True if it is EXACTLY stated in the text — don't guess.", example: "Text: 'until 2:00 PM' → Statement: 'all day long' → FALSE" },
-      { label: "Compare numbers", template: "Compare numbers, days, times, and amounts precisely.", example: "'March 3–5' = 3 days ✓ / 'due to a celebration' when text says 'renovations' → ✗" },
-      { label: "Negation", template: "Watch for 'not', 'no', 'unfortunately' — they completely change the meaning.", example: "'Children are NOT allowed alone' ≠ 'Children are allowed alone'" },
+      { label: "Richtig = steht im Text — True = stated in text", template: "Nur Richtig, wenn es GENAU im Text steht — nicht raten.", translation: "Only True if it is EXACTLY stated in the text — don't guess.", example: "Text: 'bis 14:00 Uhr' → Aussage: 'den ganzen Tag' → FALSCH" },
+      { label: "Zahlen vergleichen — Compare numbers", template: "Zahlen, Tage, Zeiten und Mengen genau vergleichen.", translation: "Compare numbers, days, times, and amounts precisely.", example: "'3 bis 5. März' = 3 Tage ✓ / 'wegen Feier' wenn Text 'Umbauarbeiten' sagt → ✗" },
+      { label: "Verneinung — Negation", template: "Achtung auf 'nicht', 'kein', 'leider' — sie ändern die Bedeutung komplett.", translation: "Watch for 'not', 'no', 'unfortunately' — they completely change the meaning.", example: "'Kinder dürfen NICHT alleine' ≠ 'Kinder dürfen alleine'" },
     ],
   },
   {
-    title: "Part 2 — Matching (Ads a–f)",
+    title: "Teil 2 — Zuordnung (Anzeigen a–f)",
     emoji: "🔗",
     color: "yellow",
     patterns: [
-      { label: "Person → Ad", template: "Read about the person: What are they looking for? When are they free? What do they need?", example: "Pedro works during the day → look for evening class → Ad a (6:30 PM)" },
-      { label: "Option X", template: "If no ad fits → write X. Each ad can only be used once (except X).", example: "Looking for a sports trainer? No matching ad → X" },
-      { label: "Check all details", template: "Check ALL details: price, time, location, topic.", example: "Anna wants to cook on SATURDAYS → Saturday class ✓ / Monday class ✗" },
+      { label: "Person → Anzeige — Person → Ad", template: "Person lesen: Was sucht sie? Wann hat sie Zeit? Was braucht sie?", translation: "Read about the person: What are they looking for? When are they free? What do they need?", example: "Pedro arbeitet tagsüber → Abendkurs suchen → Anzeige a (18:30 Uhr)" },
+      { label: "Option X", template: "Wenn keine Anzeige passt → X schreiben. Jede Anzeige max. 1× (außer X).", translation: "If no ad fits → write X. Each ad can only be used once (except X).", example: "Sporttrainerin gesucht? Keine Anzeige passt → X" },
+      { label: "Alle Details prüfen — Check all details", template: "ALLE Details prüfen: Preis, Zeit, Ort, Thema.", translation: "Check ALL details: price, time, location, topic.", example: "Anna möchte SAMSTAGS kochen → Kurs am Samstag ✓ / Kurs am Montag ✗" },
     ],
   },
   {
-    title: "Part 3 — True / False (longer text / email)",
+    title: "Teil 3 — Richtig / Falsch (längerer Text / E-Mail)",
     emoji: "📧",
     color: "orange",
     patterns: [
-      { label: "One paragraph per question", template: "Each statement usually refers to a specific section of the text.", example: "Statement 1 → introduction, Statement 2 → paragraph 2, etc." },
-      { label: "Watch out: 'almost correct'", template: "Statements can be 'almost correct' — one wrong detail makes them FALSE.", example: "Text: 'rides a bicycle' → Statement: 'takes the subway' → FALSE" },
-      { label: "Not in text = false", template: "If the information is not mentioned in the text → it cannot be 'true'.", example: "Text doesn't mention a dog → 'She has a dog' → FALSE" },
+      { label: "Absatz pro Frage — One paragraph per question", template: "Jede Aussage bezieht sich meist auf einen bestimmten Abschnitt des Textes.", translation: "Each statement usually refers to a specific section of the text.", example: "Aussage 1 → Einleitung, Aussage 2 → Absatz 2 usw." },
+      { label: "Vorsicht: 'fast richtig' — Watch out: 'almost correct'", template: "Aussagen können 'fast richtig' sein — ein falsches Detail macht sie FALSCH.", translation: "Statements can be 'almost correct' — one wrong detail makes them FALSE.", example: "Text: 'fährt mit dem Fahrrad' → Aussage: 'fährt mit der U-Bahn' → FALSCH" },
+      { label: "Nicht im Text = falsch — Not in text = false", template: "Wenn die Information nicht im Text steht → kann nicht 'richtig' sein.", translation: "If the information is not mentioned in the text → it cannot be 'true'.", example: "Text erwähnt keinen Hund → 'Sie hat einen Hund' → FALSCH" },
     ],
   },
   {
-    title: "🆘 When you don't know the answer",
+    title: "🆘 Wenn Sie die Antwort nicht wissen — When you don't know",
     emoji: "🆘",
     color: "purple",
     patterns: [
-      { label: "Always answer",        template: "Never leave an answer blank — even if unsure, mark something.", example: "No point deductions for wrong answers in Reading!" },
-      { label: "50/50 on True/False",  template: "For True/False: if unsure, choose False — statements are often worded too extremely to be true.", example: "'always', 'never', 'all' in a statement → usually FALSE" },
-      { label: "Matching: eliminate",  template: "For Part 2: cross out ads you've already matched to narrow down choices.", example: "Ad b = Pedro → ad b can't be used for any other question." },
+      { label: "Immer antworten — Always answer", template: "Keine Antwort leer lassen — auch wenn unsicher, immer ankreuzen.", translation: "Never leave an answer blank — even if unsure, mark something.", example: "Kein Punktabzug für falsche Antworten im Lesen!" },
+      { label: "50/50 bei R/F — 50/50 on True/False", template: "Bei Richtig/Falsch: wenn unsicher → 'Falsch' wählen. Aussagen sind oft zu extrem formuliert.", translation: "For True/False: if unsure, choose False — statements are often worded too extremely.", example: "'immer', 'nie', 'alle' in einer Aussage → meist FALSCH" },
+      { label: "Zuordnung: eliminieren — Matching: eliminate", template: "Anzeigen, die schon zugeordnet sind, streichen — so wird die Auswahl kleiner.", translation: "Cross out ads you've already matched to narrow down your choices.", example: "Anzeige b = Pedro → Anzeige b für alle anderen Fragen ausschließen." },
     ],
   },
 ];
