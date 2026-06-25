@@ -3,75 +3,76 @@
 import { useState } from "react";
 import Link from "next/link";
 import { listeningExamSets } from "@/data/listening";
-import { useRandomIndex } from "@/hooks/useRandomIndex";
 import { useExamScore } from "@/hooks/useExamScore";
 import { useExamTimer } from "@/hooks/useExamTimer";
 import ExamTimer from "@/components/ExamTimer";
 import ListeningExercise from "@/components/ListeningExercise";
 import WeakSpots, { type QuestionResult } from "@/components/WeakSpots";
-import PatternTips, { type PatternGroup } from "@/components/PatternTips";
+import LessonView from "@/components/LessonView";
+import { type PatternGroup } from "@/components/PatternTips";
 
 const TIPS: PatternGroup[] = [
   {
-    title: "Strategie — Vor dem Hören",
+    title: "Strategy — Before Listening",
     emoji: "📋",
     color: "green",
     patterns: [
-      { label: "Fragen zuerst lesen", template: "Lesen Sie die Aufgaben BEVOR Sie den Text hören.", example: "Lesen Sie: 'Wann fährt der Zug?' → suchen Sie dann eine Uhrzeit." },
-      { label: "Schlüsselwörter", template: "Markieren Sie Schlüsselwörter in der Frage: Wer? Was? Wann? Wo?", example: "Frage: 'Wo ist der Käse?' → Schlüsselwort: Ort (Gang, Regal, neben...)" },
-      { label: "Antworten vorbereiten", template: "Schauen Sie sich alle Optionen (a, b, c) kurz an.", example: "Wenn alle Optionen Uhrzeiten sind → hören Sie besonders auf Zahlen." },
+      { label: "Read questions first", template: "Read the tasks BEFORE you listen to the audio.", example: "Read: 'When does the train leave?' → then listen specifically for a time." },
+      { label: "Keywords", template: "Highlight key words in the question: Who? What? When? Where?", example: "Question: 'Where is the cheese?' → keyword: location (aisle, shelf, next to...)" },
+      { label: "Scan all options", template: "Quickly look at all answer choices (a, b, c) before listening.", example: "If all options are times → listen especially for numbers." },
     ],
   },
   {
-    title: "Teil 1 — Kurze Gespräche (Multiple Choice)",
+    title: "Part 1 — Short Dialogues (Multiple Choice)",
     emoji: "💬",
     color: "blue",
     patterns: [
-      { label: "Zahlen & Zeiten", template: "Achten Sie auf Zahlen, Zeiten, Preise — die sind oft die Antwort.", example: "'um 14:32 Uhr' / 'kostet 18,50 Euro' / 'Gang 3'" },
-      { label: "Ablenkung", template: "Die erste Antwort im Gespräch ist oft falsch — hören Sie auf die letzte Info.", example: "Erst sagen sie 15 Uhr, dann korrigieren sie: 'Nein, um 16 Uhr.'" },
-      { label: "Wer sagt was?", template: "Hören Sie, wer spricht — Verkäufer? Kunde? Das ist wichtig für die Antwort.", example: "Frage: 'Was macht Herr Klein?' → nur Herrn Kleins Aussagen zählen." },
+      { label: "Numbers & times", template: "Pay attention to numbers, times, prices — they're often the answer.", example: "'at 2:32 PM' / 'costs €18.50' / 'aisle 3'" },
+      { label: "Distraction", template: "The first answer mentioned is often wrong — listen for the last piece of information.", example: "First they say 3 PM, then correct: 'No, at 4 PM.'" },
+      { label: "Who says what?", template: "Listen to who is speaking — seller? customer? That matters for the answer.", example: "Question: 'What does Mr. Klein do?' → only Mr. Klein's statements count." },
     ],
   },
   {
-    title: "Teil 2 — Ansagen (Richtig / Falsch)",
+    title: "Part 2 — Announcements (True / False)",
     emoji: "📢",
     color: "yellow",
     patterns: [
-      { label: "Genau lesen", template: "Falsch = die Ansage sagt es ANDERS — auch wenn es ähnlich klingt.", example: "'eine Stunde früher' ≠ 'zwei Stunden früher' → falsch!" },
-      { label: "Achtung: Zahlen", template: "Achten Sie auf Unterschiede bei Zahlen, Tagen, Zeiten.", example: "Gleis 7 ≠ Gleis 17 / 10 Minuten ≠ 10 Uhr" },
-      { label: "Nur in der Ansage?", template: "Die Aussage muss direkt aus dem Text kommen — nicht raten!", example: "Wenn der Text nur '1 Stunde früher' sagt → '2 Stunden früher' ist FALSCH." },
+      { label: "Read carefully", template: "False = the announcement says it DIFFERENTLY — even if it sounds similar.", example: "'one hour earlier' ≠ 'two hours earlier' → false!" },
+      { label: "Watch out: numbers", template: "Pay attention to differences in numbers, days, and times.", example: "Track 7 ≠ Track 17 / 10 minutes ≠ 10 o'clock" },
+      { label: "Only in the announcement?", template: "The statement must come directly from the audio — don't guess!", example: "If the audio only says '1 hour earlier' → '2 hours earlier' is FALSE." },
     ],
   },
   {
-    title: "Teil 3 — Anrufbeantworter (Multiple Choice)",
+    title: "Part 3 — Voicemail Messages (Multiple Choice)",
     emoji: "📱",
     color: "orange",
     patterns: [
-      { label: "Wer ruft an?", template: "Hören Sie zuerst: Wer spricht? Was ist das Thema der Nachricht?", example: "'hier ist Tanja' → Freundin / 'hier ist die Arztpraxis' → Gesundheit" },
-      { label: "Hauptinfo", template: "Die wichtigste Information kommt meist am Anfang oder am Ende.", example: "'Ruf mich bitte zurück!' → Aktion des Zuhörers" },
-      { label: "Negation", template: "Achten Sie auf NICHT: 'nicht um 15 Uhr, sondern um 16:30 Uhr'", example: "'beginnt nicht um 15 Uhr' → 15 Uhr ist die FALSCHE Antwort!" },
+      { label: "Who's calling?", template: "Listen first: Who is speaking? What is the message about?", example: "'this is Tanja' → friend / 'this is the doctor's office' → health" },
+      { label: "Main information", template: "The most important information usually comes at the beginning or end.", example: "'Please call me back!' → action required from the listener" },
+      { label: "Negation", template: "Watch for NOT: 'not at 3 PM, but at 4:30 PM'", example: "'does not start at 3 PM' → 3 PM is the WRONG answer!" },
     ],
   },
   {
-    title: "🆘 Wenn Sie die Antwort nicht wissen",
+    title: "🆘 When you don't know the answer",
     emoji: "🆘",
     color: "purple",
     patterns: [
-      { label: "Raten Sie!",       template: "Im Hören gibt es keinen Punktabzug für falsche Antworten — raten Sie immer.", example: "Wenn Sie unsicher sind, wählen Sie die Antwort, die Sie am häufigsten gehört haben." },
-      { label: "Elimination",      template: "Streichen Sie die Antworten, die Sie SICHER ausschließen können.", example: "Sie hören 'Käse' und 'Milch' → Option a (Brot) fällt weg." },
-      { label: "Kontext nutzen",   template: "Nutzen Sie den Kontext: Wo sind die Personen? Was kaufen/machen sie?", example: "Im Supermarkt-Gespräch → Antworten beziehen sich auf Produkte oder Orte." },
+      { label: "Guess!",          template: "No point deductions for wrong answers in Listening — always pick something.", example: "If unsure, choose the option you heard most often." },
+      { label: "Elimination",     template: "Cross out answers you can DEFINITELY rule out.", example: "You hear 'cheese' and 'milk' → option a (bread) is out." },
+      { label: "Use context",     template: "Use the setting: Where are the people? What are they buying/doing?", example: "Supermarket dialogue → answers relate to products or locations." },
     ],
   },
 ];
 
 export default function ListeningPage() {
-  const [setIdx, setSetIdx] = useRandomIndex(listeningExamSets.length);
+  const [mode, setMode] = useState<"lesson" | "exam">("lesson");
+  const [setIdx, setSetIdx] = useState(() => Math.floor(Math.random() * listeningExamSets.length));
   const parts = listeningExamSets[setIdx];
   const { scores, save } = useExamScore();
   const [partScores, setPartScores] = useState<(number | null)[]>([null, null, null]);
   const [allResults, setAllResults] = useState<QuestionResult[]>([]);
   const [sessionSaved, setSessionSaved] = useState(false);
-  const timer = useExamTimer(20, true);
+  const timer = useExamTimer(20, false);
 
   const nextSet = () => {
     setSetIdx((i) => (i + 1) % listeningExamSets.length);
@@ -91,6 +92,10 @@ export default function ListeningPage() {
   const sectionEarned = partScores.reduce<number>((a, s) => a + (s ?? 0), 0);
   const allPartsScored = partScores.every((s) => s !== null);
 
+  if (mode === "lesson") {
+    return <LessonView groups={TIPS} sectionName="Listening (Hören)" accent="green" onStart={() => { setMode("exam"); timer.start(); }} />;
+  }
+
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
       <div className="mb-8">
@@ -98,7 +103,7 @@ export default function ListeningPage() {
           <span className="text-2xl">🎧</span>
           <h1 className="text-2xl font-bold text-gray-900">Hören</h1>
           <span className="text-xs font-semibold bg-green-100 text-green-700 rounded-full px-3 py-1">15 Punkte · 20 Minuten</span>
-          <ExamTimer {...timer} onStart={timer.start} onPause={timer.pause} onReset={timer.reset} />
+          <ExamTimer {...timer} />
           <button
             onClick={nextSet}
             className="ml-auto flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-green-400 text-green-700 text-xs font-semibold hover:bg-green-50 transition-colors"
@@ -133,10 +138,6 @@ export default function ListeningPage() {
         })}
       </div>
 
-      <div className="mb-8">
-        <PatternTips groups={TIPS} accent="green" />
-      </div>
-
       <div className="space-y-10">
         {parts.map((p, idx) => (
           <div key={`${setIdx}-${p.part}`} id={`hoeren-teil-${p.part}`}>
@@ -147,7 +148,6 @@ export default function ListeningPage() {
 
       {allResults.length > 0 && <WeakSpots results={allResults} />}
 
-      {/* Section completion */}
       {allPartsScored && !sessionSaved && (
         <div className="mt-8 rounded-xl border border-green-300 bg-green-50 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>

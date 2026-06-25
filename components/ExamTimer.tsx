@@ -5,14 +5,14 @@ interface Props {
   running: boolean;
   expired: boolean;
   timeLeft: number;
-  onStart: () => void;
-  onPause: () => void;
-  onReset: () => void;
+  start: () => void;
+  pause: () => void;
+  reset: () => void;
 }
 
-export default function ExamTimer({ display, running, expired, timeLeft, onStart, onPause, onReset }: Props) {
-  const urgent  = timeLeft <= 120 && timeLeft > 0; // < 2 min
-  const warning = timeLeft <= 300 && timeLeft > 120; // < 5 min
+export default function ExamTimer({ display, running, expired, timeLeft, start, pause, reset }: Props) {
+  const urgent  = timeLeft <= 120 && timeLeft > 0;
+  const warning = timeLeft <= 300 && timeLeft > 120;
 
   const colorCls = expired
     ? "bg-red-100 border-red-400 text-red-700"
@@ -29,14 +29,14 @@ export default function ExamTimer({ display, running, expired, timeLeft, onStart
       {expired ? (
         <span className="text-xs font-sans font-semibold ml-1">Zeit abgelaufen!</span>
       ) : running ? (
-        <button onClick={onPause} className="text-xs font-sans font-medium ml-1 hover:underline">Pause</button>
+        <button onClick={pause} className="text-xs font-sans font-medium ml-1 hover:underline">Pause</button>
       ) : (
-        <button onClick={onStart} className="text-xs font-sans font-medium ml-1 hover:underline">
+        <button onClick={start} className="text-xs font-sans font-medium ml-1 hover:underline">
           {timeLeft === 0 ? "" : "Start"}
         </button>
       )}
       {!running && timeLeft > 0 && timeLeft < 9999 && (
-        <button onClick={onReset} className="text-xs font-sans text-gray-400 hover:text-gray-600 ml-0.5">↺</button>
+        <button onClick={reset} className="text-xs font-sans text-gray-400 hover:text-gray-600 ml-0.5">↺</button>
       )}
     </div>
   );
